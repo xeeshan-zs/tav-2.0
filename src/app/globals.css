@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #231737;
+  --color-foreground: #FFFFFF;
+  --color-card: #2D2144;
+  --color-muted-text: #AEABC5;
+  --color-border-dark: #3E305C;
+  --color-accent-teal: #41AEAC;
+  --color-accent-mint: #A1E9E0;
+
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-jakarta);
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #231737;
+  --foreground: #FFFFFF;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Utilities for Premium Violet Glassmorphism */
+.glass {
+  background: rgba(45, 33, 68, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(65, 174, 172, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass:hover {
+  background: rgba(45, 33, 68, 0.65);
+  border-color: rgba(65, 174, 172, 0.2);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+}
+
+.glass-strong {
+  background: rgba(45, 33, 68, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(65, 174, 172, 0.15);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Glow effects for Teal/Mint theme */
+.glow-teal {
+  box-shadow: 0 0 15px rgba(65, 174, 172, 0.25);
+}
+
+.glow-card-teal:hover {
+  box-shadow: 0 0 30px rgba(65, 174, 172, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(65, 174, 172, 0.25);
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-loop {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* Pulse animation for teal indicator */
+@keyframes tealPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(65, 174, 172, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(65, 174, 172, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(65, 174, 172, 0);
+  }
+}
+
+.pulse-teal {
+  animation: tealPulse 2s infinite;
+}
+
+/* Custom Scrollbars in Violet Mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #231737;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3E305C;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #41AEAC;
+}
