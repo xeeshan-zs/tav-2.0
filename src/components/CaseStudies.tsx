@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 
 interface Project {
   id: string;
@@ -13,149 +11,85 @@ interface Project {
   metrics: { label: string; value: string }[];
   description: string;
   link: string;
-  image: string;
+  features: string[];
 }
 
-function ProjectCard({ project }: { project: Project }) {
-  const cardRef = useRef<HTMLAnchorElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!cardRef.current) return;
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
-
-    // Calculate rotation coordinates (range: -6deg to 6deg)
-    const rotX = -((y - height / 2) / (height / 2)) * 6;
-    const rotY = ((x - width / 2) / (width / 2)) * 6;
-    
-    setRotateX(rotX);
-    setRotateY(rotY);
-    setGlowPos({ x: (x / width) * 100, y: (y / height) * 100 });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setRotateX(0);
-    setRotateY(0);
-  };
-
+function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 35 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-      className="group flex flex-col gap-6"
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 md:p-8 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all ${
+        featured ? "col-span-full" : ""
+      }`}
     >
-      {/* Mockup Container with 3D Tilt and Spotlight */}
-      <a
-        ref={cardRef}
-        href={project.link}
-        target={project.link.startsWith("http") ? "_blank" : undefined}
-        rel="noopener noreferrer"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="block relative aspect-[4/3] rounded-2xl bg-card/30 border border-white/5 overflow-hidden group select-none shadow-2xl transition-all duration-300 hover:border-blue-500/20"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-          transition: isHovered ? "none" : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease",
-        }}
-      >
-        {/* Spotlight Overlay for Blue Mode */}
-        <div
-          className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-300"
-          style={{
-            background: isHovered
-              ? `radial-gradient(circle 200px at ${glowPos.x}% ${glowPos.y}%, rgba(33, 150, 243, 0.18), transparent 80%)`
-              : "none",
-            opacity: isHovered ? 1 : 0,
-          }}
-        />
-
-        {/* Live rendering container with AI Mockup image */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-103"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-85" />
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4 mb-5">
+        <div>
+          <span className="text-[10px] font-mono text-[#525252] tracking-widest uppercase block mb-1">
+            {project.id}
+          </span>
+          <h3 className={`font-display font-bold text-white tracking-tight ${featured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"}`}>
+            {project.title}
+          </h3>
+          <p className="text-[11px] text-[#737373] mt-1">{project.industry}</p>
         </div>
-
-        {/* Dark glass overlay tags in Blue Mode */}
-        <div className="absolute top-4 left-4 flex gap-2 z-10">
-          {project.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="px-2.5 py-1 bg-black/60 border border-white/5 backdrop-blur-md text-[9px] font-mono tracking-widest text-[#EDEDED] rounded-full uppercase"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <ArrowUpRight className="w-4 h-4 text-[#2196F3]" />
-        </div>
-      </a>
-
-      {/* Text elements */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-[#2196F3] tracking-widest uppercase font-semibold">
-              {project.id}
-            </span>
-            <h3 className="text-xl md:text-2xl font-display font-semibold text-white tracking-tight">
-              {project.title}
-            </h3>
-          </div>
-          
-          {/* Metric Display */}
-          <div className="flex gap-4">
-            {project.metrics.map((m, i) => (
-              <div key={i} className="text-right">
-                <div className="font-mono text-[9px] uppercase tracking-wider text-[#AEABC5]/60">{m.label}</div>
-                <div className="font-display font-bold text-sm text-[#90CAF9]">{m.value}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="text-xs md:text-sm text-[#AEABC5] leading-relaxed max-w-xl">
-          {project.description}
-        </p>
-
         <a
           href={project.link}
           target={project.link.startsWith("http") ? "_blank" : undefined}
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-white hover:text-[#2196F3] transition-colors mt-1 w-max"
+          className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[#737373] group-hover:text-white group-hover:bg-white/[0.1] transition-all flex-shrink-0"
         >
-          View selected work
-          <ArrowUpRight className="w-3.5 h-3.5 text-[#2196F3]" />
+          <ExternalLink className="w-4 h-4" />
         </a>
+      </div>
+
+      {/* Description */}
+      <p className={`text-[#a3a3a3] leading-relaxed mb-6 body-text ${featured ? "text-sm md:text-base max-w-2xl" : "text-[13px]"}`}>
+        {project.description}
+      </p>
+
+      {/* Features */}
+      <div className={`mb-6 ${featured ? "grid grid-cols-2 md:grid-cols-4 gap-3" : "flex flex-wrap gap-2"}`}>
+        {project.features.map((feature, i) => (
+          <span
+            key={i}
+            className="text-[11px] text-[#737373] bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-1.5"
+          >
+            {feature}
+          </span>
+        ))}
+      </div>
+
+      {/* Metrics */}
+      <div className="flex items-center gap-6 pt-5 border-t border-white/[0.04]">
+        {project.metrics.map((m, i) => (
+          <div key={i}>
+            <div className="text-[9px] font-mono uppercase tracking-wider text-[#525252] mb-0.5">{m.label}</div>
+            <div className={`font-bold text-white ${featured ? "text-lg" : "text-sm"}`}>{m.value}</div>
+          </div>
+        ))}
+        
+        <div className="ml-auto">
+          <a
+            href={project.link}
+            target={project.link.startsWith("http") ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            className="text-[11px] uppercase tracking-[0.15em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-1.5 group/link"
+          >
+            View project
+            <ArrowUpRight className="w-3 h-3 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+          </a>
+        </div>
       </div>
     </motion.div>
   );
 }
 
 export default function CaseStudies() {
-  const projects = [
+  const projects: Project[] = [
     {
       id: "01",
       title: "Aroush Works",
@@ -164,74 +98,94 @@ export default function CaseStudies() {
       metrics: [
         { label: "Performance", value: "99" },
         { label: "SEO Score", value: "100" },
+        { label: "Load Time", value: "0.8s" },
+        { label: "Lighthouse", value: "100" },
       ],
-      description: "High-impact web presence engineered with modern performance and editorial typography.",
+      description: "High-impact web presence engineered with modern performance and editorial typography. Built with Next.js, optimized for sub-second loads, and designed to convert visitors into clients.",
       link: "https://www.aroushworks.com",
-      image: "/aroush_works.jpg",
+      features: ["Next.js", "TypeScript", "Tailwind", "Vercel", "SEO Audit", "Analytics"],
     },
     {
       id: "02",
       title: "ICCS Global",
       industry: "Institutional Operations",
-      tags: ["Web System", "Clean Architecture", "Technical SEO"],
+      tags: ["Web System", "Architecture", "SEO"],
       metrics: [
         { label: "Performance", value: "98" },
-        { label: "Accessibility", value: "100" },
+        { label: "A11y", value: "100" },
       ],
-      description: "Institutional web presence with clean architecture and responsive layout integrations.",
+      description: "Institutional web presence with clean architecture and responsive layout integrations. Focused on accessibility and cross-device compatibility.",
       link: "https://iccsglobalized.com",
-      image: "/iccs_global.jpg",
+      features: ["React", "Node.js", "PostgreSQL", "WCAG 2.1"],
     },
     {
       id: "03",
       title: "Z Nectar",
       industry: "E-Commerce Mobile",
-      tags: ["Mobile App", "Android Native", "Kotlin"],
+      tags: ["Mobile App", "Android", "Kotlin"],
       metrics: [
         { label: "Platforms", value: "2" },
-        { label: "LCP Response", value: "Sub-1s" },
+        { label: "LCP", value: "Sub-1s" },
       ],
-      description: "Cross-platform grocery app with real-time sync, offline storage and production packaging.",
+      description: "Cross-platform grocery app with real-time sync, offline storage and production packaging. Native Kotlin with Jetpack Compose.",
       link: "https://github.com/xeeshan-zs/z-nectar",
-      image: "/z_nectar.jpg",
+      features: ["Kotlin", "Jetpack Compose", "Room DB", "Play Store"],
     },
     {
       id: "04",
       title: "Liquid Glass",
       industry: "Refraction Design System",
-      tags: ["Design System", "Shader Code", "Retina Ready"],
+      tags: ["Design System", "Shaders", "Retina"],
       metrics: [
         { label: "Refraction", value: "Real-time" },
         { label: "Contrast", value: "AAA" },
       ],
-      description: "Internal refractory system UI, sub-second latency, and custom glass refraction shaders.",
+      description: "Internal refractory system UI, sub-second latency, and custom glass refraction shaders for premium visual effects.",
       link: "#",
-      image: "/liquid_glass.jpg",
+      features: ["WebGL", "GLSL", "Design Tokens", "CSS Variables"],
     },
   ];
 
   return (
     <section id="projects" className="py-20 md:py-32 bg-transparent relative z-10">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         {/* Section Header */}
-        <div className="border-b border-white/5 pb-8 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <span className="text-[10px] uppercase tracking-widest font-mono text-[#AEABC5] block mb-3">
-              02 / OUR PROJECTS
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-px bg-white/20" />
+            <span className="text-[10px] uppercase tracking-[0.3em] font-mono text-[#737373]">
+              Selected Work
             </span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">
-              Selected Studio Work, <br />
-              <span className="text-[#AEABC5]">delivering business impact.</span>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white leading-[1.1] tracking-[-0.03em]">
+              Our Work<br />
+              <span className="text-[#737373]">delivering impact.</span>
             </h2>
+            <a
+              href="#contact"
+              className="text-[11px] uppercase tracking-[0.2em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-2 group"
+            >
+              Start a project
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-[#AEABC5]">SCROLL TO EXPLORE</span>
-          </div>
+        </motion.div>
+
+        {/* Featured Project (full width) */}
+        <div className="mb-6">
+          <ProjectCard project={projects[0]} featured />
         </div>
 
-        {/* 2-Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {projects.map((project) => (
+        {/* Smaller Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {projects.slice(1).map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>

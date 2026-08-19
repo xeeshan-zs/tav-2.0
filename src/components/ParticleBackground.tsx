@@ -48,7 +48,7 @@ export default function ParticleBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#0D47A1]/[0.1] blur-[150px]"
+        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#ffffff]/[0.1] blur-[150px]"
       />
       
       <motion.div
@@ -62,21 +62,21 @@ export default function ParticleBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#2196F3]/[0.04] blur-[180px]"
+        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#ffffff]/[0.04] blur-[180px]"
       />
 
       {/* Floating crisp particles in Blue Mode */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-gradient-to-r from-blue-500 to-cyan-300"
+          className="absolute rounded-full bg-gradient-to-r from-white to-gray-300"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
             opacity: p.opacity,
-            boxShadow: "0 0 8px rgba(33, 150, 243, 0.3)",
+            boxShadow: "0 0 8px rgba(255, 255, 255, 0.3)",
           }}
           animate={{
             y: ["0vh", "-100vh"],

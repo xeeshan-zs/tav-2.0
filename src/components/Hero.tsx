@@ -1,9 +1,7 @@
 "use client";
 
-import { ArrowDownRight, Award, ShieldCheck, Flame, Globe } from "lucide-react";
 import { motion } from "framer-motion";
-import Magnetic from "@/components/Magnetic";
-import CardStack from "@/components/CardStack";
+import { ArrowDown } from "lucide-react";
 
 export default function Hero() {
   const containerVariants = {
@@ -11,144 +9,112 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.1,
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
       },
     },
   } as const;
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+      transition: { type: "spring" as const, stiffness: 200, damping: 24 },
     },
   };
 
-  const wordVariants = {
+  const lineVariants = {
     hidden: { y: "110%" },
     visible: {
       y: 0,
-      transition: { type: "spring" as const, stiffness: 200, damping: 22 },
+      transition: { type: "spring" as const, stiffness: 150, damping: 20 },
     },
   };
 
-  const headlineLines = [
-    "We Engineer Digital",
-    "Products & Brands",
-    "Built to Scale.",
-  ];
-
-  const metrics = [
-    { value: "$150M+", label: "Client Capital Raised", icon: Globe },
-    { value: "98%", label: "On-Time Delivery", icon: ShieldCheck },
-    { value: "24+", label: "Global Design Awards", icon: Award },
-    { value: "12+", label: "Active Retainer Partners", icon: Flame },
+  const logos = [
+    "Vercel",
+    "Linear",
+    "Notion",
+    "Stripe",
+    "Figma",
+    "GitHub",
   ];
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-transparent">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center mb-16">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="lg:col-span-7 w-full"
-          >
-            {/* Status Badge - Neomorphic */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2.5 neo-inset px-3.5 py-2 rounded-full mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#2196F3] pulse-teal"></span>
-              <span className="text-[10px] uppercase tracking-widest font-semibold text-[#90CAF9]">
-                Independent Digital Product & Brand Studio
-              </span>
-            </motion.div>
-
-            {/* Headline with staggered mask reveal - Apple typography */}
-            <div className="mb-8 select-none">
-              {headlineLines.map((line, lineIdx) => (
-                <div key={lineIdx} className="overflow-hidden py-1">
-                  <motion.div
-                    variants={wordVariants}
-                    className={`text-4xl md:text-7xl font-display font-bold leading-none heading-lg ${
-                      lineIdx === 1 ? "text-[#AEABC5]" : "text-white"
-                    }`}
-                  >
-                    {line}
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-
-            {/* Subtitle - Apple body text */}
-            <motion.p
-              variants={itemVariants}
-              className="text-base md:text-xl font-sans text-[#c4cad6] leading-relaxed max-w-2xl mb-10 body-text"
-            >
-              A multidisciplinary studio partnering with ambitious founders, tech companies, and forward-thinking brands to design high-converting web systems and digital products.
-            </motion.p>
-
-            {/* Dual CTAs with Apple press feedback */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-5">
-              <Magnetic range={35} strength={0.35}>
-                <a
-                  href="#projects"
-                  className="neo-button bg-white text-black font-semibold text-xs py-4 px-8 rounded-full hover:bg-zinc-200 transition-colors duration-200"
-                >
-                  Explore Studio Work
-                </a>
-              </Magnetic>
-              
-              <Magnetic range={30} strength={0.3}>
-                <a
-                  href="#domains"
-                  className="group flex items-center gap-1.5 text-xs uppercase tracking-widest font-bold text-white hover:text-[#AEABC5] transition-colors py-2"
-                >
-                  Our Capabilities
-                  <ArrowDownRight className="w-4 h-4 group-hover:rotate-45 transition-transform duration-200" />
-                </a>
-              </Magnetic>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 20 }}
-            className="lg:col-span-5 flex justify-center lg:justify-end w-full"
-          >
-            <CardStack />
-          </motion.div>
-        </div>
-
-        {/* Metrics Strip - Neomorphic cards */}
+    <section className="relative min-h-screen flex flex-col items-center justify-start pt-32 md:pt-38 overflow-hidden bg-transparent">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center mt-2 md:mt-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, type: "spring", stiffness: 200, damping: 22 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-white/[0.06] pt-10"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center"
         >
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon;
-            return (
-              <div
-                key={index}
-                className="neo-raised group p-5 rounded-2xl cursor-default"
-              >
-                <div className="flex items-center justify-between mb-3 text-[#AEABC5] group-hover:text-white transition-colors">
-                  <Icon className="w-5 h-5 stroke-[1.5]" />
-                  <span className="text-[10px] uppercase tracking-widest font-mono text-[#c4cad6]/60">0{index + 1}</span>
-                </div>
-                <div className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight heading-lg">
-                  {metric.value}
-                </div>
-                <div className="text-xs text-[#c4cad6] mt-1 font-medium">{metric.label}</div>
+          {/* Centered Statement Headline */}
+          <div className="mb-6 select-none">
+            {["We Engineer", "Digital Products", "& Brands Built to Scale."].map((line, lineIdx) => (
+              <div key={lineIdx} className="overflow-hidden py-1">
+                <motion.div
+                  variants={lineVariants}
+                  className={`text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] ${
+                    lineIdx === 2 ? "text-[#737373]" : "text-white"
+                  }`}
+                >
+                  {line}
+                </motion.div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+
+          {/* Subtitle */}
+          <motion.p
+            variants={itemVariants}
+            className="text-base md:text-lg text-[#a3a3a3] leading-relaxed max-w-xl mb-10 body-text"
+          >
+            A multidisciplinary studio partnering with ambitious founders and forward-thinking brands to design high-converting web systems and digital products.
+          </motion.p>
+
+          {/* CTA */}
+          <motion.div variants={itemVariants} className="flex items-center gap-4">
+            <a
+              href="#projects"
+              className="bg-white text-black font-semibold text-[13px] py-3.5 px-8 rounded-full hover:bg-zinc-200 transition-colors duration-200 shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
+            >
+              Explore Our Work
+            </a>
+            <a
+              href="#domains"
+              className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-white hover:text-[#737373] transition-colors py-2"
+            >
+              Capabilities
+              <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-200" />
+            </a>
+          </motion.div>
+        </motion.div>
+
+        {/* Logo Row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="w-full mt-20 mb-16"
+        >
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#525252] mb-8 font-mono">
+            Trusted by forward-thinking teams
+          </p>
+          <div className="flex items-center justify-center flex-wrap gap-x-10 gap-y-4">
+            {logos.map((logo, i) => (
+              <span
+                key={i}
+                className="text-[15px] font-display font-bold text-white/[0.15] hover:text-white/[0.3] transition-colors duration-300 tracking-tight select-none cursor-default"
+              >
+                {logo}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </div>
+
     </section>
   );
 }

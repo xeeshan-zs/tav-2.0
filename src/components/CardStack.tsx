@@ -25,7 +25,7 @@ const CARDS_DATA: CardItem[] = [
     title: "Aroush Works",
     category: "Web App Development",
     image: "/aroush_works.jpg",
-    glowColor: "#90CAF9",
+    glowColor: "#ffffff",
   },
   {
     id: "03",
@@ -46,7 +46,7 @@ const CARDS_DATA: CardItem[] = [
     title: "Cryptx DApp",
     category: "Blockchain & Web3",
     image: "/liquid_glass.jpg",
-    glowColor: "#90CAF9",
+    glowColor: "#ffffff",
   },
   {
     id: "06",

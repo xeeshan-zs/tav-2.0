@@ -1,21 +1,76 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
+
+const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string }[] }> = {
+  Domains: {
+    title: "Our Expertise",
+    description: "Specialized engineering across five core domains.",
+    items: [
+      { icon: Brain, label: "Artificial Intelligence", desc: "LLM integrations, agents, ML pipelines" },
+      { icon: Shield, label: "Cyber Security", desc: "Zero-trust, API security, audits" },
+      { icon: Code, label: "Web Designing", desc: "Performant, editorial web platforms" },
+      { icon: Smartphone, label: "App Designing", desc: "Native Kotlin, Jetpack Compose" },
+      { icon: Figma, label: "UI / UX Design", desc: "Design systems, micro-interactions" },
+    ],
+  },
+  Projects: {
+    title: "Selected Work",
+    description: "High-impact digital products we've engineered.",
+    items: [
+      { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf" },
+      { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y" },
+      { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin" },
+      { icon: Code, label: "Liquid Glass", desc: "Design system — Real-time shaders" },
+    ],
+  },
+  FAQ: {
+    title: "Common Questions",
+    description: "Everything you need to know before starting.",
+    items: [
+      { icon: Sparkles, label: "How does the retainer work?", desc: "Weekly sprints, Slack access, pause anytime" },
+      { icon: Code, label: "What tech stacks?", desc: "Next.js, React, Kotlin, PostgreSQL" },
+      { icon: Globe, label: "Communication cadence?", desc: "Slack channel, Friday demo URLs" },
+      { icon: Sparkles, label: "Turnaround time?", desc: "24–48h minor, weekly milestones major" },
+    ],
+  },
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [hovering, setHovering] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const handleMouseEnter = (name: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setHovering(true);
+    setActiveDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setHovering(false);
+      setActiveDropdown(null);
+    }, 150);
+  };
 
   const navLinks = [
     { name: "Domains", href: "#domains" },
@@ -25,88 +80,118 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "py-3 bg-[#0a0e1a]/60 border-b border-white/[0.04] backdrop-blur-2xl saturate-180"
-            : "py-5 bg-transparent"
-        }`}
-      >
-        {/* Apple-style scroll edge effect */}
-        {scrolled && (
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-        )}
-
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo with Magnetic effect */}
-          <Magnetic range={40} strength={0.4}>
+      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4">
+        {/* Apple Glass Pill Nav */}
+        <div
+          ref={navRef}
+          onMouseLeave={handleMouseLeave}
+          className={`relative flex items-center gap-1 rounded-full px-2 py-2 transition-all duration-500 ${
+            scrolled
+              ? "bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]"
+              : "bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
+          }`}
+        >
+          {/* Logo */}
+          <Magnetic range={30} strength={0.3}>
             <a
               href="#"
-              className="flex items-center gap-2.5 font-display font-extrabold text-lg tracking-tight text-white hover:opacity-90 transition-opacity"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
-              <div className="neo-circle w-5 h-5 rounded flex items-center justify-center flex-shrink-0">
-                <span className="w-1.5 h-1.5 rounded-sm bg-[#41AEAC] pulse-teal"></span>
-              </div>
-              <span className="uppercase tracking-widest text-sm font-semibold text-white">Tavryz Studio®</span>
+              <span className="uppercase tracking-widest text-[11px] font-bold text-white hidden sm:inline">Tavryz</span>
             </a>
           </Magnetic>
 
-          {/* Desktop Navigation - Neomorphic inset pill */}
-          <nav className="hidden md:flex items-center gap-1 neo-pill rounded-full px-2 py-1.5">
-            {navLinks.map((link) => (
-              <Magnetic key={link.name} range={25} strength={0.3}>
-                <a
-                  href={link.href}
-                  className="px-4 py-1.5 rounded-full text-xs font-medium text-[#c4cad6] hover:text-white hover:bg-white/[0.05] transition-all duration-200"
-                >
-                  {link.name}
-                </a>
-              </Magnetic>
-            ))}
-          </nav>
+          {/* Divider */}
+          <div className="w-px h-5 bg-white/[0.08] hidden sm:block" />
 
-          {/* Action Badge & Button */}
-          <div className="hidden lg:flex items-center gap-5">
-            {/* Pulsing Client Roster Status - Neomorphic badge */}
-            <div className="flex items-center gap-2 neo-inset px-3 py-1.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#41AEAC] pulse-teal"></span>
-              <span className="text-[10px] tracking-wider uppercase font-semibold text-[#A1E9E0]">
-                Accepting Q3/Q4 Client Roster
-              </span>
-            </div>
-
-            <Magnetic range={35} strength={0.3}>
+          {/* Nav Links with Dropdown */}
+          {navLinks.map((link) => (
+            <div
+              key={link.name}
+              className="relative"
+              onMouseEnter={() => handleMouseEnter(link.name)}
+            >
               <a
-                href="#contact"
-                className="neo-button group relative inline-flex items-center gap-1 bg-white text-black text-xs font-semibold px-4.5 py-2.5 rounded-full hover:bg-zinc-200 transition-colors"
+                href={link.href}
+                className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 active:scale-[0.97] ${
+                  activeDropdown === link.name
+                    ? "bg-white/[0.1] text-white"
+                    : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
+                }`}
               >
-                Start a Project
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                {link.name}
               </a>
-            </Magnetic>
-          </div>
+            </div>
+          ))}
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-white/[0.08] hidden sm:block" />
+
+          {/* CTA Button */}
+          <Magnetic range={25} strength={0.25}>
+            <a
+              href="#contact"
+              className="flex items-center gap-1.5 bg-white text-black text-[12px] font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
+            >
+              Start a Project
+              <ArrowRight className="w-3 h-3" />
+            </a>
+          </Magnetic>
 
           {/* Mobile Menu Trigger */}
-          <div className="flex items-center gap-3 md:hidden">
-            <Magnetic range={30} strength={0.3}>
-              <a
-                href="#contact"
-                className="neo-button bg-white text-black text-xs font-semibold px-3.5 py-2 rounded-full hover:bg-zinc-200 transition-colors"
-              >
-                Start
-              </a>
-            </Magnetic>
-            
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="neo-circle w-10 h-10 rounded-full flex items-center justify-center text-white"
-              aria-label="Open menu"
-            >
-              <Menu className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="sm:hidden w-9 h-9 rounded-full flex items-center justify-center text-white bg-white/[0.08] border border-white/[0.1] active:scale-[0.95]"
+            aria-label="Open menu"
+          >
+            <Menu className="w-4 h-4" />
+          </button>
         </div>
-      </header>
+
+        {/* Expanding Card Dropdown - Glass Material */}
+        <AnimatePresence>
+          {activeDropdown && hovering && dropdownContent[activeDropdown] && (
+            <motion.div
+              initial={{ opacity: 0, y: -8, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              onMouseEnter={() => {
+                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                setHovering(true);
+              }}
+              onMouseLeave={handleMouseLeave}
+              className="absolute top-full mt-3 w-[420px] bg-white/[0.08] border border-white/[0.1] backdrop-blur-2xl rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06)] overflow-hidden"
+            >
+              <div className="p-5 border-b border-white/[0.06]">
+                <h3 className="text-sm font-bold text-white mb-1">{dropdownContent[activeDropdown].title}</h3>
+                <p className="text-[11px] text-[#a3a3a3]">{dropdownContent[activeDropdown].description}</p>
+              </div>
+              <div className="p-2">
+                {dropdownContent[activeDropdown].items.map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={i}
+                      href={`#${activeDropdown.toLowerCase()}`}
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.06] transition-all group cursor-pointer active:scale-[0.98]"
+                    >
+                      <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.1] transition-colors">
+                        <Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[13px] font-semibold text-white">{item.label}</div>
+                        <div className="text-[11px] text-[#a3a3a3] truncate">{item.desc}</div>
+                      </div>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#a3a3a3] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                    </a>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Mobile Drawer Navigation */}
       <AnimatePresence>
@@ -116,7 +201,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-[#0a0e1a]/95 backdrop-blur-3xl flex flex-col justify-between p-6"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-3xl flex flex-col justify-between p-6"
           >
             <div className="flex items-center justify-between">
               <a
@@ -124,14 +209,11 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-2 font-display font-extrabold text-sm tracking-widest text-white"
               >
-                <div className="neo-circle w-4 h-4 rounded flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-sm bg-[#41AEAC]"></span>
-                </div>
                 TAVRYZ STUDIO®
               </a>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="neo-circle w-10 h-10 rounded-full flex items-center justify-center text-white"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-white bg-white/[0.08] border border-white/[0.1] active:scale-[0.95]"
                 aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
@@ -147,7 +229,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-display font-bold text-[#AEABC5] hover:text-white transition-colors"
+                  className="text-3xl font-display font-bold text-[#737373] hover:text-white transition-colors"
                 >
                   {link.name}
                 </motion.a>
@@ -156,15 +238,15 @@ export default function Navbar() {
 
             <div className="flex flex-col gap-4 border-t border-white/[0.06] pt-6">
               <div className="flex items-center gap-2 px-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#41AEAC] pulse-teal"></span>
-                <span className="text-[10px] tracking-widest uppercase font-semibold text-[#A1E9E0]">
+                <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+                <span className="text-[10px] tracking-widest uppercase font-semibold text-[#737373]">
                   Accepting Q3/Q4 Client Roster
                 </span>
               </div>
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="neo-button w-full bg-white text-black font-semibold py-4 rounded-full text-center hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 text-sm"
+                className="w-full bg-white text-black font-semibold py-4 rounded-full text-center hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 text-sm active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
               >
                 Book Discovery Call
                 <ArrowRight className="w-4 h-4" />
