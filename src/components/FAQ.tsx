@@ -35,32 +35,38 @@ export default function FAQ() {
     <section id="faq" className="py-20 md:py-32 bg-transparent relative z-10">
       <div className="max-w-4xl mx-auto px-6">
         {/* Section Header */}
-        <div className="border-b border-white/5 pb-8 mb-12">
-          <span className="text-[10px] uppercase tracking-widest font-mono text-[#AEABC5] block mb-3">
+        <div className="border-b border-white/[0.06] pb-8 mb-12">
+          <span className="text-[10px] uppercase tracking-widest font-mono text-[#AEABC5] block mb-3 caption-text">
             04 / FAQ
           </span>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-white heading-lg">
             Frequently Asked Questions
           </h2>
         </div>
 
-        {/* Accordions */}
+        {/* Accordions - Neomorphic */}
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
             return (
-              <div
+              <motion.div
                 key={index}
-                className="bg-card/30 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-blue-500/20 shadow-2xl"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ type: "spring", stiffness: 300, damping: 24, delay: index * 0.05 }}
+                className={`neo-raised rounded-2xl overflow-hidden transition-all duration-300 ${
+                  isOpen ? "border-blue-500/15" : ""
+                }`}
               >
                 <button
                   onClick={() => setActiveIndex(isOpen ? null : index)}
-                  className="w-full text-left p-6 md:p-8 flex items-center justify-between gap-6 cursor-pointer"
+                  className="w-full text-left p-6 md:p-8 flex items-center justify-between gap-6 cursor-pointer group"
                 >
-                  <span className="text-sm md:text-base font-semibold text-white tracking-tight">
+                  <span className="text-sm md:text-base font-semibold text-white tracking-tight group-hover:text-blue-100 transition-colors">
                     {faq.question}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-blue-500/5 border border-blue-500/10 flex items-center justify-center text-white flex-shrink-0">
+                  <div className="neo-circle w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
                     {isOpen ? <Minus className="w-3.5 h-3.5 text-blue-400" /> : <Plus className="w-3.5 h-3.5 text-blue-400" />}
                   </div>
                 </button>
@@ -71,15 +77,15 @@ export default function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+                      transition={{ type: "spring", stiffness: 300, damping: 28 }}
                     >
-                      <div className="px-6 pb-6 md:px-8 md:pb-8 border-t border-white/[0.01] pt-4 text-xs md:text-sm text-[#AEABC5] leading-relaxed">
+                      <div className="px-6 pb-6 md:px-8 md:pb-8 border-t border-white/[0.04] pt-4 text-xs md:text-sm text-[#c4cad6] leading-relaxed body-text">
                         {faq.answer}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             );
           })}
         </div>

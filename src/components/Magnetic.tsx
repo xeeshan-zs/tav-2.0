@@ -42,7 +42,8 @@ export default function Magnetic({ children, range = 35, strength = 0.35 }: Magn
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 120, damping: 15, mass: 0.1 }}
+      // Apple-style: critically damped spring (no overshoot) for repositioning
+      transition={{ type: "spring", stiffness: 300, damping: 24, mass: 0.5 }}
       className="inline-block"
     >
       {children}

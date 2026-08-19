@@ -33,11 +33,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} h-full antialiased dark`}
       style={{ colorScheme: "dark" }}
     >
-      <body className="min-h-full flex flex-col bg-[#080808] text-[#EDEDED] selection:bg-red-500/30 selection:text-white relative">
+      <body className="min-h-full flex flex-col bg-[#0a0e1a] text-[#EDEDED] selection:bg-[#2196F3]/30 selection:text-white relative">
         <ParticleBackground />
         {children}
       </body>
     </html>
   );
 }
-

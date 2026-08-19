@@ -26,12 +26,17 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "py-3 bg-[#030816]/70 border-b border-white/5 backdrop-blur-md"
+            ? "py-3 bg-[#0a0e1a]/60 border-b border-white/[0.04] backdrop-blur-2xl saturate-180"
             : "py-5 bg-transparent"
         }`}
       >
+        {/* Apple-style scroll edge effect */}
+        {scrolled && (
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        )}
+
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo with Magnetic effect */}
           <Magnetic range={40} strength={0.4}>
@@ -39,20 +44,20 @@ export default function Navbar() {
               href="#"
               className="flex items-center gap-2.5 font-display font-extrabold text-lg tracking-tight text-white hover:opacity-90 transition-opacity"
             >
-              <div className="w-5 h-5 rounded bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0">
+              <div className="neo-circle w-5 h-5 rounded flex items-center justify-center flex-shrink-0">
                 <span className="w-1.5 h-1.5 rounded-sm bg-[#41AEAC] pulse-teal"></span>
               </div>
               <span className="uppercase tracking-widest text-sm font-semibold text-white">Tavryz Studio®</span>
             </a>
           </Magnetic>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-1.5 bg-white/[0.03] border border-white/5 px-2 py-1.5 rounded-full backdrop-blur-sm">
+          {/* Desktop Navigation - Neomorphic inset pill */}
+          <nav className="hidden md:flex items-center gap-1 neo-pill rounded-full px-2 py-1.5">
             {navLinks.map((link) => (
               <Magnetic key={link.name} range={25} strength={0.3}>
                 <a
                   href={link.href}
-                  className="px-4 py-1.5 rounded-full text-xs font-medium text-[#AEABC5] hover:text-white hover:bg-white/[0.04] transition-all duration-200"
+                  className="px-4 py-1.5 rounded-full text-xs font-medium text-[#c4cad6] hover:text-white hover:bg-white/[0.05] transition-all duration-200"
                 >
                   {link.name}
                 </a>
@@ -62,8 +67,8 @@ export default function Navbar() {
 
           {/* Action Badge & Button */}
           <div className="hidden lg:flex items-center gap-5">
-            {/* Pulsing Client Roster Status */}
-            <div className="flex items-center gap-2 bg-[#41AEAC]/10 border border-[#41AEAC]/20 px-3 py-1.5 rounded-full">
+            {/* Pulsing Client Roster Status - Neomorphic badge */}
+            <div className="flex items-center gap-2 neo-inset px-3 py-1.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-[#41AEAC] pulse-teal"></span>
               <span className="text-[10px] tracking-wider uppercase font-semibold text-[#A1E9E0]">
                 Accepting Q3/Q4 Client Roster
@@ -73,7 +78,7 @@ export default function Navbar() {
             <Magnetic range={35} strength={0.3}>
               <a
                 href="#contact"
-                className="group relative inline-flex items-center gap-1 bg-white text-black text-xs font-semibold px-4.5 py-2.5 rounded-full hover:bg-zinc-200 transition-colors"
+                className="neo-button group relative inline-flex items-center gap-1 bg-white text-black text-xs font-semibold px-4.5 py-2.5 rounded-full hover:bg-zinc-200 transition-colors"
               >
                 Start a Project
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -86,7 +91,7 @@ export default function Navbar() {
             <Magnetic range={30} strength={0.3}>
               <a
                 href="#contact"
-                className="bg-white text-black text-xs font-semibold px-3.5 py-2 rounded-full hover:bg-zinc-200 transition-colors"
+                className="neo-button bg-white text-black text-xs font-semibold px-3.5 py-2 rounded-full hover:bg-zinc-200 transition-colors"
               >
                 Start
               </a>
@@ -94,7 +99,7 @@ export default function Navbar() {
             
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-white bg-white/[0.02]"
+              className="neo-circle w-10 h-10 rounded-full flex items-center justify-center text-white"
               aria-label="Open menu"
             >
               <Menu className="w-4 h-4" />
@@ -110,7 +115,8 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#030816]/95 backdrop-blur-lg flex flex-col justify-between p-6"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-[#0a0e1a]/95 backdrop-blur-3xl flex flex-col justify-between p-6"
           >
             <div className="flex items-center justify-between">
               <a
@@ -118,14 +124,14 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-2 font-display font-extrabold text-sm tracking-widest text-white"
               >
-                <div className="w-4 h-4 rounded bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                <div className="neo-circle w-4 h-4 rounded flex items-center justify-center">
                   <span className="w-1.5 h-1.5 rounded-sm bg-[#41AEAC]"></span>
                 </div>
                 TAVRYZ STUDIO®
               </a>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-white bg-white/[0.02]"
+                className="neo-circle w-10 h-10 rounded-full flex items-center justify-center text-white"
                 aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
@@ -137,7 +143,7 @@ export default function Navbar() {
                 <motion.a
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: i * 0.05, type: "spring", stiffness: 300, damping: 24 }}
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
@@ -148,7 +154,7 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <div className="flex flex-col gap-4 border-t border-white/10 pt-6">
+            <div className="flex flex-col gap-4 border-t border-white/[0.06] pt-6">
               <div className="flex items-center gap-2 px-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#41AEAC] pulse-teal"></span>
                 <span className="text-[10px] tracking-widest uppercase font-semibold text-[#A1E9E0]">
@@ -158,7 +164,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full bg-white text-black font-semibold py-4 rounded-full text-center hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 text-sm"
+                className="neo-button w-full bg-white text-black font-semibold py-4 rounded-full text-center hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 text-sm"
               >
                 Book Discovery Call
                 <ArrowRight className="w-4 h-4" />

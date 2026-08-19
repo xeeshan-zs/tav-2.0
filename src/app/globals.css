@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #030816;
+  --color-background: #0a0e1a;
   --color-foreground: #FFFFFF;
-  --color-card: #091122;
+  --color-card: #0f1525;
   --color-muted-text: #94a3b8;
   --color-border-dark: #1b263b;
   --color-accent-teal: #2196F3;
   --color-accent-mint: #90CAF9;
+  --color-neo-surface: #111827;
+  --color-neo-light: #1a2238;
+  --color-neo-dark: #080c16;
 
   --font-sans: var(--font-geist-sans);
   --font-display: var(--font-jakarta);
@@ -15,8 +18,13 @@
 }
 
 :root {
-  --background: #030816;
+  --background: #0a0e1a;
   --foreground: #FFFFFF;
+  --neo-surface: #111827;
+  --neo-light: rgba(30, 42, 65, 0.6);
+  --neo-dark: rgba(2, 4, 10, 0.7);
+  --neo-light-strong: rgba(35, 50, 75, 0.5);
+  --neo-dark-strong: rgba(0, 2, 6, 0.8);
 }
 
 body {
@@ -28,30 +36,201 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Utilities for Premium Blue Glassmorphism */
+/* ─── Apple-style Translucent Materials ─── */
 .glass {
-  background: rgba(9, 17, 34, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(33, 150, 243, 0.1);
+  background: rgba(15, 21, 37, 0.55);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass:hover {
-  background: rgba(9, 17, 34, 0.65);
-  border-color: rgba(33, 150, 243, 0.2);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  background: rgba(15, 21, 37, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
 }
 
 .glass-strong {
-  background: rgba(9, 17, 34, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(33, 150, 243, 0.15);
-  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+  background: rgba(15, 21, 37, 0.85);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 24px 60px -16px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* Glow effects for Blue theme */
+/* ─── Neomorphic Utilities (Dark Mode) ─── */
+/* Note: neo-* classes do NOT set background so Tailwind bg-* utilities work */
+.neo-raised {
+  background: var(--neo-surface);
+  box-shadow:
+    8px 8px 20px var(--neo-dark),
+    -8px -8px 20px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.neo-raised:hover {
+  box-shadow:
+    10px 10px 28px var(--neo-dark-strong),
+    -10px -10px 28px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.neo-raised-lg {
+  background: var(--neo-surface);
+  box-shadow:
+    12px 12px 30px var(--neo-dark),
+    -12px -12px 30px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.neo-raised-lg:hover {
+  box-shadow:
+    14px 14px 36px var(--neo-dark-strong),
+    -14px -14px 36px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Apple-style: press feedback lives on pointer-down, instant */
+.neo-pressed:active,
+.neo-raised:active {
+  box-shadow:
+    inset 4px 4px 10px var(--neo-dark),
+    inset -4px -4px 10px var(--neo-light);
+  transform: scale(0.98);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+
+.neo-inset {
+  background: var(--neo-surface);
+  box-shadow:
+    inset 4px 4px 10px var(--neo-dark),
+    inset -4px -4px 10px var(--neo-light);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.neo-button {
+  box-shadow:
+    5px 5px 14px var(--neo-dark),
+    -5px -5px 14px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-button:hover {
+  box-shadow:
+    6px 6px 18px var(--neo-dark-strong),
+    -6px -6px 18px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.neo-button:active {
+  box-shadow:
+    inset 3px 3px 8px var(--neo-dark),
+    inset -3px -3px 8px var(--neo-light);
+  transform: scale(0.97);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+
+/* Neo button for dark surfaces (no bg override) */
+.neo-button-dark {
+  background: var(--neo-surface);
+  box-shadow:
+    5px 5px 14px var(--neo-dark),
+    -5px -5px 14px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-button-dark:hover {
+  box-shadow:
+    6px 6px 18px var(--neo-dark-strong),
+    -6px -6px 18px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.neo-button-dark:active {
+  box-shadow:
+    inset 3px 3px 8px var(--neo-dark),
+    inset -3px -3px 8px var(--neo-light);
+  transform: scale(0.97);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+
+/* Neomorphic pill for nav */
+.neo-pill {
+  background: rgba(17, 24, 39, 0.6);
+  box-shadow:
+    inset 2px 2px 6px var(--neo-dark),
+    inset -2px -2px 6px var(--neo-light);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Neomorphic circular icon button */
+.neo-circle {
+  background: var(--neo-surface);
+  box-shadow:
+    4px 4px 10px var(--neo-dark),
+    -4px -4px 10px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-circle:hover {
+  box-shadow:
+    5px 5px 14px var(--neo-dark-strong),
+    -5px -5px 14px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.neo-circle:active {
+  box-shadow:
+    inset 3px 3px 6px var(--neo-dark),
+    inset -3px -3px 6px var(--neo-light);
+  transform: scale(0.95);
+}
+
+/* Neo circle for elements with their own bg (gradients, colors) */
+.neo-circle-transparent {
+  box-shadow:
+    4px 4px 10px var(--neo-dark),
+    -4px -4px 10px var(--neo-light),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-circle-transparent:hover {
+  box-shadow:
+    5px 5px 14px var(--neo-dark-strong),
+    -5px -5px 14px var(--neo-light-strong),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.neo-circle-transparent:active {
+  box-shadow:
+    inset 3px 3px 6px var(--neo-dark),
+    inset -3px -3px 6px var(--neo-light);
+  transform: scale(0.95);
+}
+
+/* ─── Glow effects ─── */
 .glow-teal {
   box-shadow: 0 0 15px rgba(33, 150, 243, 0.25);
 }
@@ -61,14 +240,38 @@ body {
   border-color: rgba(33, 150, 243, 0.25);
 }
 
-/* Marquee Animation */
+/* ─── Apple-style Typography ─── */
+.display-text {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-optical-sizing: auto;
+}
+
+.heading-lg {
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.heading-md {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.body-text {
+  letter-spacing: 0;
+  line-height: 1.6;
+}
+
+.caption-text {
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+/* ─── Marquee Animation ─── */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee-loop {
@@ -77,7 +280,7 @@ body {
   animation: marquee 25s linear infinite;
 }
 
-/* Pulse animation for blue indicator */
+/* ─── Pulse Animation ─── */
 @keyframes tealPulse {
   0% {
     transform: scale(0.95);
@@ -97,14 +300,29 @@ body {
   animation: tealPulse 2s infinite;
 }
 
-/* Custom Scrollbars in Blue-Black Mode */
+/* ─── Neomorphic Pulse (softer) ─── */
+@keyframes neoPulse {
+  0%, 100% {
+    box-shadow:
+      5px 5px 14px var(--neo-dark),
+      -5px -5px 14px var(--neo-light);
+  }
+  50% {
+    box-shadow:
+      7px 7px 20px var(--neo-dark-strong),
+      -7px -7px 20px var(--neo-light-strong),
+      0 0 20px rgba(33, 150, 243, 0.08);
+  }
+}
+
+/* ─── Custom Scrollbars ─── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #030816;
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -114,4 +332,30 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #2196F3;
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .pulse-teal {
+    animation: none;
+  }
+  .animate-marquee-loop {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong {
+    background: rgba(15, 21, 37, 0.95);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
