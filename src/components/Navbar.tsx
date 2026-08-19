@@ -185,9 +185,9 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
 
-      {/* Mobile: Fixed Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
-        <div className="flex items-center gap-1 px-2 py-2 bg-black/80 border-t border-white/[0.08] backdrop-blur-2xl">
+      {/* Mobile: Glassy Floating Bottom Nav */}
+      <div className="fixed bottom-4 left-4 right-4 z-50 sm:hidden flex justify-center">
+        <div className="flex items-center gap-1 rounded-full px-2 py-2 bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -197,9 +197,11 @@ export default function Navbar() {
               {link.name}
             </a>
           ))}
+          {/* Divider */}
+          <div className="w-px h-4 bg-white/[0.08]" />
           <a
             href="#contact"
-            className="whitespace-nowrap flex items-center gap-1 bg-white text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] ml-auto"
+            className="whitespace-nowrap flex items-center gap-1 bg-white text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
           >
             Start a Project
             <ArrowRight className="w-3 h-3" />
