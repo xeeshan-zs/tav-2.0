@@ -28,7 +28,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "py-3 bg-[#231737]/70 border-b border-white/5 backdrop-blur-md"
+            ? "py-3 bg-[#030816]/70 border-b border-white/5 backdrop-blur-md"
             : "py-5 bg-transparent"
         }`}
       >
@@ -110,7 +110,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#231737]/95 backdrop-blur-lg flex flex-col justify-between p-6"
+            className="fixed inset-0 z-50 bg-[#030816]/95 backdrop-blur-lg flex flex-col justify-between p-6"
           >
             <div className="flex items-center justify-between">
               <a

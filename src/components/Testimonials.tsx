@@ -59,10 +59,10 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] as const }}
-              className="group p-8 bg-[#2D2144]/30 border border-white/5 rounded-2xl hover:border-teal-500/20 hover:bg-[#2D2144]/50 transition-all duration-300 flex flex-col justify-between"
+              className="group p-8 bg-card/30 border border-white/5 rounded-2xl hover:border-blue-500/20 hover:bg-card/50 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <Quote className="w-8 h-8 text-teal-500/15 group-hover:text-teal-500/25 transition-colors mb-6 stroke-[1.5]" />
+                <Quote className="w-8 h-8 text-blue-500/15 group-hover:text-blue-500/25 transition-colors mb-6 stroke-[1.5]" />
                 <p className="text-xs md:text-sm text-zinc-300 leading-relaxed italic mb-8">
                   "{review.quote}"
                 </p>

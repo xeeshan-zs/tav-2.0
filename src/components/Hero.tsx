@@ -58,9 +58,9 @@ export default function Hero() {
             className="lg:col-span-7 w-full"
           >
             {/* Status Badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2.5 bg-[#41AEAC]/10 border border-[#41AEAC]/20 px-3.5 py-2 rounded-full mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#41AEAC] pulse-teal"></span>
-              <span className="text-[10px] uppercase tracking-widest font-semibold text-[#A1E9E0]">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2.5 bg-[#2196F3]/10 border border-[#2196F3]/20 px-3.5 py-2 rounded-full mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#2196F3] pulse-teal"></span>
+              <span className="text-[10px] uppercase tracking-widest font-semibold text-[#90CAF9]">
                 Independent Digital Product & Brand Studio
               </span>
             </motion.div>

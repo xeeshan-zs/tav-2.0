@@ -18,28 +18,42 @@ const CARDS_DATA: CardItem[] = [
     title: "AETHER Engine",
     category: "AI & Machine Learning",
     image: "/liquid_glass.jpg",
-    glowColor: "#41AEAC", // Teal accent
+    glowColor: "#1E88E5", // Electric Blue
   },
   {
     id: "02",
     title: "Aroush Works",
     category: "Web App Development",
     image: "/aroush_works.jpg",
-    glowColor: "#A1E9E0", // Cyan accent
+    glowColor: "#90CAF9", // Bright Light Blue
   },
   {
     id: "03",
     title: "Z Nectar",
     category: "Mobile App Development",
     image: "/z_nectar.jpg",
-    glowColor: "#41AEAC", // Teal accent
+    glowColor: "#2563eb", // Vibrant Royal Blue
   },
   {
     id: "04",
     title: "ICCS Global Portal",
     category: "Cybersecurity & Compliance",
     image: "/iccs_global.jpg",
-    glowColor: "#A1E9E0", // Cyan accent
+    glowColor: "#1E88E5", // Electric Blue
+  },
+  {
+    id: "05",
+    title: "Cryptx DApp",
+    category: "Blockchain & Web3",
+    image: "/liquid_glass.jpg",
+    glowColor: "#90CAF9", // Bright Light Blue
+  },
+  {
+    id: "06",
+    title: "Cohesion Space",
+    category: "UI/UX & Product Design",
+    image: "/aroush_works.jpg",
+    glowColor: "#2563eb", // Vibrant Royal Blue
   },
 ];
 
@@ -152,16 +166,17 @@ export default function CardStack() {
               className="relative w-full h-full rounded-2xl bg-[#121212] border border-white/10 overflow-hidden transition-all duration-500"
               style={{
                 boxShadow: isTop
-                  ? `0 20px 45px -15px ${card.glowColor}40, 0 0 0 1px ${card.glowColor}25, 0 30px 60px -15px rgba(0,0,0,0.95)`
+                  ? `0 15px 35px -10px ${card.glowColor}60, 0 0 25px 2px ${card.glowColor}30, 0 0 0 1px ${card.glowColor}25, 0 30px 60px -15px rgba(0,0,0,0.95)`
                   : "0 30px 60px -15px rgba(0,0,0,0.95)",
               }}
             >
               {/* Glowing top accent border for the active top card */}
               {isTop && (
                 <div
-                  className="absolute top-0 left-0 right-0 h-[2px] z-10"
+                  className="absolute top-0 left-0 right-0 h-[3px] z-10"
                   style={{
                     background: `linear-gradient(90deg, transparent, ${card.glowColor}, transparent)`,
+                    boxShadow: `0 0 14px 2px ${card.glowColor}`,
                   }}
                 />
               )}
@@ -197,7 +212,7 @@ export default function CardStack() {
 
                 {/* Subtle light leak/glow in the corner */}
                 <div
-                  className="absolute bottom-0 right-0 w-20 h-20 rounded-full filter blur-[35px] opacity-10 pointer-events-none transition-colors duration-500"
+                  className="absolute bottom-0 right-0 w-32 h-32 rounded-full filter blur-[50px] opacity-25 pointer-events-none transition-colors duration-500"
                   style={{
                     backgroundColor: card.glowColor,
                   }}

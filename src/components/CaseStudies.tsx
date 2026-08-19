@@ -65,19 +65,19 @@ function ProjectCard({ project }: { project: Project }) {
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="block relative aspect-[4/3] rounded-2xl bg-[#2D2144]/30 border border-white/5 overflow-hidden group select-none shadow-2xl transition-all duration-300 hover:border-teal-500/20"
+        className="block relative aspect-[4/3] rounded-2xl bg-card/30 border border-white/5 overflow-hidden group select-none shadow-2xl transition-all duration-300 hover:border-blue-500/20"
         style={{
           transformStyle: "preserve-3d",
           transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transition: isHovered ? "none" : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease",
         }}
       >
-        {/* Spotlight Overlay for Purple-Teal Mode */}
+        {/* Spotlight Overlay for Blue Mode */}
         <div
           className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-300"
           style={{
             background: isHovered
-              ? `radial-gradient(circle 200px at ${glowPos.x}% ${glowPos.y}%, rgba(65, 174, 172, 0.18), transparent 80%)`
+              ? `radial-gradient(circle 200px at ${glowPos.x}% ${glowPos.y}%, rgba(33, 150, 243, 0.18), transparent 80%)`
               : "none",
             opacity: isHovered ? 1 : 0,
           }}
@@ -96,7 +96,7 @@ function ProjectCard({ project }: { project: Project }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-85" />
         </div>
 
-        {/* Dark glass overlay tags in Purple-Teal Mode */}
+        {/* Dark glass overlay tags in Blue Mode */}
         <div className="absolute top-4 left-4 flex gap-2 z-10">
           {project.tags.map((tag, i) => (
             <span
@@ -109,7 +109,7 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-black/50 border border-white/10 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-          <ArrowUpRight className="w-4 h-4 text-[#41AEAC]" />
+          <ArrowUpRight className="w-4 h-4 text-[#2196F3]" />
         </div>
       </a>
 
@@ -117,7 +117,7 @@ function ProjectCard({ project }: { project: Project }) {
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-[#41AEAC] tracking-widest uppercase font-semibold">
+            <span className="font-mono text-xs text-[#2196F3] tracking-widest uppercase font-semibold">
               {project.id}
             </span>
             <h3 className="text-xl md:text-2xl font-display font-semibold text-white tracking-tight">
@@ -130,7 +130,7 @@ function ProjectCard({ project }: { project: Project }) {
             {project.metrics.map((m, i) => (
               <div key={i} className="text-right">
                 <div className="font-mono text-[9px] uppercase tracking-wider text-[#AEABC5]/60">{m.label}</div>
-                <div className="font-display font-bold text-sm text-[#A1E9E0]">{m.value}</div>
+                <div className="font-display font-bold text-sm text-[#90CAF9]">{m.value}</div>
               </div>
             ))}
           </div>
@@ -144,10 +144,10 @@ function ProjectCard({ project }: { project: Project }) {
           href={project.link}
           target={project.link.startsWith("http") ? "_blank" : undefined}
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-white hover:text-[#41AEAC] transition-colors mt-1 w-max"
+          className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-white hover:text-[#2196F3] transition-colors mt-1 w-max"
         >
           View selected work
-          <ArrowUpRight className="w-3.5 h-3.5 text-[#41AEAC]" />
+          <ArrowUpRight className="w-3.5 h-3.5 text-[#2196F3]" />
         </a>
       </div>
     </motion.div>

@@ -51,7 +51,7 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className="bg-[#2D2144]/30 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-teal-500/20 shadow-2xl"
+                className="bg-card/30 border border-white/5 rounded-2xl overflow-hidden transition-all duration-300 hover:border-blue-500/20 shadow-2xl"
               >
                 <button
                   onClick={() => setActiveIndex(isOpen ? null : index)}
@@ -60,8 +60,8 @@ export default function FAQ() {
                   <span className="text-sm md:text-base font-semibold text-white tracking-tight">
                     {faq.question}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-teal-500/5 border border-teal-500/10 flex items-center justify-center text-white flex-shrink-0">
-                    {isOpen ? <Minus className="w-3.5 h-3.5 text-teal-400" /> : <Plus className="w-3.5 h-3.5 text-teal-400" />}
+                  <div className="w-8 h-8 rounded-full bg-blue-500/5 border border-blue-500/10 flex items-center justify-center text-white flex-shrink-0">
+                    {isOpen ? <Minus className="w-3.5 h-3.5 text-blue-400" /> : <Plus className="w-3.5 h-3.5 text-blue-400" />}
                   </div>
                 </button>
 

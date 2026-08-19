@@ -35,8 +35,8 @@ export default function ParticleBackground() {
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#231737]">
-      {/* Heavy ambient 3D glowing circles for Purple & Teal Mode */}
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#030816]">
+      {/* Heavy ambient 3D glowing circles for Blue Mode */}
       <motion.div
         animate={{
           x: [0, 40, -20, 0],
@@ -48,7 +48,7 @@ export default function ParticleBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#3B1C5D]/[0.08] blur-[150px]"
+        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#0D47A1]/[0.1] blur-[150px]"
       />
       
       <motion.div
@@ -62,21 +62,21 @@ export default function ParticleBackground() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#41AEAC]/[0.025] blur-[180px]"
+        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#2196F3]/[0.04] blur-[180px]"
       />
 
-      {/* Floating crisp particles in Teal Mode */}
+      {/* Floating crisp particles in Blue Mode */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-gradient-to-r from-teal-400 to-emerald-300"
+          className="absolute rounded-full bg-gradient-to-r from-blue-500 to-cyan-300"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
             opacity: p.opacity,
-            boxShadow: "0 0 8px rgba(65, 174, 172, 0.3)",
+            boxShadow: "0 0 8px rgba(33, 150, 243, 0.3)",
           }}
           animate={{
             y: ["0vh", "-100vh"],
@@ -91,8 +91,8 @@ export default function ParticleBackground() {
         />
       ))}
 
-      {/* Grid line overlay in Teal Mode (subtle teal grid lines) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(65,174,172,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(65,174,172,0.012)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+      {/* Grid line overlay in Blue Mode (subtle blue grid lines) */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(33,150,243,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(33,150,243,0.015)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
     </div>
   );
 }
