@@ -80,7 +80,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4">
+      {/* Desktop: Apple Glass Pill Nav */}
+      <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
         {/* Apple Glass Pill Nav */}
         <div
           ref={navRef}
@@ -97,12 +98,12 @@ export default function Navbar() {
               href="#"
               className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
-              <span className="uppercase tracking-widest text-[11px] font-bold text-white hidden sm:inline">Tavryz</span>
+              <span className="uppercase tracking-widest text-[11px] font-bold text-white">Tavryz</span>
             </a>
           </Magnetic>
 
           {/* Divider */}
-          <div className="w-px h-5 bg-white/[0.08] hidden sm:block" />
+          <div className="w-px h-5 bg-white/[0.08]" />
 
           {/* Nav Links with Dropdown */}
           {navLinks.map((link) => (
@@ -125,7 +126,7 @@ export default function Navbar() {
           ))}
 
           {/* Divider */}
-          <div className="w-px h-5 bg-white/[0.08] hidden sm:block" />
+          <div className="w-px h-5 bg-white/[0.08]" />
 
           {/* CTA Button */}
           <Magnetic range={25} strength={0.25}>
@@ -137,15 +138,6 @@ export default function Navbar() {
               <ArrowRight className="w-3 h-3" />
             </a>
           </Magnetic>
-
-          {/* Mobile Menu Trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="sm:hidden w-9 h-9 rounded-full flex items-center justify-center text-white bg-white/[0.08] border border-white/[0.1] active:scale-[0.95]"
-            aria-label="Open menu"
-          >
-            <Menu className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Expanding Card Dropdown - Glass Material */}
@@ -193,68 +185,27 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
 
-      {/* Mobile Drawer Navigation */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-3xl flex flex-col justify-between p-6"
+      {/* Mobile: Fixed Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden">
+        <div className="flex items-center gap-1 px-2 py-2 bg-black/80 border-t border-white/[0.08] backdrop-blur-2xl">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium text-[#a3a3a3] hover:text-white hover:bg-white/[0.06] transition-all active:scale-[0.97]"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            className="whitespace-nowrap flex items-center gap-1 bg-white text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] ml-auto"
           >
-            <div className="flex items-center justify-between">
-              <a
-                href="#"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 font-display font-extrabold text-sm tracking-widest text-white"
-              >
-                TAVRYZ STUDIO®
-              </a>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-white bg-white/[0.08] border border-white/[0.1] active:scale-[0.95]"
-                aria-label="Close menu"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <nav className="flex flex-col gap-6 my-auto pl-4">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05, type: "spring", stiffness: 300, damping: 24 }}
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-display font-bold text-[#737373] hover:text-white transition-colors"
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-            </nav>
-
-            <div className="flex flex-col gap-4 border-t border-white/[0.06] pt-6">
-              <div className="flex items-center gap-2 px-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
-                <span className="text-[10px] tracking-widest uppercase font-semibold text-[#737373]">
-                  Accepting Q3/Q4 Client Roster
-                </span>
-              </div>
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full bg-white text-black font-semibold py-4 rounded-full text-center hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2 text-sm active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
-              >
-                Book Discovery Call
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Start a Project
+            <ArrowRight className="w-3 h-3" />
+          </a>
+        </div>
+      </div>
     </>
   );
 }
