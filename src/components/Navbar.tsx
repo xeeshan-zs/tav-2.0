@@ -5,7 +5,7 @@ import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Spa
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
 
-const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string }[] }> = {
+const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string; link?: string }[] }> = {
   Domains: {
     title: "Our Expertise",
     description: "Specialized engineering across twelve core domains.",
@@ -21,9 +21,9 @@ const dropdownContent: Record<string, { title: string; description: string; item
     title: "Selected Work",
     description: "High-impact digital products we've engineered.",
     items: [
-      { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf" },
-      { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y" },
-      { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin" },
+      { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf", link: "https://www.aroushworks.com" },
+      { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y", link: "https://iccsglobalized.com" },
+      { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin", link: "https://github.com/xeeshan-zs/z-nectar" },
     ],
   },
   FAQ: {
@@ -195,10 +195,14 @@ export default function Navbar() {
                   return (
                     <a
                       key={i}
-                      href={`#${activeDropdown.toLowerCase()}`}
+                      href={item.link || `#${activeDropdown.toLowerCase()}`}
+                      target={item.link ? "_blank" : undefined}
+                      rel={item.link ? "noopener noreferrer" : undefined}
                       onClick={(e) => {
-                        e.preventDefault();
-                        scrollTo(activeDropdown.toLowerCase());
+                        if (!item.link) {
+                          e.preventDefault();
+                          scrollTo(activeDropdown.toLowerCase());
+                        }
                         setHovering(false);
                         setActiveDropdown(null);
                       }}
