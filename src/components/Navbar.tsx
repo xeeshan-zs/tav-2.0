@@ -250,7 +250,7 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-white/[0.12] border border-white/[0.18] backdrop-blur-xl text-white font-display font-extrabold text-[14px] leading-none hover:bg-white/[0.2] hover:border-white/[0.25] transition-all active:scale-[0.95] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
+            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.18] to-white/[0.06] border border-white/[0.2] backdrop-blur-xl text-white font-display font-extrabold text-[15px] leading-none hover:from-white/[0.28] hover:to-white/[0.12] hover:border-white/[0.3] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-[0.92] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.15)] after:absolute after:inset-0 after:rounded-full after:bg-gradient-to-b after:from-white/[0.1] after:to-transparent after:pointer-events-none"
           >
             T
           </a>
