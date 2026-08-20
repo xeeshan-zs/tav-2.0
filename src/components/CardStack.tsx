@@ -1,8 +1,5 @@
-"use client";
-
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import Image from "next/image";
 
 interface CardItem {
   id: string;
@@ -261,13 +258,10 @@ export default function CardStack() {
                 </motion.div>
 
                 <div className="relative w-full h-[65%] overflow-hidden bg-zinc-950">
-                  <Image
+                  <img
                     src={card.image}
                     alt={card.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 400px"
-                    className="object-cover object-center"
-                    priority
+                    className="absolute inset-0 w-full h-full object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-90" />
                 </div>
@@ -314,12 +308,10 @@ export default function CardStack() {
               style={{ boxShadow: "0 30px 60px -15px rgba(0,0,0,0.95)" }}
             >
               <div className="relative w-full h-[65%] overflow-hidden bg-zinc-950">
-                <Image
+                <img
                   src={card.image}
                   alt={card.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 400px"
-                  className="object-cover object-center transition-transform duration-700 ease-out"
+                  className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-90" />
               </div>

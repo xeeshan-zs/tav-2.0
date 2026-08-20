@@ -1,12 +1,7 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-export const metadata = {
-  title: "Privacy Policy — Tavryz Studio",
-  description: "Privacy Policy for Tavryz Studio. Learn how we collect, use, and protect your personal information.",
-};
 
 export default function PrivacyPage() {
   return (
@@ -16,7 +11,7 @@ export default function PrivacyPage() {
         <div className="max-w-3xl mx-auto px-6 pt-32 md:pt-40 pb-20 md:pb-32">
           {/* Back link */}
           <Link
-            href="/"
+            to="/"
             className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-mono text-[#737373] hover:text-white transition-colors mb-16 group"
           >
             <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />

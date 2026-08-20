@@ -1,8 +1,6 @@
-"use client";
-
 import { useState, useEffect, useMemo } from "react";
 import { Search, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export default function NotFound() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -166,7 +164,7 @@ export default function NotFound() {
 
         {/* Back to home */}
         <Link
-          href="/"
+          to="/"
           className="mt-8 text-[11px] uppercase tracking-[0.2em] font-bold text-[#a3a3a3] hover:text-white transition-colors flex items-center gap-2"
         >
           Back to Home

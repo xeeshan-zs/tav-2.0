@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { Mail, Copy, Check, Github, Linkedin, Twitter, ArrowUpRight } from "lucide-react";
 import Magnetic from "@/components/Magnetic";
