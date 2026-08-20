@@ -71,10 +71,38 @@ export default function Navbar() {
     }, 150);
   };
 
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    const sections = ["domains", "projects", "faq", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -50% 0px" }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   const navLinks = [
-    { name: "Domains", href: "#domains" },
-    { name: "Projects", href: "#projects" },
-    { name: "FAQ", href: "#faq" },
+    { name: "Domains", id: "domains" },
+    { name: "Projects", id: "projects" },
+    { name: "FAQ", id: "faq" },
   ];
 
   return (
@@ -95,6 +123,10 @@ export default function Navbar() {
           <Magnetic range={30} strength={0.3}>
             <a
               href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
               <span className="uppercase tracking-widest text-[11px] font-bold text-white">Tavryz</span>
@@ -111,16 +143,16 @@ export default function Navbar() {
               className="relative"
               onMouseEnter={() => handleMouseEnter(link.name)}
             >
-              <a
-                href={link.href}
+              <button
+                onClick={() => scrollTo(link.id)}
                 className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 active:scale-[0.97] ${
-                  activeDropdown === link.name
+                  activeSection === link.id
                     ? "bg-white/[0.1] text-white"
                     : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
                 {link.name}
-              </a>
+              </button>
             </div>
           ))}
 
@@ -129,19 +161,18 @@ export default function Navbar() {
 
           {/* CTA Button */}
           <Magnetic range={25} strength={0.25}>
-            <a
-              href="#contact"
+            <button
+              onClick={() => scrollTo("contact")}
               className="flex items-center gap-1.5 bg-white text-black text-[12px] font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
             >
               Start a Project
               <ArrowRight className="w-3 h-3" />
-            </a>
+            </button>
           </Magnetic>
         </div>
 
         {/* Expanding Card Dropdown - Glass Material */}
-        <AnimatePresence>
-          {activeDropdown && hovering && dropdownContent[activeDropdown] && (
+        <AnimatePresence>                  {activeDropdown && hovering && dropdownContent[activeDropdown] && (
             <motion.div
               initial={{ opacity: 0, y: -8, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -165,6 +196,12 @@ export default function Navbar() {
                     <a
                       key={i}
                       href={`#${activeDropdown.toLowerCase()}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollTo(activeDropdown.toLowerCase());
+                        setHovering(false);
+                        setActiveDropdown(null);
+                      }}
                       className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.06] transition-all group cursor-pointer active:scale-[0.98]"
                     >
                       <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.1] transition-colors">
@@ -188,23 +225,27 @@ export default function Navbar() {
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
         <div className="flex items-center gap-1 rounded-full px-2 py-2 bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
           {navLinks.map((link) => (
-            <a
+            <button
               key={link.name}
-              href={link.href}
-              className="whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium text-[#a3a3a3] hover:text-white hover:bg-white/[0.06] transition-all active:scale-[0.97]"
+              onClick={() => scrollTo(link.id)}
+              className={`whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-all active:scale-[0.97] ${
+                activeSection === link.id
+                  ? "bg-white/[0.1] text-white"
+                  : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
+              }`}
             >
               {link.name}
-            </a>
+            </button>
           ))}
           {/* Divider */}
           <div className="w-px h-4 bg-white/[0.08]" />
-          <a
-            href="#contact"
+          <button
+            onClick={() => scrollTo("contact")}
             className="whitespace-nowrap flex items-center gap-1 bg-white text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
           >
             Start a Project
             <ArrowRight className="w-3 h-3" />
-          </a>
+          </button>
         </div>
       </div>
     </>
