@@ -1,49 +1,95 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brain, Shield, Code, Smartphone, Figma, ArrowUpRight } from "lucide-react";
+import {
+  Brain,
+  Shield,
+  Code,
+  Smartphone,
+  Figma,
+  Link2,
+  ShoppingCart,
+  Search,
+  Megaphone,
+  Target,
+  Play,
+  Palette,
+  ArrowUpRight,
+} from "lucide-react";
 
 export default function Domains() {
   const domains = [
     {
       id: "01",
-      title: "Artificial Intelligence",
-      description:
-        "Building intelligent agentic systems, LLM integrations, and custom neural workflows. We architect AI capabilities that automate operations and deliver cognitive value.",
-      capabilities: ["Autonomous Agent Systems", "LLM Fine-Tuning & Prompt Pipelines", "Predictive ML Data Models", "RAG & Vector Search Architectures"],
+      title: "AI & Machine Learning Engineering",
+      subdomains: ["Agents", "RAG", "Automation", "Predictive Models"],
       icon: Brain,
     },
     {
       id: "02",
-      title: "Cyber Security",
-      description:
-        "Protecting your assets with clean code, secure APIs, and network hardening guidelines. We run comprehensive security checks and build zero-trust models.",
-      capabilities: ["API Access Controls & Auth", "Encrypted Database Architecture", "OWASP Security Audits", "Incident Response Strategies"],
-      icon: Shield,
-    },
-    {
-      id: "03",
-      title: "Web Designing",
-      description:
-        "Developing editorial, lightweight, performant web platforms. We focus on sub-second loading time, SEO architectures, and luxury aesthetic details.",
-      capabilities: ["Custom Layout Systems", "Responsive Core Fluidity", "Sub-second LCP Speeds", "Technical SEO Foundations"],
+      title: "Web App Development",
+      subdomains: ["Frontend", "Backend", "SaaS", "Full-Stack"],
       icon: Code,
     },
     {
-      id: "04",
-      title: "App Designing",
-      description:
-        "Building native applications with offline-first local databases, background sync services, and packaging for direct Play Store deployment.",
-      capabilities: ["Native Kotlin Development", "Jetpack Compose Fluid UI", "Room Database & Sync", "Android Release Deployment"],
+      id: "03",
+      title: "Mobile App Development",
+      subdomains: ["iOS", "Android", "Cross-Platform"],
       icon: Smartphone,
     },
     {
+      id: "04",
+      title: "Cybersecurity & Compliance",
+      subdomains: ["Security Audits", "Data Protection", "Penetration Testing"],
+      icon: Shield,
+    },
+    {
       id: "05",
-      title: "UI / UX Design",
-      description:
-        "Structuring design systems and interaction wireframes. We design premium aesthetic systems with detailed kerning and consistent vertical rhythms.",
-      capabilities: ["Aesthetic Design Systems", "High-fidelity Wireframes", "Detailed Micro-interactions", "Vertical Rhythm & Kerning"],
+      title: "Blockchain & Web3 Development",
+      subdomains: ["Smart Contracts", "Crypto / DApp Development"],
+      icon: Link2,
+    },
+    {
+      id: "06",
+      title: "E-Commerce Solutions",
+      subdomains: ["Shopify", "WooCommerce", "Custom Storefronts"],
+      icon: ShoppingCart,
+    },
+    {
+      id: "07",
+      title: "UI/UX & Product Design",
+      subdomains: ["Wireframing", "Mobile/Web Design", "GenUI", "User Research"],
       icon: Figma,
+    },
+    {
+      id: "08",
+      title: "SEO (Search Engine Optimization)",
+      subdomains: ["On-Page", "Off-Page", "Technical SEO", "Rankings", "Organic Growth"],
+      icon: Search,
+    },
+    {
+      id: "09",
+      title: "Digital Marketing",
+      subdomains: ["Social Media Marketing", "Content Strategy", "Growth Marketing"],
+      icon: Megaphone,
+    },
+    {
+      id: "10",
+      title: "Marketing & Performance Ads",
+      subdomains: ["Google Ads", "Meta Ads", "Paid Campaigns"],
+      icon: Target,
+    },
+    {
+      id: "11",
+      title: "Media & Creative Services",
+      subdomains: ["Video Editing", "Motion Graphics", "Animation", "3D Design"],
+      icon: Play,
+    },
+    {
+      id: "12",
+      title: "Graphic & Brand Design",
+      subdomains: ["Logos", "Branding", "Marketing Assets"],
+      icon: Palette,
     },
   ];
 
@@ -70,7 +116,7 @@ export default function Domains() {
               <span className="text-[#737373]">Capabilities.</span>
             </h2>
             <p className="text-sm text-[#a3a3a3] max-w-sm leading-relaxed body-text">
-              Specialized engineering across five core domains, each backed by deep technical expertise.
+              Specialized engineering across twelve core domains, each backed by deep technical expertise.
             </p>
           </div>
         </motion.div>
@@ -85,10 +131,13 @@ export default function Domains() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ type: "spring", stiffness: 300, damping: 24, delay: index * 0.05 }}
-                className={`group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all ${
-                  index === 0 ? "md:col-span-2 lg:col-span-1" : ""
-                }`}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 24,
+                  delay: index * 0.05,
+                }}
+                className="group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -104,23 +153,18 @@ export default function Domains() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-display font-bold text-white mb-2 tracking-tight">
+                <h3 className="text-lg font-display font-bold text-white mb-3 tracking-tight leading-snug">
                   {dom.title}
                 </h3>
 
-                {/* Description */}
-                <p className="text-[13px] text-[#a3a3a3] leading-relaxed mb-5 body-text">
-                  {dom.description}
-                </p>
-
-                {/* Capabilities */}
+                {/* Subdomains */}
                 <div className="flex flex-wrap gap-1.5">
-                  {dom.capabilities.map((cap, i) => (
+                  {dom.subdomains.map((sub, i) => (
                     <span
                       key={i}
                       className="text-[10px] text-[#737373] bg-white/[0.04] border border-white/[0.06] rounded-md px-2 py-1"
                     >
-                      {cap}
+                      {sub}
                     </span>
                   ))}
                 </div>

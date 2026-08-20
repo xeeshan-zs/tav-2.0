@@ -131,19 +131,6 @@ export default function CaseStudies() {
       link: "https://github.com/xeeshan-zs/z-nectar",
       features: ["Kotlin", "Jetpack Compose", "Room DB", "Play Store"],
     },
-    {
-      id: "04",
-      title: "Liquid Glass",
-      industry: "Refraction Design System",
-      tags: ["Design System", "Shaders", "Retina"],
-      metrics: [
-        { label: "Refraction", value: "Real-time" },
-        { label: "Contrast", value: "AAA" },
-      ],
-      description: "Internal refractory system UI, sub-second latency, and custom glass refraction shaders for premium visual effects.",
-      link: "#",
-      features: ["WebGL", "GLSL", "Design Tokens", "CSS Variables"],
-    },
   ];
 
   return (

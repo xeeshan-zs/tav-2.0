@@ -8,13 +8,13 @@ import Magnetic from "@/components/Magnetic";
 const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string }[] }> = {
   Domains: {
     title: "Our Expertise",
-    description: "Specialized engineering across five core domains.",
+    description: "Specialized engineering across twelve core domains.",
     items: [
-      { icon: Brain, label: "Artificial Intelligence", desc: "LLM integrations, agents, ML pipelines" },
-      { icon: Shield, label: "Cyber Security", desc: "Zero-trust, API security, audits" },
-      { icon: Code, label: "Web Designing", desc: "Performant, editorial web platforms" },
-      { icon: Smartphone, label: "App Designing", desc: "Native Kotlin, Jetpack Compose" },
-      { icon: Figma, label: "UI / UX Design", desc: "Design systems, micro-interactions" },
+      { icon: Brain, label: "AI & Machine Learning", desc: "Agents, RAG, automation, predictive models" },
+      { icon: Code, label: "Web App Development", desc: "Frontend, backend, SaaS, full-stack" },
+      { icon: Smartphone, label: "Mobile App Development", desc: "iOS, Android, cross-platform" },
+      { icon: Shield, label: "Cybersecurity & Compliance", desc: "Audits, data protection, pen testing" },
+      { icon: Figma, label: "UI/UX & Product Design", desc: "Wireframing, design systems, user research" },
     ],
   },
   Projects: {
@@ -24,7 +24,6 @@ const dropdownContent: Record<string, { title: string; description: string; item
       { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf" },
       { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y" },
       { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin" },
-      { icon: Code, label: "Liquid Glass", desc: "Design system — Real-time shaders" },
     ],
   },
   FAQ: {

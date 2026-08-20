@@ -118,7 +118,7 @@ export default function Footer() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-white font-medium">Accepting new projects</span>
-                    <span className="text-[10px] font-mono text-[#737373]">Q3/Q4 2025</span>
+                    <span className="text-[10px] font-mono text-[#737373]">Q3/Q4 2026</span>
                   </div>
                 </div>
 
