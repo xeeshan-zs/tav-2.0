@@ -235,6 +235,22 @@ export default function Navbar() {
       {/* Mobile: Glassy Floating Bottom Nav */}
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
         <div className="flex items-center gap-1 rounded-full px-2 py-2 bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
+          {/* Stylized T logo */}
+          <a
+            href={isHome ? "#hero" : "/#hero"}
+            onClick={(e) => {
+              e.preventDefault();
+              if (isHome) {
+                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+              } else {
+                window.location.href = "/#hero";
+              }
+            }}
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black font-display font-extrabold text-[14px] leading-none hover:bg-zinc-200 transition-colors active:scale-[0.95] shadow-[0_2px_8px_rgba(255,255,255,0.15)]"
+          >
+            T
+          </a>
+          <div className="w-px h-4 bg-white/[0.08]" />
           {navLinks.map((link) => (
             <button
               key={link.name}
