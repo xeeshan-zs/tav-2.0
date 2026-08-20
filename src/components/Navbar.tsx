@@ -250,9 +250,8 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.18] to-white/[0.06] border border-white/[0.2] backdrop-blur-xl text-white font-display font-extrabold text-[15px] leading-none hover:from-white/[0.28] hover:to-white/[0.12] hover:border-white/[0.3] hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 active:scale-[0.92] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.15)] after:absolute after:inset-0 after:rounded-full after:bg-gradient-to-b after:from-white/[0.1] after:to-transparent after:pointer-events-none"
-          >
-            T
+            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-full after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"            >
+            t
           </a>
           <div className="w-px h-4 bg-white/[0.08]" />
           {navLinks.map((link) => (
