@@ -46,7 +46,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer id="contact" className="bg-transparent relative overflow-hidden z-10">
+    <footer id="contact" className="bg-transparent relative overflow-hidden z-10 sm:pb-0 pb-24">
       {/* Editorial Contact Section */}
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-16">
         {/* Main CTA - Glass Card */}
@@ -203,8 +203,8 @@ export default function Footer() {
           <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono text-[#525252]">
             <span>© {new Date().getFullYear()} Tavryz Studio. All rights reserved.</span>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms</a>
             </div>
           </div>
         </div>
