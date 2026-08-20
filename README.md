@@ -10,8 +10,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js" alt="Next.js" />
   <img src="https://img.shields.io/badge/React-19-blue?logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite" />
   <img src="https://img.shields.io/badge/Firebase-Hosting-orange?logo=firebase" alt="Firebase" />
   <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss" alt="Tailwind" />
@@ -25,18 +25,23 @@
 
 Tavryz is a **full-service digital engineering agency** website. It showcases twelve core domains of expertise — from AI/ML and web development to cybersecurity, blockchain, and creative services.
 
-The site is built as a **static export** deployed automatically to **Firebase Hosting** via GitHub Actions.
+The site is built as a **single-page application** with client-side routing, deployed automatically to **Firebase Hosting** via GitHub Actions.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Framework** | Next.js 16 (App Router, static export) |
-| **UI** | React 19, Framer Motion, Lucide Icons |
+| **Framework** | React 19 + Vite 6 |
+| **Routing** | React Router 7 |
+| **UI** | Framer Motion 13, Lucide Icons |
 | **Styling** | Tailwind CSS v4 |
 | **Backend** | Firebase (Hosting, Firestore) |
 | **CI/CD** | GitHub Actions → Firebase Hosting |
 | **Language** | TypeScript 5 |
+
+## Design System
+
+The UI is built around a **liquid glass** design language — translucent frosted-glass surfaces, neomorphic depth, and editorial typography on a pure black canvas. See [DESIGN.md](./DESIGN.md) for full documentation.
 
 ## Domains
 
@@ -58,10 +63,12 @@ The site highlights **12 specialized domains**:
 ## Features
 
 - **Dynamic testimonials** — loaded from Firestore, with a submit form for new reviews
+- **Liquid glass UI** — frosted-glass surfaces with backdrop blur, layered shadows, and border highlights
 - **Animated UI** — spring-based entrance animations on scroll via Framer Motion
 - **Magnetic cursor effect** — custom interactive hover on key elements
-- **Particle background** — ambient floating particles on the hero
-- **Responsive design** — desktop-first with full mobile support
+- **Particle background** — ambient floating particles and glowing orbs
+- **Code-split routing** — lazy-loaded pages via `React.lazy` for faster initial load
+- **Responsive design** — desktop-first with mobile bottom nav and adaptive layouts
 - **Auto-deploy** — push to `main` → GitHub Actions builds & deploys to Firebase
 
 ## Getting Started
@@ -85,7 +92,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Build
 
@@ -93,7 +100,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 npm run build
 ```
 
-Static export is output to the `out/` directory.
+Production build is output to the `dist/` directory.
 
 ## Deployment
 
@@ -101,7 +108,7 @@ Static export is output to the `out/` directory.
 
 Every push to `main` triggers a GitHub Actions workflow that:
 1. Installs dependencies
-2. Builds the Next.js static export
+2. Typechecks and builds with Vite
 3. Deploys to Firebase Hosting
 
 ### Manual
@@ -110,7 +117,7 @@ Every push to `main` triggers a GitHub Actions workflow that:
 npm run deploy
 ```
 
-This runs `next build && firebase deploy --only hosting`.
+This runs `vite build && firebase deploy --only hosting`.
 
 ### CI/CD Setup
 
@@ -125,21 +132,33 @@ Add one GitHub Actions secret:
 ```
 ├── .github/workflows/deploy.yml   # CI/CD pipeline
 ├── src/
-│   ├── app/                        # Next.js App Router pages
-│   ├── components/                 # UI components
-│   │   ├── Navbar.tsx
-│   │   ├── Hero.tsx
-│   │   ├── Domains.tsx
-│   │   ├── CaseStudies.tsx
-│   │   ├── Testimonials.tsx        # Firestore-powered
-│   │   ├── Footer.tsx
-│   │   ├── ParticleBackground.tsx
-│   │   └── Magnetic.tsx
+│   ├── main.tsx                    # React entry point
+│   ├── App.tsx                     # Router + lazy-loaded routes
+│   ├── app/
+│   │   ├── globals.css             # Design tokens & neomorphic utilities
+│   │   ├── page.tsx                # Home page
+│   │   ├── not-found.tsx           # 404 radar page
+│   │   ├── privacy/page.tsx
+│   │   └── terms/page.tsx
+│   ├── components/
+│   │   ├── Navbar.tsx              # Glass pill nav (desktop + mobile)
+│   │   ├── Hero.tsx                # Full-screen hero with spring animations
+│   │   ├── Domains.tsx             # 12-domain service grid
+│   │   ├── CaseStudies.tsx         # Project showcase
+│   │   ├── Testimonials.tsx        # Firestore-powered testimonials
+│   │   ├── FAQ.tsx                 # Accordion FAQ
+│   │   ├── Footer.tsx              # Glass CTA panel + footer
+│   │   ├── CardStack.tsx           # Swipeable card carousel
+│   │   ├── GlassFlow.tsx           # Canvas glass blob animation
+│   │   ├── ParticleBackground.tsx  # Ambient particle system
+│   │   └── Magnetic.tsx            # Magnetic hover wrapper
 │   └── lib/
 │       └── firebase.ts             # Firebase client config
+├── index.html                      # Vite entry point
+├── vite.config.ts                  # Vite + React + Tailwind config
 ├── firebase.json                   # Firebase hosting rules
 ├── firestore.rules                 # Firestore security rules
-└── next.config.ts                  # Static export config
+└── DESIGN.md                       # Full design system documentation
 ```
 
 ## License
