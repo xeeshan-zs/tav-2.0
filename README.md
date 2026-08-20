@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Premium digital engineering — AI, web, mobile, security, and design.</strong><br/>
-  <a href="https://tavryz-live.web.app">tavryz-live.web.app</a>
+  <a href="https://tavryz.com">tavryz.com</a>
 </p>
 
 <p align="center">

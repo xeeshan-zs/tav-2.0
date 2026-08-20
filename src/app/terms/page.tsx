@@ -41,7 +41,7 @@ export default function TermsPage() {
                 1. Acceptance of Terms
               </h2>
               <p>
-                By accessing and using the Tavryz Studio website (tavryz-live.web.app), you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please do not use our website.
+                By accessing and using the Tavryz Studio website (tavryz.com), you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please do not use our website.
               </p>
             </section>
 
