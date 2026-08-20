@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-black text-[#fafafa]">
+    <main className="min-h-screen bg-black text-[#fafafa] relative z-10">
       <div className="max-w-3xl mx-auto px-6 py-20 md:py-32">
         {/* Back link */}
         <Link
