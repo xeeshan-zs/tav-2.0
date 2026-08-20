@@ -42,7 +42,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 overflow-hidden bg-transparent">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 overflow-hidden bg-transparent">
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
         {/* Tavryz Logo */}
         <motion.div

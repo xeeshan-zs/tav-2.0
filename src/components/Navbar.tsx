@@ -122,10 +122,10 @@ export default function Navbar() {
           {/* Logo */}
           <Magnetic range={30} strength={0.3}>
             <a
-              href="#"
+              href="#hero"
               onClick={(e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
               }}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
