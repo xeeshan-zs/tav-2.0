@@ -208,10 +208,14 @@ export default function Navbar() {
                       onClick={(e) => {
                         if (!item.link) {
                           e.preventDefault();
-                          scrollTo(activeDropdown.toLowerCase());
+                          const targetId = activeDropdown.toLowerCase();
+                          setHovering(false);
+                          setActiveDropdown(null);
+                          requestAnimationFrame(() => scrollTo(targetId));
+                        } else {
+                          setHovering(false);
+                          setActiveDropdown(null);
                         }
-                        setHovering(false);
-                        setActiveDropdown(null);
                       }}
                       className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.06] transition-all group cursor-pointer active:scale-[0.98]"
                     >
@@ -246,7 +250,7 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black font-display font-extrabold text-[14px] leading-none hover:bg-zinc-200 transition-colors active:scale-[0.95] shadow-[0_2px_8px_rgba(255,255,255,0.15)]"
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-white/[0.12] border border-white/[0.18] backdrop-blur-xl text-white font-display font-extrabold text-[14px] leading-none hover:bg-white/[0.2] hover:border-white/[0.25] transition-all active:scale-[0.95] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]"
           >
             T
           </a>
