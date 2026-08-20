@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
@@ -44,6 +45,8 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [hovering, setHovering] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,10 +125,14 @@ export default function Navbar() {
           {/* Logo */}
           <Magnetic range={30} strength={0.3}>
             <a
-              href="#hero"
+              href={isHome ? "#hero" : "/#hero"}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                if (isHome) {
+                  document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  window.location.href = "/#hero";
+                }
               }}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
