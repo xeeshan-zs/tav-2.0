@@ -33,6 +33,17 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Restore selection in form fields */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 /* ─── Neomorphic Utilities (Dark Mode) ─── */
@@ -251,6 +262,121 @@ body {
   animation: subtlePulse 2s ease-in-out infinite;
 }
 
+/* ─── Neomorphic Liquid Glass Navbar ─── */
+.neo-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+  box-shadow:
+    6px 6px 20px rgba(0, 0, 0, 0.35),
+    -4px -4px 16px rgba(255, 255, 255, 0.015),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.neo-glass-scrolled {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 35%,
+    rgba(255, 255, 255, 0.07) 65%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(48px) saturate(2) brightness(1.15);
+  -webkit-backdrop-filter: blur(48px) saturate(2) brightness(1.15);
+  box-shadow:
+    8px 8px 28px rgba(0, 0, 0, 0.45),
+    -5px -5px 20px rgba(255, 255, 255, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.neo-glass-dropdown {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.06) 60%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(48px) saturate(2) brightness(1.15);
+  -webkit-backdrop-filter: blur(48px) saturate(2) brightness(1.15);
+  box-shadow:
+    10px 10px 40px rgba(0, 0, 0, 0.5),
+    -6px -6px 24px rgba(255, 255, 255, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.neo-glass-mobile {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    rgba(255, 255, 255, 0.06) 60%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+  box-shadow:
+    6px 6px 24px rgba(0, 0, 0, 0.4),
+    -4px -4px 16px rgba(255, 255, 255, 0.015),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Nav pill hover / active — neomorphic depth */
+.neo-pill-hover {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow:
+    inset 1px 1px 3px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.neo-pill-active {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.06)
+  );
+  box-shadow:
+    2px 2px 6px rgba(0, 0, 0, 0.25),
+    -1px -1px 4px rgba(255, 255, 255, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* CTA button — neomorphic raised */
+.neo-button-cta {
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #e6e6e6
+  );
+  box-shadow:
+    3px 3px 8px rgba(0, 0, 0, 0.2),
+    -2px -2px 6px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.neo-button-cta:active {
+  box-shadow:
+    inset 2px 2px 5px rgba(0, 0, 0, 0.15),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+  transform: scale(0.97);
+}
+
 /* ─── Custom Scrollbars ─── */
 ::-webkit-scrollbar {
   width: 6px;
@@ -268,6 +394,27 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #404040;
+}
+
+/* ─── Reduced Motion ─── */
+/* ─── Particle & Blob CSS Animations ─── */
+@keyframes floatBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(40px, -60px) scale(1.1); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(10px, -20px) scale(1.05); }
+}
+
+@keyframes floatBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-30px, 50px) scale(0.9); }
+  50% { transform: translate(50px, -40px) scale(1.05); }
+  75% { transform: translate(-20px, 20px) scale(0.97); }
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-100vh) translateX(5vw); }
 }
 
 /* ─── Reduced Motion ─── */

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ParticleBackground from "@/components/ParticleBackground";
 
@@ -16,6 +16,19 @@ function PageLoader() {
 }
 
 export default function App() {
+  // Prevent text cursor / caret appearing on body when clicking
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isFormField = target.closest("input, textarea, select, [contenteditable='true'], .ql-editor");
+      if (!isFormField && document.activeElement && document.activeElement !== document.body) {
+        (document.activeElement as HTMLElement).blur();
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
   return (
     <div className="min-h-full flex flex-col bg-black text-[#fafafa] selection:bg-white/20 selection:text-white relative">
       <ParticleBackground />

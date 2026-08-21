@@ -59,40 +59,52 @@ export default function Navbar() {
     };
   }, []);
 
-  const handleMouseEnter = (name: string) => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setHovering(true);
-    setActiveDropdown(name);
-  };
-
-  const handleMouseLeave = () => {
+  const closeDropdown = () => {
     timeoutRef.current = setTimeout(() => {
       setHovering(false);
       setActiveDropdown(null);
     }, 150);
   };
 
+  const cancelClose = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  const handleLinkEnter = (name: string) => {
+    cancelClose();
+    setHovering(true);
+    setActiveDropdown(name);
+  };
+
+  const handleLinkLeave = () => {
+    closeDropdown();
+  };
+
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    const sections = ["domains", "projects", "faq", "contact"];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -50% 0px" }
-    );
+    const sectionIds = ["hero", "domains", "projects", "faq", "contact"];
+    const navIds = new Set(["domains", "projects", "faq", "contact"]);
 
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    const update = () => {
+      const offset = window.scrollY + window.innerHeight * 0.35;
+      let current = ""; // default = hero, no highlight
 
-    return () => observer.disconnect();
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.offsetTop <= offset) {
+          current = id;
+        }
+      }
+
+      // Only highlight nav-linked sections; hero = no highlight
+      setActiveSection(navIds.has(current) ? current : "");
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   const scrollTo = (id: string) => {
@@ -108,19 +120,25 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Desktop: Apple Glass Pill Nav */}
+      {/* Desktop: Liquid Neomorphic Glass Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
-        {/* Apple Glass Pill Nav */}
         <div
           ref={navRef}
-          onMouseLeave={handleMouseLeave}
           className={`relative flex items-center gap-1 rounded-full px-2 py-2 transition-all duration-500 ${
             scrolled
-              ? "bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]"
-              : "bg-white/[0.04] border border-white/[0.06] backdrop-blur-xl shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
+              ? "neo-glass-scrolled"
+              : "neo-glass"
           }`}
         >
-          {/* Logo */}
+          {/* Top-edge refraction highlight */}
+          <div className="absolute inset-0 rounded-full pointer-events-none overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+            <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
+          </div>
+
+          {/* Logo — leaving logo closes dropdown */}
           <Magnetic range={30} strength={0.3}>
             <a
               href={isHome ? "#hero" : "/#hero"}
@@ -132,6 +150,7 @@ export default function Navbar() {
                   window.location.href = "/#hero";
                 }
               }}
+              onMouseEnter={handleLinkLeave}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
               <span className="uppercase tracking-widest text-[11px] font-bold text-white">Tavryz</span>
@@ -139,20 +158,21 @@ export default function Navbar() {
           </Magnetic>
 
           {/* Divider */}
-          <div className="w-px h-5 bg-white/[0.08]" />
+          <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
 
-          {/* Nav Links with Dropdown */}
+          {/* Nav Links — each triggers dropdown */}
           {navLinks.map((link) => (
             <div
               key={link.name}
               className="relative"
-              onMouseEnter={() => handleMouseEnter(link.name)}
+              onMouseEnter={() => handleLinkEnter(link.name)}
+              onMouseLeave={handleLinkLeave}
             >
               <button
                 onClick={() => scrollTo(link.id)}
                 className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 active:scale-[0.97] ${
                   activeSection === link.id
-                    ? "bg-white/[0.1] text-white"
+                    ? "neo-pill-active text-white"
                     : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
                 }`}
               >
@@ -162,13 +182,14 @@ export default function Navbar() {
           ))}
 
           {/* Divider */}
-          <div className="w-px h-5 bg-white/[0.08]" />
+          <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
 
-          {/* CTA Button */}
+          {/* CTA Button — leaving into this closes dropdown */}
           <Magnetic range={25} strength={0.25}>
             <button
               onClick={() => scrollTo("contact")}
-              className="flex items-center gap-1.5 bg-white text-black text-[12px] font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
+              onMouseEnter={handleLinkLeave}
+              className="flex items-center gap-1.5 neo-button-cta text-black text-[12px] font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97]"
             >
               Start a Project
               <ArrowRight className="w-3 h-3" />
@@ -176,25 +197,29 @@ export default function Navbar() {
           </Magnetic>
         </div>
 
-        {/* Expanding Card Dropdown - Glass Material */}
-        <AnimatePresence>                  {activeDropdown && hovering && dropdownContent[activeDropdown] && (
+        {/* Expanding Card Dropdown — hovering it cancels close */}
+        <AnimatePresence>
+          {activeDropdown && hovering && dropdownContent[activeDropdown] && (
             <motion.div
               initial={{ opacity: 0, y: -8, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              onMouseEnter={() => {
-                if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                setHovering(true);
-              }}
-              onMouseLeave={handleMouseLeave}
-              className="absolute top-full mt-3 w-[420px] bg-white/[0.08] border border-white/[0.1] backdrop-blur-2xl rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.06)] overflow-hidden"
+              onMouseEnter={cancelClose}
+              onMouseLeave={handleLinkLeave}
+              className="absolute top-full mt-3 w-[420px] neo-glass-dropdown rounded-2xl overflow-hidden"
             >
-              <div className="p-5 border-b border-white/[0.06]">
+              {/* Dropdown refraction edges */}
+              <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
+              </div>
+
+              <div className="relative p-5 border-b border-white/[0.06]">
                 <h3 className="text-sm font-bold text-white mb-1">{dropdownContent[activeDropdown].title}</h3>
                 <p className="text-[11px] text-[#a3a3a3]">{dropdownContent[activeDropdown].description}</p>
               </div>
-              <div className="p-2">
+              <div className="relative p-2">
                 {dropdownContent[activeDropdown].items.map((item, i) => {
                   const Icon = item.icon;
                   return (
@@ -234,9 +259,15 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
 
-      {/* Mobile: Glassy Floating Bottom Nav */}
+      {/* Mobile: Neomorphic Glass Floating Bottom Nav */}
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
-        <div className="flex items-center gap-1 rounded-full px-2 py-2 bg-white/[0.08] border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="neo-glass-mobile flex items-center gap-1 rounded-full px-2 py-2 relative">
+          {/* Mobile refraction edges */}
+          <div className="absolute inset-0 rounded-full pointer-events-none overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          </div>
+
           {/* Stylized T logo */}
           <a
             href={isHome ? "#hero" : "/#hero"}
@@ -248,17 +279,18 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-full after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"            >
+            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-full after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
+          >
             t
           </a>
-          <div className="w-px h-4 bg-white/[0.08]" />
+          <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           {navLinks.map((link) => (
             <button
               key={link.name}
               onClick={() => scrollTo(link.id)}
               className={`whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-all active:scale-[0.97] ${
                 activeSection === link.id
-                  ? "bg-white/[0.1] text-white"
+                  ? "neo-pill-active text-white"
                   : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
               }`}
             >
@@ -266,10 +298,10 @@ export default function Navbar() {
             </button>
           ))}
           {/* Divider */}
-          <div className="w-px h-4 bg-white/[0.08]" />
+          <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           <button
             onClick={() => scrollTo("contact")}
-            className="whitespace-nowrap flex items-center gap-1 bg-white text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97] shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
+            className="whitespace-nowrap flex items-center gap-1 neo-button-cta text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97]"
           >
             Start a Project
             <ArrowRight className="w-3 h-3" />
