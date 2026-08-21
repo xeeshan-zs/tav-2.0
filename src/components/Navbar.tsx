@@ -170,13 +170,20 @@ export default function Navbar() {
             >
               <button
                 onClick={() => scrollTo(link.id)}
-                className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 active:scale-[0.97] ${
+                className={`relative px-4 py-2 rounded-full text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
                   activeSection === link.id
-                    ? "neo-pill-active text-white"
-                    : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
+                    ? "text-white"
+                    : "text-[#a3a3a3] hover:text-white"
                 }`}
               >
-                {link.name}
+                {activeSection === link.id && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full neo-pill-active"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{link.name}</span>
               </button>
             </div>
           ))}
@@ -288,13 +295,20 @@ export default function Navbar() {
             <button
               key={link.name}
               onClick={() => scrollTo(link.id)}
-              className={`whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-all active:scale-[0.97] ${
+              className={`relative whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-colors active:scale-[0.97] ${
                 activeSection === link.id
-                  ? "neo-pill-active text-white"
-                  : "text-[#a3a3a3] hover:text-white hover:bg-white/[0.06]"
+                  ? "text-white"
+                  : "text-[#a3a3a3] hover:text-white"
               }`}
             >
-              {link.name}
+              {activeSection === link.id && (
+                <motion.div
+                  layoutId="nav-pill-mobile"
+                  className="absolute inset-0 rounded-full neo-pill-active"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{link.name}</span>
             </button>
           ))}
           {/* Divider */}
