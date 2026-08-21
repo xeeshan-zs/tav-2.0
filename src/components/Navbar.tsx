@@ -74,13 +74,16 @@ export default function Navbar() {
     cancelClose();
     setHovering(true);
     setActiveDropdown(name);
+    setHoveredTab(name);
   };
 
   const handleLinkLeave = () => {
     closeDropdown();
+    setHoveredTab(null);
   };
 
   const [activeSection, setActiveSection] = useState("");
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   useEffect(() => {
     const sectionIds = ["hero", "domains", "projects", "faq", "contact"];
@@ -171,16 +174,18 @@ export default function Navbar() {
               <button
                 onClick={() => scrollTo(link.id)}
                 className={`relative px-4 py-2 rounded-full text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
-                  activeSection === link.id
+                  activeSection === link.id || hoveredTab === link.id
                     ? "text-white"
-                    : "text-[#a3a3a3] hover:text-white"
+                    : "text-[#a3a3a3]"
                 }`}
               >
-                {activeSection === link.id && (
+                {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
                   <motion.div
                     layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full neo-pill-active"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    className={`absolute inset-0 rounded-full ${
+                      hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
+                    }`}
+                    transition={{ type: "spring", stiffness: 500, damping: 26 }}
                   />
                 )}
                 <span className="relative z-10">{link.name}</span>
@@ -296,16 +301,18 @@ export default function Navbar() {
               key={link.name}
               onClick={() => scrollTo(link.id)}
               className={`relative whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-colors active:scale-[0.97] ${
-                activeSection === link.id
+                activeSection === link.id || hoveredTab === link.id
                   ? "text-white"
-                  : "text-[#a3a3a3] hover:text-white"
+                  : "text-[#a3a3a3]"
               }`}
             >
-              {activeSection === link.id && (
+              {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
                 <motion.div
                   layoutId="nav-pill-mobile"
-                  className="absolute inset-0 rounded-full neo-pill-active"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  className={`absolute inset-0 rounded-full ${
+                    hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
+                  }`}
+                  transition={{ type: "spring", stiffness: 500, damping: 26 }}
                 />
               )}
               <span className="relative z-10">{link.name}</span>
