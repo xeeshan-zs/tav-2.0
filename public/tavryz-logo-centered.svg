@@ -1,19 +1,83 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="140 310 520 180" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 240" fill="none">
   <defs>
-    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#f5f5f7"/>
-      <stop offset="100%" stop-color="#8f7aff"/>
+    <linearGradient id="mark1" x1="0" y1="0" x2="130" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#5a7da8"/>
+      <stop offset="35%" stop-color="#2a4060"/>
+      <stop offset="70%" stop-color="#1a2d45"/>
+      <stop offset="100%" stop-color="#0e1a28"/>
+    </linearGradient>
+    <linearGradient id="markHL" x1="20" y1="0" x2="110" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#90b8e0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#3a5a80" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="55" y1="140" x2="85" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3a9ee8" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#1a6ab0" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="txt1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9ab0cc"/>
+      <stop offset="100%" stop-color="#4a6585"/>
+    </linearGradient>
+    <linearGradient id="txtEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b0c8e4" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#6080a0" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <text
-    x="400"
-    y="400"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
-    font-size="120"
-    font-weight="600"
-    letter-spacing="-2"
-    fill="url(#logo-gradient)"
-  >tavryz</text>
+
+  <!-- ========== TV MONOGRAM MARK ========== -->
+  <g transform="translate(18, 8)">
+    <!-- === T crossbar — wide horizontal bar === -->
+    <rect x="4" y="8" width="126" height="24" rx="2" fill="url(#mark1)"/>
+    <!-- top edge highlight -->
+    <rect x="4" y="8" width="126" height="3" rx="1.5" fill="url(#markHL)"/>
+    <!-- right edge sheen -->
+    <rect x="127" y="8" width="3" height="24" rx="1" fill="#b0c8e4" opacity="0.07"/>
+
+    <!-- === V — left stroke === -->
+    <path d="M 14 40 L 38 40 L 78 198 L 54 198 Z" fill="url(#mark1)"/>
+    <!-- top highlight -->
+    <path d="M 14 40 L 38 40 L 36 45 L 16 45 Z" fill="#b0c8e4" opacity="0.1"/>
+
+    <!-- === V — right stroke === -->
+    <path d="M 96 40 L 120 40 L 80 198 L 56 198 Z" fill="url(#mark1)"/>
+    <!-- top highlight -->
+    <path d="M 96 40 L 120 40 L 118 45 L 98 45 Z" fill="#b0c8e4" opacity="0.1"/>
+
+    <!-- === Blue accent light streak === -->
+    <path d="M 60 140 L 80 198 L 76 198 L 56 140 Z" fill="url(#accent)"/>
+
+    <!-- === Inner glass sheen === -->
+    <path d="M 40 48 L 94 48 L 80 115 L 54 115 Z" fill="white" opacity="0.035"/>
+
+    <!-- === Bottom point glow === -->
+    <ellipse cx="68" cy="200" rx="20" ry="6" fill="#3a9ee8" opacity="0.08"/>
+  </g>
+
+  <!-- ========== TAVRYZ WORDMARK ========== -->
+  <g transform="translate(185, 56)">
+    <!-- T -->
+    <path d="M 0 0 H 72 V 17 H 48 V 118 H 24 V 17 H 0 Z" fill="url(#txt1)"/>
+    <path d="M 0 0 H 72 V 3.5 H 0 Z" fill="url(#txtEdge)"/>
+
+    <!-- A -->
+    <path d="M 90 118 L 126 0 H 150 L 186 118 H 162 L 155 94 H 121 L 114 118 Z" fill="url(#txt1)"/>
+    <path d="M 124 74 H 152 L 138 34 Z" fill="#1a2d45"/>
+
+    <!-- V -->
+    <path d="M 200 0 H 224 L 270 118 H 246 L 236 94 L 212 94 L 200 0 Z" fill="url(#txt1)"/>
+    <path d="M 215 74 L 232 34 L 235 74 Z" fill="#1a2d45"/>
+
+    <!-- R -->
+    <path d="M 284 0 H 346 C 368 0 380 16 380 36 C 380 52 370 62 356 66 L 384 118 H 356 L 334 72 H 308 V 118 H 284 Z" fill="url(#txt1)"/>
+    <path d="M 284 0 H 346 V 3.5 H 284 Z" fill="url(#txtEdge)"/>
+    <path d="M 308 52 H 344 C 356 52 362 44 362 36 C 362 26 356 20 344 20 H 308 Z" fill="#1a2d45"/>
+
+    <!-- Y -->
+    <path d="M 400 0 H 424 L 458 54 L 492 0 H 516 L 470 70 V 118 H 446 V 70 Z" fill="url(#txt1)"/>
+    <path d="M 400 0 H 424 L 446 30 L 446 0 Z" fill="#b0c8e4" opacity="0.05"/>
+
+    <!-- Z -->
+    <path d="M 534 0 H 606 L 606 17 L 558 101 L 608 101 L 608 118 H 534 V 101 L 582 17 H 534 Z" fill="url(#txt1)"/>
+    <path d="M 534 0 H 606 V 3.5 H 534 Z" fill="url(#txtEdge)"/>
+  </g>
 </svg>

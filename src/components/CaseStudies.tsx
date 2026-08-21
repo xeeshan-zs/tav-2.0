@@ -19,20 +19,20 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 md:p-8 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all ${
+      className={`group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 sm:p-6 md:p-8 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all overflow-hidden ${
         featured ? "col-span-full" : ""
       }`}
     >
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-5">
-        <div>
+      <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
+        <div className="min-w-0 flex-1">
           <span className="text-[10px] font-mono text-[#525252] tracking-widest uppercase block mb-1">
             {project.id}
           </span>
-          <h3 className={`font-display font-bold text-white tracking-tight ${featured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"}`}>
+          <h3 className={`font-display font-bold text-white tracking-tight break-words ${featured ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg md:text-xl"}`}>
             {project.title}
           </h3>
-          <p className="text-[11px] text-[#737373] mt-1">{project.industry}</p>
+          <p className="text-[11px] text-[#737373] mt-1 truncate">{project.industry}</p>
         </div>
         <a
           href={project.link}
@@ -45,12 +45,12 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
       </div>
 
       {/* Description */}
-      <p className={`text-[#a3a3a3] leading-relaxed mb-6 body-text ${featured ? "text-sm md:text-base max-w-2xl" : "text-[13px]"}`}>
+      <p className={`text-[#a3a3a3] leading-relaxed mb-5 sm:mb-6 body-text break-words ${featured ? "text-sm md:text-base max-w-2xl" : "text-xs sm:text-[13px]"}`}>
         {project.description}
       </p>
 
       {/* Features */}
-      <div className={`mb-6 ${featured ? "grid grid-cols-2 md:grid-cols-4 gap-3" : "flex flex-wrap gap-2"}`}>
+      <div className={`mb-5 sm:mb-6 ${featured ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3" : "flex flex-wrap gap-1.5 sm:gap-2"}`}>
         {project.features.map((feature, i) => (
           <span
             key={i}
@@ -62,7 +62,7 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
       </div>
 
       {/* Metrics */}
-      <div className="flex items-center gap-6 pt-5 border-t border-white/[0.04]">
+      <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-4 sm:pt-5 border-t border-white/[0.04]">
         {project.metrics.map((m, i) => (
           <div key={i}>
             <div className="text-[9px] font-mono uppercase tracking-wider text-[#525252] mb-0.5">{m.label}</div>
@@ -75,7 +75,7 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
             href={project.link}
             target={project.link.startsWith("http") ? "_blank" : undefined}
             rel="noopener noreferrer"
-            className="text-[11px] uppercase tracking-[0.15em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-1.5 group/link"
+            className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-1.5 group/link whitespace-nowrap"
           >
             View project
             <ArrowUpRight className="w-3 h-3 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />

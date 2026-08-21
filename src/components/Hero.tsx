@@ -42,19 +42,7 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 overflow-hidden bg-transparent">
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
-        {/* Tavryz Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-6 md:mb-8 select-none"
-        >
-          <img
-            src="/tavryz-logo-centered.svg"
-            alt="Tavryz"
-            className="w-24 md:w-32 h-auto"
-          />
-        </motion.div>
+
 
         <motion.div
           variants={containerVariants}
