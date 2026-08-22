@@ -46,7 +46,7 @@ export default function Hero() {
         <img 
           src="/tav files/tavryz-wordmark.png" 
           alt="Tavryz" 
-          className="h-4.5 w-auto object-contain" 
+          className="h-[22px] w-auto object-contain" 
         />
       </div>
 
