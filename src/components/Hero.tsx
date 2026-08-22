@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Hero() {
   const containerVariants = {
@@ -41,13 +42,18 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent grid-bg border-b border-outline-variant">
-      {/* Mobile-only wordmark at top-left corner */}
+      {/* Mobile-only wordmark at top-left corner of hero */}
       <div className="absolute top-6 left-6 z-20 block sm:hidden">
         <img 
           src="/tav files/tavryz-wordmark.png" 
           alt="Tavryz" 
-          className="h-[22px] w-auto object-contain" 
+          className="h-[22px] w-auto object-contain theme-invert" 
         />
+      </div>
+
+      {/* Mobile-only theme toggle at top-right corner of hero */}
+      <div className="absolute top-5 right-5 z-20 block sm:hidden">
+        <ThemeToggle />
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
@@ -67,50 +73,59 @@ export default function Hero() {
           </motion.div>
 
           {/* Centered Statement Headline */}
-          <div className="mb-6 select-none">
-            <div className="overflow-hidden py-1">
-              <motion.div
-                variants={lineVariants}
-                className="text-4xl md:text-6xl lg:text-[5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] text-white"
-              >
-                Engineering Precision for the
-              </motion.div>
-            </div>
-            <div className="overflow-hidden py-1">
-              <motion.div
-                variants={lineVariants}
-                className="text-4xl md:text-6xl lg:text-[5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] matrix-text"
-              >
-                Next Wave of Innovation
-              </motion.div>
-            </div>
-          </div>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.05] mb-8 max-w-4xl">
+            <motion.span 
+              variants={itemVariants} 
+              className="block overflow-hidden pb-1"
+            >
+              Engineering Precision
+            </motion.span>
+            <motion.span 
+              variants={itemVariants} 
+              className="block overflow-hidden text-[#737373] pb-1"
+            >
+              for the
+            </motion.span>
+            <motion.span 
+              variants={itemVariants} 
+              className="block overflow-hidden matrix-text pb-1"
+            >
+              Next Wave of Innovation
+            </motion.span>
+          </h1>
 
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-base md:text-lg text-[#bbcabf] leading-relaxed max-w-2xl mb-10 body-text"
+            className="text-sm md:text-base text-[#bbcabf] max-w-2xl leading-relaxed mb-10 body-text"
           >
             We build high-performance web platforms, robust Android applications, and scalable design systems for technology leaders who demand structural integrity and data density.
           </motion.p>
 
-          {/* CTA */}
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+          {/* CTA Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-4"
+          >
             <a
               href="#contact"
-              className="btn-primary px-8 py-3.5 font-mono text-[11px] uppercase font-bold flex items-center justify-center gap-2 active:scale-[0.97]"
+              className="btn-primary font-mono text-[12px] px-8 py-3.5 uppercase font-bold tracking-wider hover:bg-[#4edea3] transition-colors active:scale-[0.97]"
             >
               Initialize Project
             </a>
             <a
-              href="#domains"
-              className="btn-ghost px-8 py-3.5 font-mono text-[11px] uppercase flex items-center justify-center gap-2 active:scale-[0.97]"
+              href="#projects"
+              className="btn-ghost font-mono text-[12px] px-8 py-3.5 uppercase font-bold tracking-wider hover:border-[#10b981] hover:text-[#10b981] transition-colors active:scale-[0.97]"
             >
               View Technical Docs
             </a>
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Decorative vertical lines / wireframe details */}
+      <div className="absolute left-1/4 top-0 bottom-0 w-px bg-outline-variant/10 pointer-events-none hidden md:block" />
+      <div className="absolute right-1/4 top-0 bottom-0 w-px bg-outline-variant/10 pointer-events-none hidden md:block" />
     </section>
   );
 }

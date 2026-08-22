@@ -625,3 +625,19 @@ html.light .bg-gradient-to-b {
   background-color: rgba(0, 0, 0, 0.06) !important;
 }
 
+/* Light Mode specific element styling overrides */
+html.light .theme-invert {
+  filter: invert(1);
+}
+
+html.light .card-level-1 span {
+  background-color: #f4f4f5 !important;
+  color: #1f2937 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .bg-black\/80 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+
+

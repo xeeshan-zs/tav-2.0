@@ -151,7 +151,7 @@ export default function Navbar() {
               <img 
                 src="/tav files/tavryz-wordmark.png" 
                 alt="Tavryz" 
-                className="h-4.5 w-auto object-contain" 
+                className="h-4.5 w-auto object-contain theme-invert" 
               />
             </a>
           </Magnetic>
@@ -292,7 +292,7 @@ export default function Navbar() {
             <img 
               src="/tav files/tavryz-icon.png" 
               alt="T" 
-              className="w-full h-full object-contain p-1.5" 
+              className="w-full h-full object-contain p-1.5 theme-invert" 
             />
           </a>
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
@@ -332,11 +332,6 @@ export default function Navbar() {
             Book a Call
           </button>
         </div>
-      </div>
-
-      {/* Mobile-only theme toggle at top-right corner */}
-      <div className="fixed top-5 right-5 z-50 block sm:hidden">
-        <ThemeToggle />
       </div>
     </>
   );
