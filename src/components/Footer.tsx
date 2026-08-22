@@ -129,7 +129,7 @@ export default function Footer() {
               <img 
                 src="/tav files/tavryz-wordmark.png" 
                 alt="Tavryz Studio" 
-                className="h-4.5 w-auto object-contain self-start" 
+                className="h-[22px] w-auto object-contain self-start" 
               />
               <p className="text-[11px] text-[#bbcabf] leading-relaxed body-text">
                 Custom software engineering studio. High-converting web platforms, mobile apps, and digital systems.
