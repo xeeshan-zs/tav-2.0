@@ -126,9 +126,11 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
             {/* Brand */}
             <div className="flex flex-col gap-3 max-w-xs">
-              <span className="font-display font-extrabold text-sm uppercase tracking-widest text-white">
-                Tavryz Studio®
-              </span>
+              <img 
+                src="/tav files/tavryz-wordmark.png" 
+                alt="Tavryz Studio" 
+                className="h-4.5 w-auto object-contain self-start" 
+              />
               <p className="text-[11px] text-[#bbcabf] leading-relaxed body-text">
                 Custom software engineering studio. High-converting web platforms, mobile apps, and digital systems.
               </p>
