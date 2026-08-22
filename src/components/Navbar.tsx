@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
+import ThemeToggle from "./ThemeToggle";
 
 const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string; link?: string }[] }> = {
   Services: {
@@ -195,10 +196,13 @@ export default function Navbar() {
           <button
             onClick={() => scrollTo("contact")}
             onMouseEnter={handleLinkLeave}
-            className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
+            className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97] mr-1"
           >
             Book a Call
           </button>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </div>
 
         {/* Expanding Card Dropdown — hovering it cancels close */}
@@ -328,6 +332,11 @@ export default function Navbar() {
             Book a Call
           </button>
         </div>
+      </div>
+
+      {/* Mobile-only theme toggle at top-right corner */}
+      <div className="fixed top-5 right-5 z-50 block sm:hidden">
+        <ThemeToggle />
       </div>
     </>
   );

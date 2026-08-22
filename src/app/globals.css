@@ -1,27 +1,51 @@
 @import "tailwindcss";
 
+:root {
+  --background: #000000;
+  --foreground: #fafafa;
+  --card: #0a0a0a;
+  --muted-text: #737373;
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --accent: #ffffff;
+  --primary: #4edea3;
+  --primary-container: #10b981;
+  --outline-variant: #3c4a42;
+
+  --muted: #171717;
+  --muted-foreground: #737373;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+html.light {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --muted-text: #525252;
+  --border-dark: rgba(0, 0, 0, 0.08);
+  --accent: #000000;
+  --primary: #10b981;
+  --primary-container: #059669;
+  --outline-variant: #cbd5e1;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #737373;
+  --border: rgba(0, 0, 0, 0.08);
+}
+
 @theme {
-  --color-background: #000000;
-  --color-foreground: #FFFFFF;
-  --color-card: #0a0a0a;
-  --color-muted-text: #737373;
-  --color-border-dark: rgba(255, 255, 255, 0.08);
-  --color-accent: #ffffff;
-  --color-primary: #4edea3;
-  --color-primary-container: #10b981;
-  --color-outline-variant: #3c4a42;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted-text: var(--muted-text);
+  --color-border-dark: var(--border-dark);
+  --color-accent: var(--accent);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-outline-variant: var(--outline-variant);
 
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
-}
-
-:root {
-  --background: #000000;
-  --foreground: #fafafa;
-  --muted: #171717;
-  --muted-foreground: #737373;
-  --border: rgba(255, 255, 255, 0.08);
 }
 
 html {
@@ -476,3 +500,128 @@ select,
 .card-level-1:hover {
   border-color: #10b981;
 }
+
+/* ─── Light Mode Styles & Overrides ─── */
+html.light body {
+  background: #fcfcfc;
+  color: #09090b;
+}
+
+html.light .grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.08) 1px, transparent 1px);
+}
+
+html.light .card-level-1 {
+  background-color: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html.light .card-level-1:hover {
+  border-color: #10b981;
+}
+
+html.light .neo-glass,
+html.light .neo-glass-scrolled,
+html.light .neo-glass-mobile,
+html.light .neo-glass-dropdown {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+html.light .neo-glass-scrolled {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+html.light .neo-pill-hover {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+html.light .neo-pill-active {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+html.light .text-white {
+  color: #09090b !important;
+}
+
+html.light .text-\[\#bbcabf\] {
+  color: #4b5563 !important;
+}
+
+html.light .text-\[\#737373\] {
+  color: #71717a !important;
+}
+
+html.light .bg-black {
+  background-color: #f4f4f5 !important;
+}
+
+html.light .bg-black\/45 {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+html.light .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+}
+
+html.light .bg-white\/\[0\.03\] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light .bg-white\/\[0\.04\] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .bg-white\/\[0\.06\] {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-white\/\[0\.08\] {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .border-white\/\[0\.06\] {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .border-white\/\[0\.08\] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .border-outline-variant {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-outline-variant\/20 {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .border-outline-variant\/30 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .text-\[\#e5e2e1\] {
+  color: #1f2937 !important;
+}
+
+html.light .btn-ghost {
+  border-color: #cbd5e1;
+  color: #374151;
+}
+
+html.light .btn-ghost:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+
+html.light .bg-gradient-to-b {
+  background-image: none !important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
