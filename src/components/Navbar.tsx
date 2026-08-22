@@ -147,7 +147,11 @@ export default function Navbar() {
               onMouseEnter={handleLinkLeave}
               className="flex items-center gap-2 px-3 py-1.5 rounded-none hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
-              <span className="uppercase tracking-widest text-[11px] font-bold text-white">Tavryz</span>
+              <img 
+                src="/tav files/tavryz-wordmark.png" 
+                alt="Tavryz" 
+                className="h-4.5 w-auto object-contain" 
+              />
             </a>
           </Magnetic>
 
@@ -268,7 +272,7 @@ export default function Navbar() {
             <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
           </div>
 
-          {/* Stylized T logo */}
+          {/* Stylized T logo replaced with tavryz-icon.png */}
           <a
             href={isHome ? "#hero" : "/#hero"}
             onClick={(e) => {
@@ -279,9 +283,13 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="relative flex items-center justify-center w-8 h-8 rounded-none bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[14px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-none after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
+            className="relative flex items-center justify-center w-8 h-8 rounded-none bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.22] hover:bg-white/[0.08] transition-all duration-300 active:scale-[0.9] overflow-hidden"
           >
-            t
+            <img 
+              src="/tav files/tavryz-icon.png" 
+              alt="T" 
+              className="w-full h-full object-contain p-1.5" 
+            />
           </a>
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           

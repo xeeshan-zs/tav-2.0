@@ -41,6 +41,15 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent grid-bg border-b border-outline-variant">
+      {/* Mobile-only wordmark at top-left corner */}
+      <div className="absolute top-6 left-6 z-20 block sm:hidden">
+        <img 
+          src="/tav files/tavryz-wordmark.png" 
+          alt="Tavryz" 
+          className="h-4.5 w-auto object-contain" 
+        />
+      </div>
+
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
 
         <motion.div
