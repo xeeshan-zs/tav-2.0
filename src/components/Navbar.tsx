@@ -261,7 +261,7 @@ export default function Navbar() {
 
       {/* Mobile: Neomorphic Glass Floating Bottom Nav */}
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
-        <div className="neo-glass-mobile flex items-center gap-1 rounded-none px-2 py-2 relative">
+        <div className="neo-glass-mobile flex items-center justify-between w-full rounded-none px-2 py-1.5 relative">
           {/* Mobile refraction edges */}
           <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
@@ -279,38 +279,43 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="relative flex items-center justify-center w-9 h-9 rounded-none bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-none after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
+            className="relative flex items-center justify-center w-8 h-8 rounded-none bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[14px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-none after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
           >
             t
           </a>
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
-          {navLinks.map((link) => (
-            <button
-              key={link.name}
-              onClick={() => scrollTo(link.id)}
-              className={`relative whitespace-nowrap px-3 py-2 rounded-none text-[12px] font-medium transition-colors active:scale-[0.97] ${
-                activeSection === link.id || hoveredTab === link.id
-                  ? "text-white"
-                  : "text-[#a3a3a3]"
-              }`}
-            >
-              {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
-                <motion.div
-                  layoutId="nav-pill-mobile"
-                  className={`absolute inset-0 rounded-none ${
-                    hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
-                  }`}
-                  transition={{ type: "spring", stiffness: 500, damping: 26 }}
-                />
-              )}
-              <span className="relative z-10">{link.name}</span>
-            </button>
-          ))}
+          
+          {/* Navigation links (excluding About on mobile to save space) */}
+          <div className="flex items-center gap-0.5">
+            {navLinks.filter(link => link.name !== "About").map((link) => (
+              <button
+                key={link.name}
+                onClick={() => scrollTo(link.id)}
+                className={`relative whitespace-nowrap px-2 py-1.5 rounded-none text-[11px] font-medium transition-colors active:scale-[0.97] ${
+                  activeSection === link.id || hoveredTab === link.id
+                    ? "text-white"
+                    : "text-[#a3a3a3]"
+                }`}
+              >
+                {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
+                  <motion.div
+                    layoutId="nav-pill-mobile"
+                    className={`absolute inset-0 rounded-none ${
+                      hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
+                    }`}
+                    transition={{ type: "spring", stiffness: 500, damping: 26 }}
+                  />
+                )}
+                <span className="relative z-10">{link.name}</span>
+              </button>
+            ))}
+          </div>
+
           {/* Divider */}
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           <button
             onClick={() => scrollTo("contact")}
-            className="whitespace-nowrap btn-primary font-mono text-[11px] px-3 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
+            className="whitespace-nowrap btn-primary font-mono text-[10px] px-2.5 py-1.5 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
           >
             Book a Call
           </button>
