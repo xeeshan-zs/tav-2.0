@@ -120,20 +120,24 @@ export default function Domains() {
         </motion.div>
 
         {/* Domain Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ perspective: 1200 }}>
           {domains.map((dom, index) => {
             const Icon = dom.icon;
             return (
               <motion.div
                 key={dom.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                initial={{ opacity: 0, y: 40, rotateX: 18, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 12px 30px rgba(16, 185, 129, 0.06)"
+                }}
                 transition={{
                   type: "spring",
-                  stiffness: 300,
-                  damping: 24,
-                  delay: index * 0.05,
+                  stiffness: 140,
+                  damping: 18,
+                  delay: (index % 3) * 0.08,
                 }}
                 className="group card-level-1 p-6 transition-all duration-300 relative overflow-hidden"
               >
