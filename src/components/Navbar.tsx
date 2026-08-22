@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
 
 const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string; link?: string }[] }> = {
-  Domains: {
+  Services: {
     title: "Our Expertise",
     description: "Specialized engineering across twelve core domains.",
     items: [
@@ -16,23 +16,13 @@ const dropdownContent: Record<string, { title: string; description: string; item
       { icon: Figma, label: "UI/UX & Product Design", desc: "Wireframing, design systems, user research" },
     ],
   },
-  Projects: {
+  Work: {
     title: "Selected Work",
     description: "High-impact digital products we've engineered.",
     items: [
       { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf", link: "https://www.aroushworks.com" },
       { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y", link: "https://iccsglobalized.com" },
       { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin", link: "https://github.com/xeeshan-zs/z-nectar" },
-    ],
-  },
-  FAQ: {
-    title: "Common Questions",
-    description: "Everything you need to know before starting.",
-    items: [
-      { icon: Sparkles, label: "How does the retainer work?", desc: "Weekly sprints, Slack access, pause anytime" },
-      { icon: Code, label: "What tech stacks?", desc: "Next.js, React, Kotlin, PostgreSQL" },
-      { icon: Globe, label: "Communication cadence?", desc: "Slack channel, Friday demo URLs" },
-      { icon: Sparkles, label: "Turnaround time?", desc: "24–48h minor, weekly milestones major" },
     ],
   },
 };
@@ -86,8 +76,8 @@ export default function Navbar() {
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   useEffect(() => {
-    const sectionIds = ["hero", "domains", "projects", "faq", "contact"];
-    const navIds = new Set(["domains", "projects", "faq", "contact"]);
+    const sectionIds = ["hero", "domains", "projects", "process", "contact"];
+    const navIds = new Set(["domains", "projects", "process", "contact"]);
 
     const update = () => {
       const offset = window.scrollY + window.innerHeight * 0.35;
@@ -116,9 +106,10 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: "Domains", id: "domains" },
-    { name: "Projects", id: "projects" },
-    { name: "FAQ", id: "faq" },
+    { name: "Services", id: "domains" },
+    { name: "Work", id: "projects" },
+    { name: "Process", id: "process" },
+    { name: "About", id: "contact" },
   ];
 
   return (
@@ -196,17 +187,14 @@ export default function Navbar() {
           {/* Divider */}
           <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
 
-          {/* CTA Button — leaving into this closes dropdown */}
-          <Magnetic range={25} strength={0.25}>
-            <button
-              onClick={() => scrollTo("contact")}
-              onMouseEnter={handleLinkLeave}
-              className="flex items-center gap-1.5 neo-button-cta text-black text-[12px] font-bold px-4 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97]"
-            >
-              Start a Project
-              <ArrowRight className="w-3 h-3" />
-            </button>
-          </Magnetic>
+          {/* CTA Button */}
+          <button
+            onClick={() => scrollTo("contact")}
+            onMouseEnter={handleLinkLeave}
+            className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
+          >
+            Book a Call
+          </button>
         </div>
 
         {/* Expanding Card Dropdown — hovering it cancels close */}
@@ -322,10 +310,9 @@ export default function Navbar() {
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           <button
             onClick={() => scrollTo("contact")}
-            className="whitespace-nowrap flex items-center gap-1 neo-button-cta text-black text-[11px] font-bold px-3 py-2 rounded-full hover:bg-zinc-200 transition-colors active:scale-[0.97]"
+            className="whitespace-nowrap btn-primary font-mono text-[11px] px-3 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
           >
-            Start a Project
-            <ArrowRight className="w-3 h-3" />
+            Book a Call
           </button>
         </div>
       </div>

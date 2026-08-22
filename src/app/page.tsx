@@ -2,8 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Domains from "@/components/Domains";
 import CaseStudies from "@/components/CaseStudies";
-import Testimonials from "@/components/Testimonials";
-import FAQ from "@/components/FAQ";
+import Process from "@/components/Process";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -14,8 +13,7 @@ export default function Home() {
         <Hero />
         <Domains />
         <CaseStudies />
-        <FAQ />
-        <Testimonials />
+        <Process />
       </main>
       <Footer />
     </>

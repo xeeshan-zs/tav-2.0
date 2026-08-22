@@ -40,9 +40,8 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-16 md:pt-20 overflow-hidden bg-transparent">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent grid-bg border-b border-outline-variant">
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
-
 
         <motion.div
           variants={containerVariants}
@@ -50,71 +49,59 @@ export default function Hero() {
           animate="visible"
           className="flex flex-col items-center"
         >
+          {/* Centered Active Badge */}
+          <motion.div
+            variants={itemVariants}
+            className="inline-block px-3 py-1 mb-6 border border-[#10b981] text-[#10b981] font-mono text-[11px] uppercase tracking-widest bg-black/80"
+          >
+            System Active v2.4.1
+          </motion.div>
+
           {/* Centered Statement Headline */}
           <div className="mb-6 select-none">
-            {["We Engineer", "Digital Products", "& Brands Built to Scale."].map((line, lineIdx) => (
-              <div key={lineIdx} className="overflow-hidden py-1">
-                <motion.div
-                  variants={lineVariants}
-                  className={`text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] ${
-                    lineIdx === 2 ? "text-[#737373]" : "text-white"
-                  }`}
-                >
-                  {line}
-                </motion.div>
-              </div>
-            ))}
+            <div className="overflow-hidden py-1">
+              <motion.div
+                variants={lineVariants}
+                className="text-4xl md:text-6xl lg:text-[5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] text-white"
+              >
+                Engineering Precision for the
+              </motion.div>
+            </div>
+            <div className="overflow-hidden py-1">
+              <motion.div
+                variants={lineVariants}
+                className="text-4xl md:text-6xl lg:text-[5rem] font-display font-bold leading-[1.05] tracking-[-0.03em] matrix-text"
+              >
+                Next Wave of Innovation
+              </motion.div>
+            </div>
           </div>
 
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-base md:text-lg text-[#a3a3a3] leading-relaxed max-w-xl mb-10 body-text"
+            className="text-base md:text-lg text-[#bbcabf] leading-relaxed max-w-2xl mb-10 body-text"
           >
-            A multidisciplinary studio partnering with ambitious founders and forward-thinking brands to design high-converting web systems and digital products.
+            We build high-performance web platforms, robust Android applications, and scalable design systems for technology leaders who demand structural integrity and data density.
           </motion.p>
 
           {/* CTA */}
-          <motion.div variants={itemVariants} className="flex items-center gap-4">
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
             <a
-              href="#projects"
-              className="bg-white text-black font-semibold text-[13px] py-3.5 px-8 rounded-full hover:bg-zinc-200 transition-colors duration-200 shadow-[0_2px_8px_rgba(255,255,255,0.1)]"
+              href="#contact"
+              className="btn-primary px-8 py-3.5 font-mono text-[11px] uppercase font-bold flex items-center justify-center gap-2 active:scale-[0.97]"
             >
-              Explore Our Work
+              Initialize Project
             </a>
             <a
               href="#domains"
-              className="group flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-white hover:text-[#737373] transition-colors py-2"
+              className="btn-ghost px-8 py-3.5 font-mono text-[11px] uppercase flex items-center justify-center gap-2 active:scale-[0.97]"
             >
-              Capabilities
-              <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-200" />
+              View Technical Docs
             </a>
           </motion.div>
         </motion.div>
-
-        {/* Logo Row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="w-full mt-20 mb-16"
-        >
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[#525252] mb-8 font-mono">
-            Trusted by forward-thinking teams
-          </p>
-          <div className="flex items-center justify-center flex-wrap gap-x-10 gap-y-4">
-            {logos.map((logo, i) => (
-              <span
-                key={i}
-                className="text-[15px] font-display font-bold text-white/[0.15] hover:text-white/[0.3] transition-colors duration-300 tracking-tight select-none cursor-default"
-              >
-                {logo}
-              </span>
-            ))}
-          </div>
-        </motion.div>
       </div>
-
     </section>
   );
 }

@@ -7,6 +7,9 @@
   --color-muted-text: #737373;
   --color-border-dark: rgba(255, 255, 255, 0.08);
   --color-accent: #ffffff;
+  --color-primary: #4edea3;
+  --color-primary-container: #10b981;
+  --color-outline-variant: #3c4a42;
 
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
@@ -432,4 +435,44 @@ select,
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* ─── Stealth Matrix / Stitch UI Utilities ─── */
+.grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.matrix-text {
+  color: #10b981;
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+}
+.btn-primary {
+  background-color: #10b981;
+  color: #000000;
+  border-radius: 0;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background-color: #4edea3;
+}
+.btn-ghost {
+  background-color: transparent;
+  border: 1px solid #1e293b;
+  color: #e5e2e1;
+  border-radius: 0;
+  transition: all 0.2s;
+}
+.btn-ghost:hover {
+  border-color: #10b981;
+  color: #10b981;
+}
+.card-level-1 {
+  background-color: #0a0a0a;
+  border: 1px solid #1e293b;
+  transition: all 0.3s;
+}
+.card-level-1:hover {
+  border-color: #10b981;
 }

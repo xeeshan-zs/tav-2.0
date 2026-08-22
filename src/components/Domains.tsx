@@ -92,8 +92,8 @@ export default function Domains() {
   ];
 
   return (
-    <section id="domains" className="py-20 md:py-32 bg-transparent relative z-10">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="domains" className="py-24 px-6 border-b border-outline-variant bg-transparent relative z-10">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -113,13 +113,13 @@ export default function Domains() {
               Our<br />
               <span className="text-[#737373]">Capabilities.</span>
             </h2>
-            <p className="text-sm text-[#a3a3a3] max-w-sm leading-relaxed body-text">
+            <p className="text-sm text-[#bbcabf] max-w-sm leading-relaxed body-text">
               Specialized engineering across twelve core domains, each backed by deep technical expertise.
             </p>
           </div>
         </motion.div>
 
-        {/* Domain Cards - Clean Grid */}
+        {/* Domain Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {domains.map((dom, index) => {
             const Icon = dom.icon;
@@ -135,7 +135,7 @@ export default function Domains() {
                   damping: 24,
                   delay: index * 0.05,
                 }}
-                className="group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all"
+                className="group card-level-1 p-6 transition-all duration-300 relative overflow-hidden"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -160,7 +160,7 @@ export default function Domains() {
                   {dom.subdomains.map((sub, i) => (
                     <span
                       key={i}
-                      className="text-[10px] text-[#737373] bg-white/[0.04] border border-white/[0.06] rounded-md px-2 py-1"
+                      className="text-[10px] text-[#bbcabf] bg-[#0c0c0c] border border-outline-variant/30 rounded-md px-2.5 py-1"
                     >
                       {sub}
                     </span>

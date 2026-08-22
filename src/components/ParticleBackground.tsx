@@ -31,14 +31,14 @@ export default function ParticleBackground() {
   if (!particles.length) return null;
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#030816]">
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black">
       {/* CSS-animated ambient glow blobs — much cheaper than framer-motion */}
       <div
-        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#ffffff]/[0.07] blur-[150px] will-change-transform"
+        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#10b981]/[0.04] blur-[150px] will-change-transform"
         style={{ animation: "floatBlob1 30s ease-in-out infinite" }}
       />
       <div
-        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#ffffff]/[0.03] blur-[180px] will-change-transform"
+        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#10b981]/[0.02] blur-[180px] will-change-transform"
         style={{ animation: "floatBlob2 35s ease-in-out infinite" }}
       />
 
@@ -46,21 +46,21 @@ export default function ParticleBackground() {
       {particles.map((p) => (
         <div
           key={p.id}
-          className="absolute rounded-full bg-gradient-to-r from-white to-gray-300 will-change-transform"
+          className="absolute rounded-full bg-gradient-to-r from-[#4edea3]/40 to-gray-300/40 will-change-transform"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
             opacity: p.opacity,
-            boxShadow: "0 0 8px rgba(255, 255, 255, 0.3)",
+            boxShadow: "0 0 8px rgba(16, 185, 129, 0.2)",
             animation: `floatParticle ${p.duration}s linear ${p.delay}s infinite`,
           }}
         />
       ))}
 
       {/* Subtle grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(33,150,243,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(33,150,243,0.015)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(16,185,129,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(16,185,129,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
     </div>
   );
 }

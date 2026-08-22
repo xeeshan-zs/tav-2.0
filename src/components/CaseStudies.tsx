@@ -9,7 +9,6 @@ interface Project {
   metrics: { label: string; value: string }[];
   description: string;
   link: string;
-  features: string[];
 }
 
 function ProjectCard({ project, featured = false }: { project: Project; featured?: boolean }) {
@@ -19,66 +18,74 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 sm:p-6 md:p-8 hover:bg-white/[0.05] hover:border-white/[0.1] transition-all overflow-hidden ${
+      className={`group card-level-1 p-6 md:p-8 transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
         featured ? "col-span-full" : ""
       }`}
     >
-      {/* Header */}
-      <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
-        <div className="min-w-0 flex-1">
-          <span className="text-[10px] font-mono text-[#525252] tracking-widest uppercase block mb-1">
-            {project.id}
-          </span>
-          <h3 className={`font-display font-bold text-white tracking-tight break-words ${featured ? "text-xl sm:text-2xl md:text-3xl" : "text-base sm:text-lg md:text-xl"}`}>
-            {project.title}
-          </h3>
-          <p className="text-[11px] text-[#737373] mt-1 truncate">{project.industry}</p>
-        </div>
-        <a
-          href={project.link}
-          target={project.link.startsWith("http") ? "_blank" : undefined}
-          rel="noopener noreferrer"
-          className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[#737373] group-hover:text-white group-hover:bg-white/[0.1] transition-all flex-shrink-0"
-        >
-          <ExternalLink className="w-4 h-4" />
-        </a>
-      </div>
-
-      {/* Description */}
-      <p className={`text-[#a3a3a3] leading-relaxed mb-5 sm:mb-6 body-text break-words ${featured ? "text-sm md:text-base max-w-2xl" : "text-xs sm:text-[13px]"}`}>
-        {project.description}
-      </p>
-
-      {/* Features */}
-      <div className={`mb-5 sm:mb-6 ${featured ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3" : "flex flex-wrap gap-1.5 sm:gap-2"}`}>
-        {project.features.map((feature, i) => (
-          <span
-            key={i}
-            className="text-[11px] text-[#737373] bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-1.5"
-          >
-            {feature}
-          </span>
-        ))}
-      </div>
-
-      {/* Metrics */}
-      <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-4 sm:pt-5 border-t border-white/[0.04]">
-        {project.metrics.map((m, i) => (
-          <div key={i}>
-            <div className="text-[9px] font-mono uppercase tracking-wider text-[#525252] mb-0.5">{m.label}</div>
-            <div className={`font-bold text-white ${featured ? "text-lg" : "text-sm"}`}>{m.value}</div>
+      <div>
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4 mb-5">
+          <div>
+            <span className="text-[10px] font-mono text-[#525252] tracking-widest uppercase block mb-1">
+              {project.id}
+            </span>
+            <h3 className="font-display font-bold text-white tracking-tight text-xl sm:text-2xl">
+              {project.title}
+            </h3>
+            <p className="text-[11px] text-[#737373] mt-1">{project.industry}</p>
           </div>
-        ))}
-        
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-[#737373] group-hover:text-[#10b981] group-hover:bg-[#10b981]/10 group-hover:border-[#10b981] transition-all flex-shrink-0"
+          >
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+
+        {/* Description */}
+        <p className="text-[#bbcabf] leading-relaxed mb-6 body-text text-sm sm:text-[14px]">
+          {project.description}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.tags.map((tag, i) => (
+            <span
+              key={i}
+              className="text-[10px] text-[#bbcabf] bg-black border border-outline-variant/30 rounded-md px-2.5 py-1 font-mono"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Metrics Footer */}
+      <div className="flex flex-wrap items-end gap-6 pt-5 border-t border-outline-variant/20 mt-4">
+        <div className="flex flex-wrap gap-6 sm:gap-10">
+          {project.metrics.map((m, i) => (
+            <div key={i}>
+              <div className="text-[9px] font-mono uppercase tracking-wider text-[#525252] mb-1">
+                {m.label}
+              </div>
+              <div className="font-bold text-white text-lg sm:text-xl font-display">
+                {m.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="ml-auto">
           <a
             href={project.link}
-            target={project.link.startsWith("http") ? "_blank" : undefined}
+            target="_blank"
             rel="noopener noreferrer"
-            className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-1.5 group/link whitespace-nowrap"
+            className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] font-mono font-bold text-white hover:text-[#10b981] transition-colors flex items-center gap-1.5"
           >
-            View project
-            <ArrowUpRight className="w-3 h-3 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+            View Project
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
@@ -92,7 +99,7 @@ export default function CaseStudies() {
       id: "01",
       title: "Aroush Works",
       industry: "Creative Studio Portfolio",
-      tags: ["Website", "Brand Identity", "SEO"],
+      tags: ["Next.js", "TypeScript", "Tailwind", "Vercel", "SEO Audit", "Analytics"],
       metrics: [
         { label: "Performance", value: "99" },
         { label: "SEO Score", value: "100" },
@@ -101,39 +108,36 @@ export default function CaseStudies() {
       ],
       description: "High-impact web presence engineered with modern performance and editorial typography. Built with Next.js, optimized for sub-second loads, and designed to convert visitors into clients.",
       link: "https://www.aroushworks.com",
-      features: ["Next.js", "TypeScript", "Tailwind", "Vercel", "SEO Audit", "Analytics"],
     },
     {
       id: "02",
       title: "ICCS Global",
       industry: "Institutional Operations",
-      tags: ["Web System", "Architecture", "SEO"],
+      tags: ["React", "Node.js", "PostgreSQL", "WCAG 2.1"],
       metrics: [
         { label: "Performance", value: "98" },
         { label: "A11y", value: "100" },
       ],
       description: "Institutional web presence with clean architecture and responsive layout integrations. Focused on accessibility and cross-device compatibility.",
       link: "https://iccsglobalized.com",
-      features: ["React", "Node.js", "PostgreSQL", "WCAG 2.1"],
     },
     {
       id: "03",
       title: "Z Nectar",
       industry: "E-Commerce Mobile",
-      tags: ["Mobile App", "Android", "Kotlin"],
+      tags: ["Kotlin", "Jetpack Compose", "Room DB", "Play Store"],
       metrics: [
         { label: "Platforms", value: "2" },
         { label: "LCP", value: "Sub-1s" },
       ],
       description: "Cross-platform grocery app with real-time sync, offline storage and production packaging. Native Kotlin with Jetpack Compose.",
       link: "https://github.com/xeeshan-zs/z-nectar",
-      features: ["Kotlin", "Jetpack Compose", "Room DB", "Play Store"],
     },
   ];
 
   return (
-    <section id="projects" className="py-20 md:py-32 bg-transparent relative z-10">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="projects" className="py-24 px-6 bg-transparent relative z-10 border-b border-outline-variant">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -155,23 +159,23 @@ export default function CaseStudies() {
             </h2>
             <a
               href="#contact"
-              className="text-[11px] uppercase tracking-[0.2em] font-bold text-white hover:text-[#a3a3a3] transition-colors flex items-center gap-2 group"
+              className="text-[11px] uppercase tracking-[0.2em] font-mono font-bold text-white hover:text-[#10b981] transition-colors flex items-center gap-2"
             >
-              Start a project
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              Start a Project
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </motion.div>
 
-        {/* Featured Project (full width) */}
-        <div className="mb-6">
-          <ProjectCard project={projects[0]} featured />
-        </div>
-
-        {/* Smaller Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-full">
+            <ProjectCard project={projects[0]} featured />
+          </div>
           {projects.slice(1).map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <div key={project.id} className="flex">
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
       </div>
