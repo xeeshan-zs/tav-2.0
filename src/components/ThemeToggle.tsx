@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    // Check local storage or default to dark
+    // Check local storage or default to light
     const savedTheme = localStorage.getItem("tavryz-theme") as "light" | "dark" | null;
-    if (savedTheme === "light") {
-      document.documentElement.classList.add("light");
-      setTheme("light");
-    } else {
+    if (savedTheme === "dark") {
       document.documentElement.classList.remove("light");
       setTheme("dark");
+    } else {
+      document.documentElement.classList.add("light");
+      setTheme("light");
     }
   }, []);
 

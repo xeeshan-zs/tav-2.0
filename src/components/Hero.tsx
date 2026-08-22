@@ -64,13 +64,7 @@ export default function Hero() {
           animate="visible"
           className="flex flex-col items-center"
         >
-          {/* Centered Active Badge */}
-          <motion.div
-            variants={itemVariants}
-            className="inline-block px-3 py-1 mb-6 border border-[#10b981] text-[#10b981] font-mono text-[11px] uppercase tracking-widest bg-black/80"
-          >
-            System Active v2.4.1
-          </motion.div>
+
 
           {/* Centered Statement Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.05] mb-8 max-w-4xl">

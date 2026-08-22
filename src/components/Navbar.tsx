@@ -110,7 +110,6 @@ export default function Navbar() {
     { name: "Services", id: "domains" },
     { name: "Work", id: "projects" },
     { name: "Process", id: "process" },
-    { name: "About", id: "contact" },
   ];
 
   return (
@@ -297,9 +296,9 @@ export default function Navbar() {
           </a>
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           
-          {/* Navigation links (excluding About on mobile to save space) */}
+          {/* Navigation links */}
           <div className="flex items-center gap-0.5">
-            {navLinks.filter(link => link.name !== "About").map((link) => (
+            {navLinks.map((link) => (
               <button
                 key={link.name}
                 onClick={() => scrollTo(link.id)}
