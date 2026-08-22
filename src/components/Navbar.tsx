@@ -118,14 +118,14 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
         <div
           ref={navRef}
-          className={`relative flex items-center gap-1 rounded-full px-2 py-2 transition-all duration-500 ${
+          className={`relative flex items-center gap-1 rounded-none px-2 py-2 transition-all duration-500 ${
             scrolled
               ? "neo-glass-scrolled"
               : "neo-glass"
           }`}
         >
           {/* Top-edge refraction highlight */}
-          <div className="absolute inset-0 rounded-full pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
             <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
@@ -145,7 +145,7 @@ export default function Navbar() {
                 }
               }}
               onMouseEnter={handleLinkLeave}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-none hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
               <span className="uppercase tracking-widest text-[11px] font-bold text-white">Tavryz</span>
             </a>
@@ -164,7 +164,7 @@ export default function Navbar() {
             >
               <button
                 onClick={() => scrollTo(link.id)}
-                className={`relative px-4 py-2 rounded-full text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
+                className={`relative px-4 py-2 rounded-none text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
                   activeSection === link.id || hoveredTab === link.id
                     ? "text-white"
                     : "text-[#a3a3a3]"
@@ -173,7 +173,7 @@ export default function Navbar() {
                 {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
                   <motion.div
                     layoutId="nav-pill"
-                    className={`absolute inset-0 rounded-full ${
+                    className={`absolute inset-0 rounded-none ${
                       hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
                     }`}
                     transition={{ type: "spring", stiffness: 500, damping: 26 }}
@@ -207,10 +207,10 @@ export default function Navbar() {
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
               onMouseEnter={cancelClose}
               onMouseLeave={handleLinkLeave}
-              className="absolute top-full mt-3 w-[420px] neo-glass-dropdown rounded-2xl overflow-hidden"
+              className="absolute top-full mt-3 w-[420px] neo-glass-dropdown rounded-none overflow-hidden"
             >
               {/* Dropdown refraction edges */}
-              <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
+              <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
                 <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
               </div>
@@ -261,9 +261,9 @@ export default function Navbar() {
 
       {/* Mobile: Neomorphic Glass Floating Bottom Nav */}
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
-        <div className="neo-glass-mobile flex items-center gap-1 rounded-full px-2 py-2 relative">
+        <div className="neo-glass-mobile flex items-center gap-1 rounded-none px-2 py-2 relative">
           {/* Mobile refraction edges */}
-          <div className="absolute inset-0 rounded-full pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
           </div>
@@ -279,7 +279,7 @@ export default function Navbar() {
                 window.location.href = "/#hero";
               }
             }}
-            className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-full after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
+            className="relative flex items-center justify-center w-9 h-9 rounded-none bg-gradient-to-br from-white/[0.22] via-white/[0.08] to-transparent border border-white/[0.22] backdrop-blur-xl text-white font-display font-extrabold italic text-[16px] leading-none hover:from-white/[0.35] hover:via-white/[0.15] hover:border-white/[0.35] hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] transition-all duration-300 active:scale-[0.9] shadow-[0_4px_20px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(255,255,255,0.04)] after:absolute after:inset-[1px] after:rounded-none after:bg-gradient-to-b after:from-white/[0.12] after:via-transparent after:to-white/[0.04] after:pointer-events-none"
           >
             t
           </a>
@@ -288,7 +288,7 @@ export default function Navbar() {
             <button
               key={link.name}
               onClick={() => scrollTo(link.id)}
-              className={`relative whitespace-nowrap px-3 py-2 rounded-full text-[12px] font-medium transition-colors active:scale-[0.97] ${
+              className={`relative whitespace-nowrap px-3 py-2 rounded-none text-[12px] font-medium transition-colors active:scale-[0.97] ${
                 activeSection === link.id || hoveredTab === link.id
                   ? "text-white"
                   : "text-[#a3a3a3]"
@@ -297,7 +297,7 @@ export default function Navbar() {
               {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
                 <motion.div
                   layoutId="nav-pill-mobile"
-                  className={`absolute inset-0 rounded-full ${
+                  className={`absolute inset-0 rounded-none ${
                     hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
                   }`}
                   transition={{ type: "spring", stiffness: 500, damping: 26 }}
