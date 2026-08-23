@@ -102,13 +102,13 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <a
-              href="#contact"
+              href="/contact"
               className="btn-primary font-mono text-[12px] px-8 py-3.5 uppercase font-bold tracking-wider hover:bg-[#4edea3] transition-colors active:scale-[0.97]"
             >
               Initialize Project
             </a>
             <a
-              href="#projects"
+              href="/work"
               className="btn-ghost font-mono text-[12px] px-8 py-3.5 uppercase font-bold tracking-wider hover:border-[#10b981] hover:text-[#10b981] transition-colors active:scale-[0.97]"
             >
               View Technical Docs

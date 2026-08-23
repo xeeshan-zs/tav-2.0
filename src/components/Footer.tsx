@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Mail, Copy, Check, Github, Linkedin, Twitter, Power } from "lucide-react";
+import { Mail, Copy, Check, Linkedin, Twitter, Power } from "lucide-react";
 import Magnetic from "@/components/Magnetic";
 import { motion } from "framer-motion";
 
@@ -113,7 +113,7 @@ export default function Footer() {
 
             {/* Sharp Matrix Button */}
             <a
-              href={`mailto:${email}?subject=Project%20Inquiry`}
+              href="/contact"
               className="btn-primary rounded-none bg-[#10b981] hover:bg-[#4edea3] text-black font-bold font-mono tracking-widest text-[12px] uppercase py-4 px-8 flex items-center justify-center gap-2 mx-auto active:scale-[0.97] max-w-xs transition-colors duration-200"
             >
               Start Project <Power className="w-4 h-4" />
@@ -140,13 +140,13 @@ export default function Footer() {
             <div className="flex flex-col gap-4 font-mono text-[11px]">
               <span className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Navigate</span>
               <div className="flex gap-6">
-                {["Services", "Work", "Process"].map((link) => (
+                {[{ label: "Services", path: "/services" }, { label: "Work", path: "/work" }, { label: "Process", path: "/process" }, { label: "Contact", path: "/contact" }].map((link) => (
                   <a
-                    key={link}
-                    href={`#${link === "Services" ? "domains" : link === "Work" ? "projects" : "process"}`}
+                    key={link.label}
+                    href={link.path}
                     className="text-[#bbcabf] hover:text-[#10b981] transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 ))}
               </div>
@@ -159,7 +159,6 @@ export default function Footer() {
                 {[
                   { name: "Twitter", href: "https://x.com", icon: Twitter },
                   { name: "LinkedIn", href: "https://linkedin.com/company/tavryz", icon: Linkedin },
-                  { name: "GitHub", href: "https://github.com/xeeshan-zs", icon: Github },
                 ].map((social) => {
                   const Icon = social.icon;
                   return (

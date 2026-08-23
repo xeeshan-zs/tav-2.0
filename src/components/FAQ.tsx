@@ -58,7 +58,7 @@ export default function FAQ() {
               </p>
 
               <a
-                href="#contact"
+                href="/contact"
                 className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] font-bold text-white hover:text-[#a3a3a3] transition-colors group"
               >
                 Ask a question

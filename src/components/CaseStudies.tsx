@@ -158,7 +158,7 @@ export default function CaseStudies() {
               <span className="text-[#737373]">delivering impact.</span>
             </h2>
             <a
-              href="#contact"
+              href="/contact"
               className="text-[11px] uppercase tracking-[0.2em] font-mono font-bold text-white hover:text-[#10b981] transition-colors flex items-center gap-2"
             >
               Start a Project

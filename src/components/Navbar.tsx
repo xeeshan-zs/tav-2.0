@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
@@ -35,6 +35,7 @@ export default function Navbar() {
   const [hovering, setHovering] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === "/";
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -76,13 +77,19 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
+  // Only track scroll sections on the home page
   useEffect(() => {
+    if (!isHome) {
+      setActiveSection("");
+      return;
+    }
+
     const sectionIds = ["hero", "domains", "projects", "process", "contact"];
     const navIds = new Set(["domains", "projects", "process", "contact"]);
 
     const update = () => {
       const offset = window.scrollY + window.innerHeight * 0.35;
-      let current = ""; // default = hero, no highlight
+      let current = "";
 
       for (const id of sectionIds) {
         const el = document.getElementById(id);
@@ -92,25 +99,30 @@ export default function Navbar() {
         }
       }
 
-      // Only highlight nav-linked sections; hero = no highlight
       setActiveSection(navIds.has(current) ? current : "");
     };
 
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
-  }, []);
+  }, [isHome]);
+
+  const navLinks = [
+    { name: "Services", path: "/services" },
+    { name: "Work", path: "/work" },
+    { name: "Process", path: "/process" },
+  ];
+
+  const handleNavClick = (path: string) => {
+    setHovering(false);
+    setActiveDropdown(null);
+    navigate(path);
+  };
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
-
-  const navLinks = [
-    { name: "Services", id: "domains" },
-    { name: "Work", id: "projects" },
-    { name: "Process", id: "process" },
-  ];
 
   return (
     <>
@@ -132,17 +144,13 @@ export default function Navbar() {
             <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
           </div>
 
-          {/* Logo — leaving logo closes dropdown */}
+          {/* Logo */}
           <Magnetic range={30} strength={0.3}>
             <a
-              href={isHome ? "#hero" : "/#hero"}
+              href="/"
               onClick={(e) => {
                 e.preventDefault();
-                if (isHome) {
-                  document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  window.location.href = "/#hero";
-                }
+                navigate("/");
               }}
               onMouseEnter={handleLinkLeave}
               className="flex items-center gap-2 px-3 py-1.5 rounded-none hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
@@ -158,7 +166,7 @@ export default function Navbar() {
           {/* Divider */}
           <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
 
-          {/* Nav Links — each triggers dropdown */}
+          {/* Nav Links */}
           {navLinks.map((link) => (
             <div
               key={link.name}
@@ -167,18 +175,18 @@ export default function Navbar() {
               onMouseLeave={handleLinkLeave}
             >
               <button
-                onClick={() => scrollTo(link.id)}
+                onClick={() => handleNavClick(link.path)}
                 className={`relative px-4 py-2 rounded-none text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
-                  activeSection === link.id || hoveredTab === link.id
+                  location.pathname === link.path || hoveredTab === link.name
                     ? "text-white"
                     : "text-[#a3a3a3]"
                 }`}
               >
-                {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
+                {(hoveredTab === link.name || (!hoveredTab && location.pathname === link.path)) && (
                   <motion.div
                     layoutId="nav-pill"
                     className={`absolute inset-0 rounded-none ${
-                      hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
+                      hoveredTab === link.name ? "neo-pill-hover" : "neo-pill-active"
                     }`}
                     transition={{ type: "spring", stiffness: 500, damping: 26 }}
                   />
@@ -193,7 +201,7 @@ export default function Navbar() {
 
           {/* CTA Button */}
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => handleNavClick("/contact")}
             onMouseEnter={handleLinkLeave}
             className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97] mr-1"
           >
@@ -204,7 +212,7 @@ export default function Navbar() {
           <ThemeToggle />
         </div>
 
-        {/* Expanding Card Dropdown — hovering it cancels close */}
+        {/* Expanding Card Dropdown */}
         <AnimatePresence>
           {activeDropdown && hovering && dropdownContent[activeDropdown] && (
             <motion.div
@@ -216,7 +224,6 @@ export default function Navbar() {
               onMouseLeave={handleLinkLeave}
               className="absolute top-full mt-3 w-[420px] neo-glass-dropdown rounded-none overflow-hidden"
             >
-              {/* Dropdown refraction edges */}
               <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
                 <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
@@ -232,16 +239,16 @@ export default function Navbar() {
                   return (
                     <a
                       key={i}
-                      href={item.link || `#${activeDropdown.toLowerCase()}`}
+                      href={item.link || `${activeDropdown === "Services" ? "/services" : "/work"}`}
                       target={item.link ? "_blank" : undefined}
                       rel={item.link ? "noopener noreferrer" : undefined}
                       onClick={(e) => {
                         if (!item.link) {
                           e.preventDefault();
-                          const targetId = activeDropdown.toLowerCase();
+                          const targetPath = activeDropdown === "Services" ? "/services" : "/work";
                           setHovering(false);
                           setActiveDropdown(null);
-                          requestAnimationFrame(() => scrollTo(targetId));
+                          navigate(targetPath);
                         } else {
                           setHovering(false);
                           setActiveDropdown(null);
@@ -269,22 +276,16 @@ export default function Navbar() {
       {/* Mobile: Neomorphic Glass Floating Bottom Nav */}
       <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
         <div className="neo-glass-mobile flex items-center justify-between w-full rounded-none px-2 py-1.5 relative">
-          {/* Mobile refraction edges */}
           <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
           </div>
 
-          {/* Stylized T logo replaced with tavryz-icon.png */}
           <a
-            href={isHome ? "#hero" : "/#hero"}
+            href="/"
             onClick={(e) => {
               e.preventDefault();
-              if (isHome) {
-                document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
-              } else {
-                window.location.href = "/#hero";
-              }
+              navigate("/");
             }}
             className="relative flex items-center justify-center w-8 h-8 rounded-none bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.22] hover:bg-white/[0.08] transition-all duration-300 active:scale-[0.9] overflow-hidden"
           >
@@ -301,18 +302,18 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => scrollTo(link.id)}
+                onClick={() => handleNavClick(link.path)}
                 className={`relative whitespace-nowrap px-2 py-1.5 rounded-none text-[11px] font-medium transition-colors active:scale-[0.97] ${
-                  activeSection === link.id || hoveredTab === link.id
+                  location.pathname === link.path || hoveredTab === link.name
                     ? "text-white"
                     : "text-[#a3a3a3]"
                 }`}
               >
-                {(hoveredTab === link.id || (!hoveredTab && activeSection === link.id)) && (
+                {(hoveredTab === link.name || (!hoveredTab && location.pathname === link.path)) && (
                   <motion.div
                     layoutId="nav-pill-mobile"
                     className={`absolute inset-0 rounded-none ${
-                      hoveredTab === link.id ? "neo-pill-hover" : "neo-pill-active"
+                      hoveredTab === link.name ? "neo-pill-hover" : "neo-pill-active"
                     }`}
                     transition={{ type: "spring", stiffness: 500, damping: 26 }}
                   />
@@ -325,7 +326,7 @@ export default function Navbar() {
           {/* Divider */}
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => handleNavClick("/contact")}
             className="whitespace-nowrap btn-primary font-mono text-[10px] px-2.5 py-1.5 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
           >
             Book a Call

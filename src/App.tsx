@@ -1,8 +1,13 @@
 import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ParticleBackground from "@/components/ParticleBackground";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const HomePage = lazy(() => import("./app/page"));
+const ServicesPage = lazy(() => import("./app/services/page"));
+const WorkPage = lazy(() => import("./app/work/page"));
+const ProcessPage = lazy(() => import("./app/process/page"));
+const ContactPage = lazy(() => import("./app/contact/page"));
 const PrivacyPage = lazy(() => import("./app/privacy/page"));
 const TermsPage = lazy(() => import("./app/terms/page"));
 const NotFoundPage = lazy(() => import("./app/not-found"));
@@ -32,9 +37,14 @@ export default function App() {
   return (
     <div className="min-h-full flex flex-col bg-black text-[#fafafa] selection:bg-white/20 selection:text-white relative">
       <ParticleBackground />
+      <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/work" element={<WorkPage />} />
+          <Route path="/process" element={<ProcessPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
