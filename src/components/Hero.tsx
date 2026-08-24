@@ -42,19 +42,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden bg-transparent grid-bg border-b border-outline-variant">
-      {/* Mobile-only wordmark at top-left corner of hero */}
-      <div className="absolute top-6 left-6 z-20 block sm:hidden">
-        <img 
-          src="/tav files/tavryz_horizontal_white.png" 
-          alt="Tavryz" 
-          className="h-6 w-auto object-contain logo-dark" 
-        />
-        <img 
-          src="/tav files/tavryz_horizontal_fullcolor.png" 
-          alt="Tavryz" 
-          className="h-6 w-auto object-contain logo-light" 
-        />
-      </div>
+
 
       {/* Mobile-only theme toggle at top-right corner of hero */}
       <div className="absolute top-5 right-5 z-20 block sm:hidden">
@@ -69,7 +57,6 @@ export default function Hero() {
           animate="visible"
           className="flex flex-col items-center"
         >
-
 
           {/* Centered Statement Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.05] mb-8 max-w-4xl">

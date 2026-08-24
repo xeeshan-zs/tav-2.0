@@ -126,6 +126,27 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Fixed glassy logo square — top-left */}
+      <a
+        href="/"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/");
+        }}
+        className="fixed top-5 left-5 z-50 flex items-center justify-center px-4 py-3 backdrop-blur-md bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.1] hover:border-white/[0.22] transition-all duration-300 active:scale-[0.97]"
+      >
+        <img
+          src="/tav files/tavryz_horizontal_white.png"
+          alt="Tavryz"
+          className="h-5 w-auto object-contain logo-dark"
+        />
+        <img
+          src="/tav files/tavryz_horizontal_fullcolor.png"
+          alt="Tavryz"
+          className="h-5 w-auto object-contain logo-light"
+        />
+      </a>
+
       {/* Desktop: Liquid Neomorphic Glass Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
         <div
@@ -143,30 +164,6 @@ export default function Navbar() {
             <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
             <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
           </div>
-
-          {/* Logo */}
-          <Magnetic range={30} strength={0.3}>
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/");
-              }}
-              onMouseEnter={handleLinkLeave}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-none hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
-            >
-              <img 
-                src="/tav files/tavryz_horizontal_white.png" 
-                alt="Tavryz" 
-                className="h-5 w-auto object-contain logo-dark" 
-              />
-              <img 
-                src="/tav files/tavryz_horizontal_fullcolor.png" 
-                alt="Tavryz" 
-                className="h-5 w-auto object-contain logo-light" 
-              />
-            </a>
-          </Magnetic>
 
           {/* Divider */}
           <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
