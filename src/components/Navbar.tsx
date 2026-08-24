@@ -132,6 +132,7 @@ export default function Navbar() {
         onClick={(e) => {
           e.preventDefault();
           navigate("/");
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         className="fixed top-5 left-5 z-50 flex items-center justify-center px-4 py-3 backdrop-blur-md bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.1] hover:border-white/[0.22] transition-all duration-300 active:scale-[0.97]"
       >
