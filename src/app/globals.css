@@ -640,4 +640,24 @@ html.light .bg-black\/80 {
   background-color: rgba(16, 185, 129, 0.08) !important;
 }
 
+/* Logo theme switching */
+.logo-dark {
+  display: block;
+}
+html.light .logo-dark {
+  display: none !important;
+}
+.logo-light {
+  display: none !important;
+}
+html.light .logo-light {
+  display: block !important;
+}
+html.light .logo-light.logo-inline {
+  display: inline-block !important;
+}
+html.light .logo-light.logo-flex {
+  display: flex !important;
+}
+
 

@@ -159,8 +159,8 @@ export default function ContactPage() {
                 disabled={status === "sending" || status === "sent"}
                 className={`w-full font-mono text-[12px] uppercase font-bold tracking-wider py-4 px-8 flex items-center justify-center gap-2 transition-colors duration-200 active:scale-[0.97] ${
                   status === "sent"
-                    ? "bg-[#10b981] text-black"
-                    : "bg-[#10b981] hover:bg-[#4edea3] text-black"
+                    ? "btn-primary"
+                    : "btn-primary hover:bg-[#4edea3]"
                 } disabled:opacity-70 disabled:cursor-not-allowed`}
               >
                 {status === "sending" ? (

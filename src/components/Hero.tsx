@@ -45,9 +45,14 @@ export default function Hero() {
       {/* Mobile-only wordmark at top-left corner of hero */}
       <div className="absolute top-6 left-6 z-20 block sm:hidden">
         <img 
-          src="/tav files/tavryz-wordmark.png" 
+          src="/tav files/tavryz_horizontal_white.png" 
           alt="Tavryz" 
-          className="h-[22px] w-auto object-contain theme-invert" 
+          className="h-6 w-auto object-contain logo-dark" 
+        />
+        <img 
+          src="/tav files/tavryz_horizontal_fullcolor.png" 
+          alt="Tavryz" 
+          className="h-6 w-auto object-contain logo-light" 
         />
       </div>
 

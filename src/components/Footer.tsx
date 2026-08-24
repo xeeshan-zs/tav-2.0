@@ -114,7 +114,7 @@ export default function Footer() {
             {/* Sharp Matrix Button */}
             <a
               href="/contact"
-              className="btn-primary rounded-none bg-[#10b981] hover:bg-[#4edea3] text-black font-bold font-mono tracking-widest text-[12px] uppercase py-4 px-8 flex items-center justify-center gap-2 mx-auto active:scale-[0.97] max-w-xs transition-colors duration-200"
+              className="btn-primary rounded-none hover:bg-[#4edea3] font-bold font-mono tracking-widest text-[12px] uppercase py-4 px-8 flex items-center justify-center gap-2 mx-auto active:scale-[0.97] max-w-xs transition-colors duration-200"
             >
               Start Project <Power className="w-4 h-4" />
             </a>
@@ -127,9 +127,14 @@ export default function Footer() {
             {/* Brand */}
             <div className="flex flex-col gap-3 max-w-xs">
               <img 
-                src="/tav files/tavryz-wordmark.png" 
+                src="/tav files/tavryz_horizontal_white.png" 
                 alt="Tavryz Studio" 
-                className="h-[22px] w-auto object-contain self-start theme-invert" 
+                className="h-6 w-auto object-contain self-start logo-dark" 
+              />
+              <img 
+                src="/tav files/tavryz_horizontal_fullcolor.png" 
+                alt="Tavryz Studio" 
+                className="h-6 w-auto object-contain self-start logo-light" 
               />
               <p className="text-[11px] text-[#bbcabf] leading-relaxed body-text">
                 Custom software engineering studio. High-converting web platforms, mobile apps, and digital systems.

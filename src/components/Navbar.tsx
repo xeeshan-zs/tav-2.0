@@ -156,9 +156,14 @@ export default function Navbar() {
               className="flex items-center gap-2 px-3 py-1.5 rounded-none hover:bg-white/[0.08] transition-colors active:scale-[0.97]"
             >
               <img 
-                src="/tav files/tavryz-wordmark.png" 
+                src="/tav files/tavryz_horizontal_white.png" 
                 alt="Tavryz" 
-                className="h-4.5 w-auto object-contain theme-invert" 
+                className="h-5 w-auto object-contain logo-dark" 
+              />
+              <img 
+                src="/tav files/tavryz_horizontal_fullcolor.png" 
+                alt="Tavryz" 
+                className="h-5 w-auto object-contain logo-light" 
               />
             </a>
           </Magnetic>
@@ -290,9 +295,14 @@ export default function Navbar() {
             className="relative flex items-center justify-center w-8 h-8 rounded-none bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.22] hover:bg-white/[0.08] transition-all duration-300 active:scale-[0.9] overflow-hidden"
           >
             <img 
-              src="/tav files/tavryz-icon.png" 
+              src="/tav files/tavryz_icon_white.png" 
               alt="T" 
-              className="w-full h-full object-contain p-1.5 theme-invert" 
+              className="w-full h-full object-contain p-1.5 logo-dark" 
+            />
+            <img 
+              src="/tav files/tavryz_icon_fullcolor.png" 
+              alt="T" 
+              className="w-full h-full object-contain p-1.5 logo-light" 
             />
           </a>
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
