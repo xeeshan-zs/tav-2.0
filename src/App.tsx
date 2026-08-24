@@ -12,6 +12,28 @@ const PrivacyPage = lazy(() => import("./app/privacy/page"));
 const TermsPage = lazy(() => import("./app/terms/page"));
 const NotFoundPage = lazy(() => import("./app/not-found"));
 
+/* ─── Route preloading ─── */
+const routeImports: Record<string, () => Promise<unknown>> = {
+  "/": () => import("./app/page"),
+  "/services": () => import("./app/services/page"),
+  "/work": () => import("./app/work/page"),
+  "/process": () => import("./app/process/page"),
+  "/contact": () => import("./app/contact/page"),
+  "/privacy": () => import("./app/privacy/page"),
+  "/terms": () => import("./app/terms/page"),
+};
+
+const preloaded = new Set<string>();
+
+export function preloadRoute(path: string) {
+  if (preloaded.has(path)) return;
+  const loader = routeImports[path];
+  if (loader) {
+    preloaded.add(path);
+    loader();
+  }
+}
+
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center">

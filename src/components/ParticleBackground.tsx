@@ -15,7 +15,7 @@ export default function ParticleBackground() {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    const generated: Particle[] = Array.from({ length: 18 }).map((_, i) => ({
+    const generated: Particle[] = Array.from({ length: 8 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -32,13 +32,13 @@ export default function ParticleBackground() {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-black">
-      {/* CSS-animated ambient glow blobs — much cheaper than framer-motion */}
+      {/* CSS-animated ambient glow blobs — cheaper than framer-motion */}
       <div
-        className="absolute top-[-20%] left-[-10%] w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full bg-[#10b981]/[0.04] blur-[150px] will-change-transform"
+        className="absolute top-[-20%] left-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] rounded-full bg-[#10b981]/[0.04] blur-[150px] will-change-transform"
         style={{ animation: "floatBlob1 30s ease-in-out infinite" }}
       />
       <div
-        className="absolute bottom-[-10%] right-[-10%] w-[600px] md:w-[900px] h-[600px] md:h-[900px] rounded-full bg-[#10b981]/[0.02] blur-[180px] will-change-transform"
+        className="absolute bottom-[-10%] right-[-10%] w-[450px] md:w-[700px] h-[450px] md:h-[700px] rounded-full bg-[#10b981]/[0.02] blur-[180px] will-change-transform"
         style={{ animation: "floatBlob2 35s ease-in-out infinite" }}
       />
 

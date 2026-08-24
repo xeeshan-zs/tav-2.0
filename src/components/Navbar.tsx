@@ -4,6 +4,7 @@ import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Spa
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
 import ThemeToggle from "./ThemeToggle";
+import { preloadRoute } from "@/App";
 
 const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string; link?: string }[] }> = {
   Services: {
@@ -127,26 +128,31 @@ export default function Navbar() {
   return (
     <>
       {/* Fixed glassy logo square — top-left */}
-      <a
+      <motion.a
         href="/"
         onClick={(e) => {
           e.preventDefault();
           navigate("/");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
-        className="fixed top-5 left-5 z-50 flex items-center justify-center px-4 py-3 backdrop-blur-md bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.1] hover:border-white/[0.22] transition-all duration-300 active:scale-[0.97]"
+        whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,255,255,0.08), inset 0 0 12px rgba(255,255,255,0.04)" }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 400, damping: 22 }}
+        className="fixed top-5 left-5 z-[60] flex items-center justify-center px-4 py-3 backdrop-blur-md bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.1] hover:border-white/[0.22] transition-colors duration-300"
       >
-        <img
+        <motion.img
           src="/tav files/tavryz_horizontal_white.png"
           alt="Tavryz"
           className="h-5 w-auto object-contain logo-dark"
+          whileHover={{ filter: "brightness(1.2)" }}
         />
-        <img
+        <motion.img
           src="/tav files/tavryz_horizontal_fullcolor.png"
           alt="Tavryz"
           className="h-5 w-auto object-contain logo-light"
+          whileHover={{ filter: "brightness(1.15)" }}
         />
-      </a>
+      </motion.a>
 
       {/* Desktop: Liquid Neomorphic Glass Nav */}
       <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
@@ -179,6 +185,7 @@ export default function Navbar() {
             >
               <button
                 onClick={() => handleNavClick(link.path)}
+                onMouseEnter={() => preloadRoute(link.path)}
                 className={`relative px-4 py-2 rounded-none text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
                   location.pathname === link.path || hoveredTab === link.name
                     ? "text-white"
@@ -205,7 +212,7 @@ export default function Navbar() {
           {/* CTA Button */}
           <button
             onClick={() => handleNavClick("/contact")}
-            onMouseEnter={handleLinkLeave}
+            onMouseEnter={() => { handleLinkLeave(); preloadRoute("/contact"); }}
             className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97] mr-1"
           >
             Book a Call
@@ -311,6 +318,7 @@ export default function Navbar() {
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.path)}
+                onMouseEnter={() => preloadRoute(link.path)}
                 className={`relative whitespace-nowrap px-2 py-1.5 rounded-none text-[11px] font-medium transition-colors active:scale-[0.97] ${
                   location.pathname === link.path || hoveredTab === link.name
                     ? "text-white"
@@ -335,6 +343,7 @@ export default function Navbar() {
           <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
           <button
             onClick={() => handleNavClick("/contact")}
+            onMouseEnter={() => preloadRoute("/contact")}
             className="whitespace-nowrap btn-primary font-mono text-[10px] px-2.5 py-1.5 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
           >
             Book a Call
