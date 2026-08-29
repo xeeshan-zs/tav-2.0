@@ -1,355 +1,254 @@
-import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ArrowRight, Globe, Code, Shield, Brain, Smartphone, Figma, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Magnetic from "@/components/Magnetic";
-import ThemeToggle from "./ThemeToggle";
-import { preloadRoute } from "@/App";
+import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
+import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
+import { services } from "@/lib/services";
 
-const dropdownContent: Record<string, { title: string; description: string; items: { icon: React.ElementType; label: string; desc: string; link?: string }[] }> = {
-  Services: {
-    title: "Our Expertise",
-    description: "Specialized engineering across twelve core domains.",
-    items: [
-      { icon: Brain, label: "AI & Machine Learning", desc: "Agents, RAG, automation, predictive models" },
-      { icon: Code, label: "Web App Development", desc: "Frontend, backend, SaaS, full-stack" },
-      { icon: Smartphone, label: "Mobile App Development", desc: "iOS, Android, cross-platform" },
-      { icon: Shield, label: "Cybersecurity & Compliance", desc: "Audits, data protection, pen testing" },
-      { icon: Figma, label: "UI/UX & Product Design", desc: "Wireframing, design systems, user research" },
-    ],
-  },
-  Work: {
-    title: "Selected Work",
-    description: "High-impact digital products we've engineered.",
-    items: [
-      { icon: Globe, label: "Aroush Works", desc: "Creative studio portfolio — 99 Perf", link: "https://www.aroushworks.com" },
-      { icon: Globe, label: "ICCS Global", desc: "Institutional web system — 100 A11y", link: "https://iccsglobalized.com" },
-      { icon: Smartphone, label: "Z Nectar", desc: "E-commerce mobile app — Kotlin", link: "https://github.com/xeeshan-zs/z-nectar" },
-    ],
-  },
-};
+const preLinks = [{ name: "Home", path: "/" }, { name: "About", path: "/about" }];
+const postLinks = [{ name: "Team", path: "/team" }];
 
-export default function Navbar() {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [hovering, setHovering] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isHome = location.pathname === "/";
-  const navRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [pathname, setPathname] = useState(window.location.pathname);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
+    const onPop = () => setPathname(window.location.pathname);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
 
-  const closeDropdown = () => {
-    timeoutRef.current = setTimeout(() => {
-      setHovering(false);
-      setActiveDropdown(null);
-    }, 150);
-  };
-
-  const cancelClose = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  };
-
-  const handleLinkEnter = (name: string) => {
-    cancelClose();
-    setHovering(true);
-    setActiveDropdown(name);
-    setHoveredTab(name);
-  };
-
-  const handleLinkLeave = () => {
-    closeDropdown();
-    setHoveredTab(null);
-  };
-
-  const [activeSection, setActiveSection] = useState("");
-  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
-
-  // Only track scroll sections on the home page
   useEffect(() => {
-    if (!isHome) {
-      setActiveSection("");
-      return;
-    }
+    setOpen(false);
+    setMobileServicesOpen(false);
+  }, [pathname]);
 
-    const sectionIds = ["hero", "domains", "projects", "process", "contact"];
-    const navIds = new Set(["domains", "projects", "process", "contact"]);
+  // Listen for react-router navigation
+  useEffect(() => {
+    const handleClick = () => setTimeout(() => setPathname(window.location.pathname), 0);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
+  }, []);
 
-    const update = () => {
-      const offset = window.scrollY + window.innerHeight * 0.35;
-      let current = "";
-
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        if (el.offsetTop <= offset) {
-          current = id;
-        }
-      }
-
-      setActiveSection(navIds.has(current) ? current : "");
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, [isHome]);
-
-  const navLinks = [
-    { name: "Services", path: "/services" },
-    { name: "Work", path: "/work" },
-    { name: "Process", path: "/process" },
-  ];
-
-  const handleNavClick = (path: string) => {
-    setHovering(false);
-    setActiveDropdown(null);
-    navigate(path);
-  };
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
+  const isServiceRoute = pathname.startsWith("/services");
 
   return (
-    <>
-      {/* Fixed glassy logo square — top-left */}
-      <motion.a
-        href="/"
-        onClick={(e) => {
-          e.preventDefault();
-          navigate("/");
-          window.scrollTo({ top: 0, behavior: "smooth" });
+    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+      <nav
+        className={`flex w-full max-w-5xl items-center justify-between rounded-full border px-4 py-2.5 backdrop-blur-xl transition-all duration-500 ${
+          scrolled
+            ? "dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_40px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.03)] shadow-lg"
+            : ""
+        }`}
+        style={{
+          borderColor: "var(--nav-border)",
+          backgroundColor: scrolled ? "var(--nav-bg)" : "transparent",
         }}
-        whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,255,255,0.08), inset 0 0 12px rgba(255,255,255,0.04)" }}
-        whileTap={{ scale: 0.95 }}
-        transition={{ type: "spring", stiffness: 400, damping: 22 }}
-        className="fixed top-5 left-5 z-[60] flex items-center justify-center px-4 py-3 backdrop-blur-md bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.1] hover:border-white/[0.22] transition-colors duration-300"
       >
-        <motion.img
-          src="/tav files/tavryz_horizontal_white.png"
-          alt="Tavryz"
-          className="h-5 w-auto object-contain logo-dark"
-          whileHover={{ filter: "brightness(1.2)" }}
-        />
-        <motion.img
-          src="/tav files/tavryz_horizontal_fullcolor.png"
-          alt="Tavryz"
-          className="h-5 w-auto object-contain logo-light"
-          whileHover={{ filter: "brightness(1.15)" }}
-        />
-      </motion.a>
+        <Link to="/" className="pl-1">
+          <Logo markClassName="h-8 w-8" />
+        </Link>
 
-      {/* Desktop: Liquid Neomorphic Glass Nav */}
-      <div className="fixed top-0 left-0 right-0 z-50 hidden sm:flex justify-center pt-4 px-4">
-        <div
-          ref={navRef}
-          className={`relative flex items-center gap-1 rounded-none px-2 py-2 transition-all duration-500 ${
-            scrolled
-              ? "neo-glass-scrolled"
-              : "neo-glass"
-          }`}
-        >
-          {/* Top-edge refraction highlight */}
-          <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-            <div className="absolute inset-y-0 left-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
-            <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-white/20 via-white/[0.06] to-transparent" />
-          </div>
-
-          {/* Divider */}
-          <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
-
-          {/* Nav Links */}
-          {navLinks.map((link) => (
-            <div
-              key={link.name}
-              className="relative"
-              onMouseEnter={() => handleLinkEnter(link.name)}
-              onMouseLeave={handleLinkLeave}
+        <div className="hidden items-center gap-1 md:flex">
+          {preLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                pathname === link.path
+                  ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                  : "dark:text-slate-400 text-[var(--text-secondary)] dark:hover:text-white hover:text-[var(--text-primary)]"
+              }`}
             >
-              <button
-                onClick={() => handleNavClick(link.path)}
-                onMouseEnter={() => preloadRoute(link.path)}
-                className={`relative px-4 py-2 rounded-none text-[13px] font-medium transition-colors duration-200 active:scale-[0.97] ${
-                  location.pathname === link.path || hoveredTab === link.name
-                    ? "text-white"
-                    : "text-[#a3a3a3]"
-                }`}
-              >
-                {(hoveredTab === link.name || (!hoveredTab && location.pathname === link.path)) && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className={`absolute inset-0 rounded-none ${
-                      hoveredTab === link.name ? "neo-pill-hover" : "neo-pill-active"
-                    }`}
-                    transition={{ type: "spring", stiffness: 500, damping: 26 }}
-                  />
-                )}
-                <span className="relative z-10">{link.name}</span>
-              </button>
-            </div>
+              {link.name}
+            </Link>
           ))}
 
-          {/* Divider */}
-          <div className="w-px h-5 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
-
-          {/* CTA Button */}
-          <button
-            onClick={() => handleNavClick("/contact")}
-            onMouseEnter={() => { handleLinkLeave(); preloadRoute("/contact"); }}
-            className="btn-primary font-mono text-[11px] px-4 py-2 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97] mr-1"
+          <div
+            className="relative"
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
           >
-            Book a Call
-          </button>
-
-          {/* Theme Toggle */}
-          <ThemeToggle />
-        </div>
-
-        {/* Expanding Card Dropdown */}
-        <AnimatePresence>
-          {activeDropdown && hovering && dropdownContent[activeDropdown] && (
-            <motion.div
-              initial={{ opacity: 0, y: -8, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              onMouseEnter={cancelClose}
-              onMouseLeave={handleLinkLeave}
-              className="absolute top-full mt-3 w-[420px] neo-glass-dropdown rounded-none overflow-hidden"
+            <Link
+              to="/services"
+              className={`flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                isServiceRoute
+                  ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                  : "dark:text-slate-400 text-[var(--text-secondary)] dark:hover:text-white hover:text-[var(--text-primary)]"
+              }`}
             >
-              <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
-                <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.05] to-transparent" />
-              </div>
+              Services
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
+            </Link>
 
-              <div className="relative p-5 border-b border-white/[0.06]">
-                <h3 className="text-sm font-bold text-white mb-1">{dropdownContent[activeDropdown].title}</h3>
-                <p className="text-[11px] text-[#a3a3a3]">{dropdownContent[activeDropdown].description}</p>
-              </div>
-              <div className="relative p-2">
-                {dropdownContent[activeDropdown].items.map((item, i) => {
-                  const Icon = item.icon;
-                  return (
-                    <a
-                      key={i}
-                      href={item.link || `${activeDropdown === "Services" ? "/services" : "/work"}`}
-                      target={item.link ? "_blank" : undefined}
-                      rel={item.link ? "noopener noreferrer" : undefined}
-                      onClick={(e) => {
-                        if (!item.link) {
-                          e.preventDefault();
-                          const targetPath = activeDropdown === "Services" ? "/services" : "/work";
-                          setHovering(false);
-                          setActiveDropdown(null);
-                          navigate(targetPath);
-                        } else {
-                          setHovering(false);
-                          setActiveDropdown(null);
-                        }
-                      }}
-                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.06] transition-all group cursor-pointer active:scale-[0.98]"
-                    >
-                      <div className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.1] transition-colors">
-                        <Icon className="w-4 h-4 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[13px] font-semibold text-white">{item.label}</div>
-                        <div className="text-[11px] text-[#a3a3a3] truncate">{item.desc}</div>
-                      </div>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#a3a3a3] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                    </a>
-                  );
-                })}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Mobile: Neomorphic Glass Floating Bottom Nav */}
-      <div className="fixed bottom-6 left-4 right-4 z-50 sm:hidden flex justify-center">
-        <div className="neo-glass-mobile flex items-center justify-between w-full rounded-none px-2 py-1.5 relative">
-          <div className="absolute inset-0 rounded-none pointer-events-none overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+            <AnimatePresence>
+              {servicesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute left-1/2 top-full mt-3 w-[560px] -translate-x-1/2 rounded-2xl p-3 dark:bg-[#0A0C0E]/95 bg-white/95 dark:border-white/[0.06] border-black/[0.08] backdrop-blur-xl"
+                  style={{
+                    boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 16px 64px -12px rgba(0,0,0,0.7), 0 4px 20px -4px rgba(0,124,125,0.08), inset 0 1px 0 rgba(255,255,255,0.03)",
+                  }}
+                >
+                  <div className="grid grid-cols-2 gap-1">
+                    {services.map((service) => {
+                      const Icon = service.icon;
+                      return (
+                        <Link
+                          key={service.slug}
+                          to={`/services/${service.slug}`}
+                          className="group flex items-start gap-3 rounded-xl p-3 transition-colors dark:hover:bg-white/[0.06] hover:bg-black/[0.03]"
+                        >
+                          <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-brand-gradient-soft">
+                            <Icon className="h-4 w-4 text-accent-teal" />
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block text-[13px] font-semibold text-[var(--text-primary)]">{service.title}</span>
+                            <span className="block truncate text-[11px] dark:text-slate-500 text-[var(--text-muted)]">{service.shortDescription}</span>
+                          </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  <Link
+                    to="/services"
+                    className="mt-2 flex items-center justify-center gap-2 rounded-xl border-t dark:border-white/[0.06] border-black/[0.06] py-3 font-mono text-[11px] font-bold uppercase tracking-wider text-accent-teal hover:text-accent-bright"
+                  >
+                    View All Services <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/");
-            }}
-            className="relative flex items-center justify-center w-8 h-8 rounded-none bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.22] hover:bg-white/[0.08] transition-all duration-300 active:scale-[0.9] overflow-hidden"
-          >
-            <img 
-              src="/tav files/tavryz_icon_white.png" 
-              alt="T" 
-              className="w-full h-full object-contain p-1.5 logo-dark" 
-            />
-            <img 
-              src="/tav files/tavryz_icon_fullcolor.png" 
-              alt="T" 
-              className="w-full h-full object-contain p-1.5 logo-light" 
-            />
-          </a>
-          <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
-          
-          {/* Navigation links */}
-          <div className="flex items-center gap-0.5">
-            {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.path)}
-                onMouseEnter={() => preloadRoute(link.path)}
-                className={`relative whitespace-nowrap px-2 py-1.5 rounded-none text-[11px] font-medium transition-colors active:scale-[0.97] ${
-                  location.pathname === link.path || hoveredTab === link.name
-                    ? "text-white"
-                    : "text-[#a3a3a3]"
-                }`}
-              >
-                {(hoveredTab === link.name || (!hoveredTab && location.pathname === link.path)) && (
-                  <motion.div
-                    layoutId="nav-pill-mobile"
-                    className={`absolute inset-0 rounded-none ${
-                      hoveredTab === link.name ? "neo-pill-hover" : "neo-pill-active"
-                    }`}
-                    transition={{ type: "spring", stiffness: 500, damping: 26 }}
-                  />
-                )}
-                <span className="relative z-10">{link.name}</span>
-              </button>
-            ))}
-          </div>
+          {postLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                pathname === link.path
+                  ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                  : "dark:text-slate-400 text-[var(--text-secondary)] dark:hover:text-white hover:text-[var(--text-primary)]"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
 
-          {/* Divider */}
-          <div className="w-px h-4 bg-gradient-to-b from-white/20 via-white/[0.08] to-white/20" />
-          <button
-            onClick={() => handleNavClick("/contact")}
-            onMouseEnter={() => preloadRoute("/contact")}
-            className="whitespace-nowrap btn-primary font-mono text-[10px] px-2.5 py-1.5 uppercase font-bold hover:bg-[#4edea3] transition-colors duration-200 active:scale-[0.97]"
+        <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
+          <Link
+            to="/contact"
+            className="btn-shine inline-flex items-center rounded-full bg-brand-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow transition-transform hover:-translate-y-0.5"
           >
             Book a Call
-          </button>
+          </Link>
         </div>
-      </div>
-    </>
+
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-9 w-9 items-center justify-center rounded-full dark:border-white/[0.08] border-black/[0.08] dark:text-white text-[var(--text-primary)] md:hidden"
+          aria-label="Toggle menu"
+        >
+          {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        </button>
+      </nav>
+
+      {open && (
+        <div
+          className="absolute left-4 right-4 top-[72px] flex max-h-[75vh] flex-col gap-1 overflow-y-auto rounded-2xl p-3 dark:bg-[#0A0C0E]/95 bg-white/95 dark:border-white/[0.06] border-black/[0.08] backdrop-blur-xl md:hidden"
+          style={{
+            boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 16px 64px -12px rgba(0,0,0,0.7), 0 4px 20px -4px rgba(0,124,125,0.08)",
+          }}
+        >
+          {preLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`rounded-xl px-4 py-3 text-sm font-medium ${
+                pathname === link.path
+                  ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                  : "dark:text-slate-300 text-[var(--text-secondary)]"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+
+          <button
+            onClick={() => setMobileServicesOpen((v) => !v)}
+            className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium ${
+              isServiceRoute
+                ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                : "dark:text-slate-300 text-[var(--text-secondary)]"
+            }`}
+          >
+            Services
+            <ChevronDown className={`h-4 w-4 transition-transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
+          </button>
+
+          <AnimatePresence>
+            {mobileServicesOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="flex flex-col gap-0.5 py-1 pl-2">
+                  {services.map((service) => (
+                    <Link
+                      key={service.slug}
+                      to={`/services/${service.slug}`}
+                      className="rounded-lg px-4 py-2.5 text-[13px] dark:text-slate-400 text-[var(--text-secondary)] dark:hover:bg-white/[0.06] hover:bg-black/[0.03] dark:hover:text-white hover:text-[var(--text-primary)]"
+                    >
+                      {service.title}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {postLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`rounded-xl px-4 py-3 text-sm font-medium ${
+                pathname === link.path
+                  ? "dark:bg-white/10 bg-accent/[0.08] text-[var(--text-primary)]"
+                  : "dark:text-slate-300 text-[var(--text-secondary)]"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <div className="mt-1 flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              to="/contact"
+              className="flex-1 rounded-xl bg-brand-gradient px-4 py-3 text-center text-sm font-semibold text-white"
+            >
+              Book a Call
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

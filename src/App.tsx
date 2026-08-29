@@ -1,77 +1,66 @@
-import { lazy, Suspense, useEffect } from "react";
+import { HelmetProvider, Helmet } from "react-helmet-async";
+import { ThemeProvider } from "next-themes";
 import { Routes, Route } from "react-router-dom";
-import ParticleBackground from "@/components/ParticleBackground";
-import ScrollToTop from "@/components/ScrollToTop";
-
-const HomePage = lazy(() => import("./app/page"));
-const ServicesPage = lazy(() => import("./app/services/page"));
-const WorkPage = lazy(() => import("./app/work/page"));
-const ProcessPage = lazy(() => import("./app/process/page"));
-const ContactPage = lazy(() => import("./app/contact/page"));
-const PrivacyPage = lazy(() => import("./app/privacy/page"));
-const TermsPage = lazy(() => import("./app/terms/page"));
-const NotFoundPage = lazy(() => import("./app/not-found"));
-
-/* ─── Route preloading ─── */
-const routeImports: Record<string, () => Promise<unknown>> = {
-  "/": () => import("./app/page"),
-  "/services": () => import("./app/services/page"),
-  "/work": () => import("./app/work/page"),
-  "/process": () => import("./app/process/page"),
-  "/contact": () => import("./app/contact/page"),
-  "/privacy": () => import("./app/privacy/page"),
-  "/terms": () => import("./app/terms/page"),
-};
-
-const preloaded = new Set<string>();
-
-export function preloadRoute(path: string) {
-  if (preloaded.has(path)) return;
-  const loader = routeImports[path];
-  if (loader) {
-    preloaded.add(path);
-    loader();
-  }
-}
-
-function PageLoader() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-    </div>
-  );
-}
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { ScrollToTopOnNavigate } from "./components/ScrollToTopOnNavigate";
+import { PageTransition } from "./components/PageTransition";
+import { IntroSplash } from "./components/IntroSplash";
+import { CursorTrail } from "./components/CursorTrail";
+import { ScrollProgressBar } from "./components/ScrollProgressBar";
+import { HomePage } from "./pages/HomePage";
+import { AboutPage } from "./pages/AboutPage";
+import { ContactPage } from "./pages/ContactPage";
+import { TeamPage } from "./pages/TeamPage";
+import { WorkPage } from "./pages/WorkPage";
+import { ServicesPage } from "./pages/ServicesPage";
+import { ServiceDetailPage } from "./pages/ServiceDetailPage";
+import { BrandPage } from "./pages/BrandPage";
+import { PrivacyPage } from "./pages/PrivacyPage";
+import { TermsPage } from "./pages/TermsPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 export default function App() {
-  // Prevent text cursor / caret appearing on body when clicking
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const isFormField = target.closest("input, textarea, select, [contenteditable='true'], .ql-editor");
-      if (!isFormField && document.activeElement && document.activeElement !== document.body) {
-        (document.activeElement as HTMLElement).blur();
-      }
-    };
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, []);
-
   return (
-    <div className="min-h-full flex flex-col bg-black text-[#fafafa] selection:bg-white/20 selection:text-white relative">
-      <ParticleBackground />
-      <ScrollToTop />
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/process" element={<ProcessPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </div>
+    <HelmetProvider>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
+        <Helmet>
+          <title>Tavryz Studio — Custom Software, Design &amp; Growth Engineering</title>
+          <meta name="description" content="Tavryz is a software engineering studio building high-performance web platforms, mobile apps, AI systems, and growth for teams who want things built right." />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="Tavryz Studio — Custom Software, Design &amp; Growth Engineering" />
+          <meta property="og:description" content="We build web platforms, mobile apps, AI systems, and growth marketing for teams who want things built right." />
+          <meta property="og:site_name" content="Tavryz Studio" />
+          <meta property="og:url" content="https://tavryz.com" />
+        </Helmet>
+        <body className="flex min-h-screen flex-col font-sans antialiased" style={{ color: "var(--text-primary)", background: "var(--bg)" }}>
+          <IntroSplash />
+          <ScrollProgressBar />
+          <CursorTrail />
+          <ScrollToTopOnNavigate />
+          <Navbar />
+          <main className="flex-1">
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/team" element={<TeamPage />} />
+                <Route path="/work" element={<WorkPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/services/:slug" element={<ServiceDetailPage />} />
+                <Route path="/brand" element={<BrandPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </PageTransition>
+          </main>
+          <Footer />
+          <ScrollToTop />
+        </body>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }

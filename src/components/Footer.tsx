@@ -1,196 +1,173 @@
-import { useState, useEffect } from "react";
-import { Mail, Copy, Check, Linkedin, Twitter, Power } from "lucide-react";
-import Magnetic from "@/components/Magnetic";
+import { Link } from "react-router-dom";
+import { Linkedin, Twitter, ArrowUpRight, Mail } from "lucide-react";
+import { Logo } from "./Logo";
+import { Reveal } from "./Reveal";
+import { NewsletterForm } from "./NewsletterForm";
+import { getServiceBySlug } from "@/lib/services";
+import { MagneticButton } from "./MagneticButton";
 import { motion } from "framer-motion";
 
-export default function Footer() {
-  const [copied, setCopied] = useState(false);
-  const [currentTime, setCurrentTime] = useState("");
+const quickLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Services", path: "/services" },
+  { label: "Work", path: "/work" },
+  { label: "Team", path: "/team" },
+  { label: "Contact", path: "/contact" },
+];
 
-  const email = "tavryzofficial@gmail.com";
+const footerServiceSlugs = [
+  "web-development",
+  "mobile-app-development",
+  "ai-machine-learning",
+  "cybersecurity-compliance",
+  "seo",
+  "media-creative-services",
+];
 
-  useEffect(() => {
-    const updateClock = () => {
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Karachi",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      };
-      const formatter = new Intl.DateTimeFormat([], options);
-      setCurrentTime(formatter.format(new Date()));
-    };
+const resourceLinks = [
+  { label: "Brand Guide", path: "/brand" },
+  { label: "Privacy Policy", path: "/privacy" },
+  { label: "Terms of Service", path: "/terms" },
+];
 
-    updateClock();
-    const interval = setInterval(updateClock, 1000);
-    return () => clearInterval(interval);
-  }, []);
+const socials = [
+  { name: "LinkedIn", href: "https://linkedin.com/company/tavryz", icon: Linkedin },
+  { name: "X", href: "https://x.com", icon: Twitter },
+];
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-    }
-  };
+export function Footer() {
+  const footerServices = footerServiceSlugs.map((slug) => getServiceBySlug(slug)).filter(Boolean);
 
   return (
-    <footer id="contact" className="bg-transparent relative overflow-hidden z-10 w-full pb-6">
-      {/* Contact Section - Centered layout with metadata cards */}
-      <div className="max-w-7xl mx-auto px-6 pt-24 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-none overflow-hidden mb-20 max-w-5xl mx-auto"
-        >
-          {/* Glass background */}
-          <div className="absolute inset-0 bg-white/[0.03] border border-white/[0.06] backdrop-blur-xl rounded-none" />
-
-          <div className="relative p-10 md:p-16 lg:p-20 text-center">
-            {/* Title & Subtitle */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 tracking-tight leading-[1.1]">
-              Ready to Initialize?
-            </h2>
-            <p className="text-base md:text-lg text-[#bbcabf] mb-12 max-w-xl mx-auto leading-relaxed body-text">
-              Engage our engineering team to architect your next high-performance digital product.
-            </p>
-
-            {/* Interactive Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12 text-left">
-              {/* Email Card */}
-              <div className="bg-black/60 border border-outline-variant/30 rounded-none p-5 hover:bg-black/80 transition-colors group">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[9px] uppercase tracking-[0.25em] font-mono text-[#737373]">Email</span>
-                  <Mail className="w-3.5 h-3.5 text-[#737373]" />
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <span className="text-[13px] text-white font-medium truncate mr-2">{email}</span>
-                  <button
-                    onClick={handleCopy}
-                    className="flex items-center gap-1.5 text-[9px] font-mono font-bold uppercase tracking-wider text-[#bbcabf] hover:text-[#10b981] transition-colors self-start sm:self-auto"
-                  >
-                    {copied ? (
-                      <>
-                        <Check className="w-3.5 h-3.5" />
-                        Copied
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3.5 h-3.5" />
-                        Copy
-                      </>
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Availability Card */}
-              <div className="bg-black/60 border border-outline-variant/30 rounded-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[9px] uppercase tracking-[0.25em] font-mono text-[#737373]">Availability</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[13px] text-white font-medium">Accepting new projects</span>
-                  <span className="text-[9px] font-mono text-[#737373]">Q3/Q4 2026</span>
-                </div>
-              </div>
-
-              {/* Local Time Card */}
-              <div className="bg-black/60 border border-outline-variant/30 rounded-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[9px] uppercase tracking-[0.25em] font-mono text-[#737373]">Local Time</span>
-                  <span className="text-[9px] font-mono text-[#737373]">PKT</span>
-                </div>
-                <span className="text-[13px] text-white font-medium font-mono block mt-1">{currentTime || "00:00:00"}</span>
-              </div>
+    <footer className="relative z-10 overflow-hidden border-t dark:border-white/5 border-black/[0.06] dark:bg-[#07080A] bg-[var(--bg-subtle)]">
+      <div className="mx-auto max-w-6xl px-6 pb-16 pt-20">
+        <Reveal>
+          <div className="glass-strong relative mx-auto mb-20 max-w-4xl overflow-hidden rounded-3xl p-10 text-center md:p-16">
+            <div
+              className="glow-blob left-1/2 top-[-140px] h-[360px] w-[500px] -translate-x-1/2 opacity-70"
+              style={{ background: "radial-gradient(circle, rgba(0,124,125,0.2), rgba(0,166,166,0.06) 45%, transparent 65%)" }}
+            />
+            <div
+              className="glow-blob left-[20%] bottom-[-80px] h-[200px] w-[200px] opacity-40"
+              style={{ background: "radial-gradient(circle, rgba(0,166,166,0.15), transparent 70%)" }}
+            />
+            <div className="relative">
+              <h2 className="mb-4 font-display text-4xl font-extrabold tracking-tight dark:text-white text-[var(--text-primary)] md:text-5xl">
+                Ready to start?
+              </h2>
+              <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">
+                Bring your next project to our engineering team and let&apos;s build something that actually performs.
+              </p>
+              <MagneticButton>
+                <Link
+                  to="/contact"
+                  className="btn-shine mx-auto inline-flex max-w-xs items-center justify-center gap-2 rounded-full bg-brand-gradient px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-glow transition-transform hover:-translate-y-0.5"
+                >
+                  Start a Project <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </MagneticButton>
             </div>
+          </div>
+        </Reveal>
 
-            {/* Sharp Matrix Button */}
+        <div className="grid grid-cols-1 gap-12 border-t dark:border-white/5 border-black/[0.06] pt-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="flex flex-col gap-4">
+            <Logo markClassName="h-8 w-8" />
+            <p className="max-w-xs text-[13px] leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">
+              Custom software engineering studio. High-converting web platforms, mobile apps, and digital
+              systems.
+            </p>
             <a
-              href="/contact"
-              className="btn-primary rounded-none hover:bg-[#4edea3] font-bold font-mono tracking-widest text-[12px] uppercase py-4 px-8 flex items-center justify-center gap-2 mx-auto active:scale-[0.97] max-w-xs transition-colors duration-200"
+              href="mailto:tavryzofficial@gmail.com"
+              className="flex items-center gap-2 text-sm dark:text-slate-400 text-[var(--text-secondary)] hover:text-accent-teal"
             >
-              Start Project <Power className="w-4 h-4" />
+              <Mail className="h-4 w-4" />
+              tavryzofficial@gmail.com
             </a>
           </div>
-        </motion.div>
 
-        {/* Footer Bottom */}
-        <div className="border-t border-white/[0.06] pt-10">
-          <div className="flex flex-col md:flex-row gap-8 justify-between items-start">
-            {/* Brand */}
-            <div className="flex flex-col gap-3 max-w-xs">
-              <img 
-                src="/tav files/tavryz_horizontal_white.png" 
-                alt="Tavryz Studio" 
-                className="h-6 w-auto object-contain self-start logo-dark" 
-              />
-              <img 
-                src="/tav files/tavryz_horizontal_fullcolor.png" 
-                alt="Tavryz Studio" 
-                className="h-6 w-auto object-contain self-start logo-light" 
-              />
-              <p className="text-[11px] text-[#bbcabf] leading-relaxed body-text">
-                Custom software engineering studio. High-converting web platforms, mobile apps, and digital systems.
-              </p>
-            </div>
-
-            {/* Links */}
-            <div className="flex flex-col gap-4 font-mono text-[11px]">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Navigate</span>
-              <div className="flex gap-6">
-                {[{ label: "Services", path: "/services" }, { label: "Work", path: "/work" }, { label: "Process", path: "/process" }, { label: "Contact", path: "/contact" }].map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.path}
-                    className="text-[#bbcabf] hover:text-[#10b981] transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Socials */}
-            <div className="flex flex-col gap-4">
-              <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-[#737373]">Connect</span>
-              <div className="flex items-center gap-3">
-                {[
-                  { name: "Twitter", href: "https://x.com", icon: Twitter },
-                  { name: "LinkedIn", href: "https://linkedin.com/company/tavryz", icon: Linkedin },
-                ].map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <Magnetic key={social.name} range={15} strength={0.3}>
-                      <a
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-[#737373] bg-white/[0.04] border border-white/[0.06] hover:text-white hover:bg-white/[0.08] hover:border-[#10b981] hover:text-[#10b981] transition-colors active:scale-[0.95]"
-                        aria-label={social.name}
-                      >
-                        <Icon className="w-4 h-4" />
-                      </a>
-                    </Magnetic>
-                  );
-                })}
-              </div>
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] dark:text-slate-500 text-[var(--text-muted)]">Quick Links</span>
+            <div className="flex flex-col gap-2.5">
+              {quickLinks.map((link) => (
+                <Link key={link.path} to={link.path} className="text-sm dark:text-slate-400 text-[var(--text-secondary)] hover:text-accent-teal">
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Copyright */}
-          <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono text-[#525252]">
-            <span>© {new Date().getFullYear()} Tavryz Studio. All rights reserved.</span>
-            <div className="flex gap-6">
-              <a href="/privacy" className="hover:text-[#10b981] transition-colors">Privacy</a>
-              <a href="/terms" className="hover:text-[#10b981] transition-colors">Terms</a>
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] dark:text-slate-500 text-[var(--text-muted)]">Services</span>
+            <div className="flex flex-col gap-2.5">
+              {footerServices.map((s) => (
+                <Link key={s!.slug} to={`/services/${s!.slug}`} className="text-sm dark:text-slate-400 text-[var(--text-secondary)] hover:text-accent-teal">
+                  {s!.title}
+                </Link>
+              ))}
+              <Link to="/services" className="text-sm font-semibold text-accent-teal hover:text-accent-bright">
+                View All →
+              </Link>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] dark:text-slate-500 text-[var(--text-muted)]">Resources</span>
+            <div className="flex flex-col gap-2.5">
+              {resourceLinks.map((link) => (
+                <Link key={link.path} to={link.path} className="text-sm dark:text-slate-400 text-[var(--text-secondary)] hover:text-accent-teal">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col gap-10 border-t dark:border-white/5 border-black/[0.06] pt-10 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-sm">
+            <span className="mb-3 block font-display text-base font-bold dark:text-white text-[var(--text-primary)]">Stay Updated</span>
+            <p className="mb-4 text-[13px] leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">
+              Occasional notes on what we&apos;re building and shipping. No spam.
+            </p>
+            <NewsletterForm />
+          </div>
+
+          <div>
+            <span className="mb-4 block font-mono text-[10px] uppercase tracking-[0.25em] dark:text-slate-500 text-[var(--text-muted)]">
+              Follow Us
+            </span>
+            <div className="flex items-center gap-3">
+              {socials.map((s, i) => (
+                <motion.a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  whileHover={{ y: -3, scale: 1.1 }}
+                  className="flex h-10 w-10 items-center justify-center rounded-full dark:border-white/10 border-black/[0.08] dark:text-slate-400 text-[var(--text-secondary)] transition-colors hover:border-accent-teal/40 hover:text-accent-teal"
+                >
+                  <s.icon className="h-4 w-4" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t dark:border-white/5 border-black/[0.06] pt-6 text-[11px] font-mono dark:text-slate-500 text-[var(--text-muted)] sm:flex-row">
+          <span>© {new Date().getFullYear()} Tavryz Studio. All rights reserved.</span>
+          <div className="flex gap-6">
+            <Link to="/privacy" className="hover:text-accent-teal">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-accent-teal">
+              Terms of Service
+            </Link>
           </div>
         </div>
       </div>

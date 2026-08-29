@@ -1,45 +1,37 @@
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    // Check local storage or default to light
-    const savedTheme = localStorage.getItem("tavryz-theme") as "light" | "dark" | null;
-    if (savedTheme === "dark") {
-      document.documentElement.classList.remove("light");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.add("light");
-      setTheme("light");
-    }
-  }, []);
+  useEffect(() => setMounted(true), []);
 
-  const toggleTheme = () => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("light");
-      localStorage.setItem("tavryz-theme", "light");
-      setTheme("light");
-    } else {
-      document.documentElement.classList.remove("light");
-      localStorage.setItem("tavryz-theme", "dark");
-      setTheme("dark");
-    }
-  };
+  if (!mounted) return <div className="h-8 w-8" />;
+
+  const isDark = theme === "dark";
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="w-8 h-8 flex items-center justify-center bg-transparent border border-white/[0.08] hover:border-[#10b981]/40 hover:bg-[#10b981]/5 transition-colors duration-200 text-[#a3a3a3] hover:text-white rounded-none cursor-pointer"
-      title={theme === "dark" ? "Switch to Light Theme" : "Switch to Dark Theme"}
-      aria-label="Toggle Theme"
+    <motion.button
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      whileTap={{ scale: 0.9 }}
+      className="flex h-8 w-8 items-center justify-center rounded-md transition-colors duration-200 dark:text-slate-400 text-[var(--text-secondary)] hover:text-accent-teal"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
-      {theme === "dark" ? (
-        <Sun className="w-3.5 h-3.5 transition-transform duration-300 hover:rotate-45" />
-      ) : (
-        <Moon className="w-3.5 h-3.5 transition-transform duration-300 hover:-rotate-12" />
-      )}
-    </button>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={isDark ? "sun" : "moon"}
+          initial={{ y: -8, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 8, opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className="flex items-center justify-center"
+        >
+          {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </motion.span>
+      </AnimatePresence>
+    </motion.button>
   );
 }

@@ -1,0 +1,14 @@
+<svg viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="10" y1="18" x2="110" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#07080A"/>
+      <stop offset="45%" stop-color="#007C7D"/>
+      <stop offset="100%" stop-color="#00A6A6"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 26 H100" stroke="url(#g)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M28 26 L60 98" stroke="url(#g)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M92 26 L60 98" stroke="url(#g)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M34 30 L58 88" stroke="white" stroke-opacity="0.28" stroke-width="4" stroke-linecap="round"/>
+  <text x="136" y="72" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" letter-spacing="6" fill="#F1F1F1">TAVRYZ</text>
+</svg>

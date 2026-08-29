@@ -1,0 +1,38 @@
+<svg viewBox="0 0 1584 396" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#024243"/>
+      <stop offset="45%" stop-color="#007C7D"/>
+      <stop offset="100%" stop-color="#00A6A6"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#007C7D" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#007C7D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00A6A6" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#00A6A6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M 44 0 L 0 0 0 44" fill="none" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1584" height="396" fill="#07080A"/>
+  <rect width="1584" height="396" fill="url(#grid)"/>
+  <circle cx="1250" cy="80" r="260" fill="url(#glow1)"/>
+  <circle cx="250" cy="360" r="220" fill="url(#glow2)"/>
+
+  <g transform="translate(120,148)">
+    <path d="M20 26 H100" stroke="url(#mark)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M28 26 L60 96" stroke="url(#mark)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M92 26 L60 96" stroke="url(#mark)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="150" y="72" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="52" letter-spacing="7" fill="#F1F1F1">TAVRYZ</text>
+  </g>
+
+  <text x="122" y="330" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="21" letter-spacing="0.5" fill="#737878">
+    Web &#183; Mobile &#183; AI &amp; ML &#183; Security &#183; Design &#183; Growth
+  </text>
+
+  <rect x="120" y="352" width="64" height="4" rx="2" fill="url(#mark)"/>
+</svg>

@@ -1,0 +1,36 @@
+<svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mark" x1="0" y1="0" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#024243"/>
+      <stop offset="45%" stop-color="#007C7D"/>
+      <stop offset="100%" stop-color="#00A6A6"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#007C7D" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#007C7D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00A6A6" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#00A6A6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#FFFFFF" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="1200" fill="#07080A"/>
+  <rect width="1200" height="1200" fill="url(#grid)"/>
+  <circle cx="600" cy="360" r="420" fill="url(#glow1)"/>
+  <circle cx="900" cy="900" r="320" fill="url(#glow2)"/>
+
+  <g transform="translate(510,470)">
+    <path d="M20 26 H160" stroke="url(#mark)" stroke-width="26" stroke-linecap="round"/>
+    <path d="M46 26 L90 150" stroke="url(#mark)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M134 26 L90 150" stroke="url(#mark)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="600" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="72" letter-spacing="12" fill="#F1F1F1">TAVRYZ</text>
+  <text x="600" y="790" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="24" letter-spacing="4" fill="#737878">SOFTWARE ENGINEERING STUDIO</text>
+
+  <rect x="560" y="840" width="80" height="4" rx="2" fill="url(#mark)"/>
+</svg>
