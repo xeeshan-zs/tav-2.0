@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter, ArrowUpRight, Mail } from "lucide-react";
 import { Logo } from "./Logo";
@@ -5,7 +6,7 @@ import { Reveal } from "./Reveal";
 import { NewsletterForm } from "./NewsletterForm";
 import { getServiceBySlug } from "@/lib/services";
 import { MagneticButton } from "./MagneticButton";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 const quickLinks = [
   { label: "Home", path: "/" },
@@ -35,6 +36,28 @@ const socials = [
   { name: "LinkedIn", href: "https://linkedin.com/company/tavryz", icon: Linkedin },
   { name: "X", href: "https://x.com", icon: Twitter },
 ];
+
+function SocialLink({ s, index }: { s: typeof socials[0]; index: number }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  return (
+    <motion.a
+      ref={ref}
+      href={s.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={s.name}
+      initial={{ opacity: 0, y: 10 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={{ y: -3, scale: 1.1 }}
+      className="flex h-10 w-10 items-center justify-center rounded-full dark:border-white/10 border-black/[0.08] dark:text-slate-400 text-[var(--text-secondary)] transition-colors hover:border-accent-teal/40 hover:text-accent-teal"
+    >
+      <s.icon className="h-4 w-4" />
+    </motion.a>
+  );
+}
 
 export function Footer() {
   const footerServices = footerServiceSlugs.map((slug) => getServiceBySlug(slug)).filter(Boolean);
@@ -139,21 +162,7 @@ export function Footer() {
             </span>
             <div className="flex items-center gap-3">
               {socials.map((s, i) => (
-                <motion.a
-                  key={s.name}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  whileHover={{ y: -3, scale: 1.1 }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full dark:border-white/10 border-black/[0.08] dark:text-slate-400 text-[var(--text-secondary)] transition-colors hover:border-accent-teal/40 hover:text-accent-teal"
-                >
-                  <s.icon className="h-4 w-4" />
-                </motion.a>
+                <SocialLink key={s.name} s={s} index={i} />
               ))}
             </div>
           </div>

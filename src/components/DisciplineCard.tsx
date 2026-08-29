@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { revealItem } from "./Reveal";
 import { disciplines } from "@/lib/team";
 
@@ -9,6 +10,9 @@ export function DisciplineCard({ index }: { index: number }) {
   if (!d) return null;
   const { icon: Icon, title, body } = d;
   const tag = tags[index] || "CORE";
+
+  const sweepRef = useRef<HTMLDivElement>(null);
+  const sweepInView = useInView(sweepRef, { once: true });
 
   return (
     <motion.div
@@ -59,7 +63,9 @@ export function DisciplineCard({ index }: { index: number }) {
         </p>
       </div>
 
-      <motion.div initial={{ x: "-100%" }} whileInView={{ x: "200%" }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.2 + index * 0.1, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
+      <div ref={sweepRef}>
+        <motion.div initial={{ x: "-100%" }} animate={sweepInView ? { x: "200%" } : {}} transition={{ duration: 1.2, delay: 0.2 + index * 0.1, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
+      </div>
     </motion.div>
   );
 }

@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -12,7 +14,7 @@ const pageVariants = {
     y: 0,
     transition: {
       duration: 0.4,
-      ease: [0.16, 1, 0.3, 1],
+      ease,
     },
   },
   exit: {
@@ -20,7 +22,7 @@ const pageVariants = {
     y: -8,
     transition: {
       duration: 0.2,
-      ease: [0.16, 1, 0.3, 1],
+      ease,
     },
   },
 };

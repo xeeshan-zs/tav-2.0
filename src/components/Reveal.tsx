@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { type ReactNode } from "react";
 
 export function Reveal({
   children,
@@ -12,11 +13,14 @@ export function Reveal({
   delay?: number;
   y?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
@@ -34,11 +38,14 @@ export function RevealGroup({
   className?: string;
   stagger?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
   return (
     <motion.div
+      ref={ref}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      animate={inView ? "visible" : "hidden"}
       variants={{
         hidden: {},
         visible: { transition: { staggerChildren: stagger } },

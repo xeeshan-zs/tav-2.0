@@ -98,13 +98,14 @@ function ManifestoBlock({ item, index }: { item: (typeof manifesto)[0]; index: n
 function CapabilityCard({ cap, index }: { cap: (typeof capabilities)[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
+  const sweepRef = useRef<HTMLDivElement>(null);
+  const sweepInView = useInView(sweepRef, { once: true });
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.2 } }}
       className="glass-card group relative overflow-hidden rounded-2xl p-8"
@@ -140,12 +141,17 @@ function CapabilityCard({ cap, index }: { cap: (typeof capabilities)[0]; index: 
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] dark:text-slate-500 text-[var(--text-muted)]">{cap.label}</div>
       </div>
 
-      <motion.div initial={{ x: "-100%" }} whileInView={{ x: "200%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.3 + index * 0.15, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/50 to-transparent" />
+      <div ref={sweepRef}>
+        <motion.div initial={{ x: "-100%" }} animate={sweepInView ? { x: "200%" } : {}} transition={{ duration: 1.5, delay: 0.3 + index * 0.15, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/50 to-transparent" />
+      </div>
     </motion.div>
   );
 }
 
 function TechyPrincipleCard({ principle, index }: { principle: (typeof principles)[0]; index: number }) {
+  const sweepRef = useRef<HTMLDivElement>(null);
+  const sweepInView = useInView(sweepRef, { once: true });
+
   return (
     <motion.div
       variants={revealItem}
@@ -189,7 +195,9 @@ function TechyPrincipleCard({ principle, index }: { principle: (typeof principle
         </p>
       </div>
 
-      <motion.div initial={{ x: "-100%" }} whileInView={{ x: "200%" }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.2 + index * 0.1, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/4 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
+      <div ref={sweepRef}>
+        <motion.div initial={{ x: "-100%" }} animate={sweepInView ? { x: "200%" } : {}} transition={{ duration: 1.2, delay: 0.2 + index * 0.1, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/4 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
+      </div>
     </motion.div>
   );
 }
@@ -206,70 +214,98 @@ function ProcessPreview() {
         </Reveal>
 
         <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 dark:bg-white/[0.04] bg-black/[0.06] sm:block">
-            <motion.div initial={{ height: 0 }} whileInView={{ height: "100%" }} viewport={{ once: true }} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="w-full bg-gradient-to-b from-accent-teal/40 via-accent-teal/20 to-transparent" />
-          </div>
-          <div className="pointer-events-none absolute top-1/2 hidden h-px w-full -translate-y-1/2 dark:bg-white/[0.04] bg-black/[0.06] sm:block">
-            <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="h-full bg-gradient-to-r from-transparent via-accent-teal/20 to-transparent" />
-          </div>
-
+          <ProcessGridLines />
           {process.map((phase, i) => (
-            <motion.div
-              key={phase.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className="group relative overflow-hidden rounded-2xl border dark:border-white/[0.06] border-accent-teal/15 dark:bg-white/[0.03] bg-white/80 p-8 backdrop-blur-sm"
-            >
-              <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.03] dark:opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <pattern id={`process-pcb-${i}`} x="0" y="0" width="45" height="45" patternUnits="userSpaceOnUse">
-                    <line x1="0" y1="11" x2="45" y2="11" stroke="currentColor" strokeWidth="0.3" />
-                    <line x1="0" y1="34" x2="45" y2="34" stroke="currentColor" strokeWidth="0.3" />
-                    <line x1="11" y1="0" x2="11" y2="45" stroke="currentColor" strokeWidth="0.3" />
-                    <line x1="34" y1="0" x2="34" y2="45" stroke="currentColor" strokeWidth="0.3" />
-                    <circle cx="11" cy="11" r="1.5" fill="none" stroke="currentColor" strokeWidth="0.3" />
-                    <circle cx="34" cy="34" r="1.5" fill="none" stroke="currentColor" strokeWidth="0.3" />
-                    <circle cx="22" cy="22" r="1" fill="currentColor" opacity="0.3" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill={`url(#process-pcb-${i})`} className="text-accent-teal" />
-              </svg>
-
-              <div className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l border-t border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
-              <div className="pointer-events-none absolute right-3 top-3 h-3 w-3 border-r border-t border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
-              <div className="pointer-events-none absolute bottom-3 left-3 h-3 w-3 border-b border-l border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
-              <div className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b border-r border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
-
-              <div className="relative z-10">
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-accent-teal/50">[{phase.id}]</span>
-                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }} className="h-1.5 w-1.5 rounded-full bg-accent-teal" />
-                </div>
-                <h3 className="mb-2 font-display text-2xl font-bold uppercase tracking-tight dark:text-white text-[var(--text-primary)] group-hover:text-accent-teal transition-colors duration-300">
-                  {phase.title}
-                </h3>
-                <p className="mb-5 text-sm leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">
-                  {phase.description}
-                </p>
-                <ul className="grid grid-cols-1 gap-2">
-                  {phase.details.map((detail) => (
-                    <li key={detail} className="flex items-start gap-2 text-[12px] dark:text-slate-400 text-[var(--text-secondary)]">
-                      <CheckCircle2 className="mt-0.5 h-3 w-3 flex-shrink-0 text-accent-teal/60" />
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <motion.div initial={{ x: "-100%" }} whileInView={{ x: "200%" }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.3 + i * 0.15, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
-            </motion.div>
+            <ProcessPhaseCard key={phase.id} phase={phase} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProcessGridLines() {
+  const vRef = useRef<HTMLDivElement>(null);
+  const vInView = useInView(vRef, { once: true });
+  const hRef = useRef<HTMLDivElement>(null);
+  const hInView = useInView(hRef, { once: true });
+
+  return (
+    <>
+      <div className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 dark:bg-white/[0.04] bg-black/[0.06] sm:block">
+        <div ref={vRef} className="h-full">
+          <motion.div initial={{ height: 0 }} animate={vInView ? { height: "100%" } : {}} transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="w-full bg-gradient-to-b from-accent-teal/40 via-accent-teal/20 to-transparent" />
+        </div>
+      </div>
+      <div className="pointer-events-none absolute top-1/2 hidden h-px w-full -translate-y-1/2 dark:bg-white/[0.04] bg-black/[0.06] sm:block">
+        <div ref={hRef} className="w-full">
+          <motion.div initial={{ width: 0 }} animate={hInView ? { width: "100%" } : {}} transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="h-full bg-gradient-to-r from-transparent via-accent-teal/20 to-transparent" />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function ProcessPhaseCard({ phase, index }: { phase: typeof process[0]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const sweepRef = useRef<HTMLDivElement>(null);
+  const sweepInView = useInView(sweepRef, { once: true });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      className="group relative overflow-hidden rounded-2xl border dark:border-white/[0.06] border-accent-teal/15 dark:bg-white/[0.03] bg-white/80 p-8 backdrop-blur-sm"
+    >
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.03] dark:opacity-[0.02]" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id={`process-pcb-${index}`} x="0" y="0" width="45" height="45" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="11" x2="45" y2="11" stroke="currentColor" strokeWidth="0.3" />
+            <line x1="0" y1="34" x2="45" y2="34" stroke="currentColor" strokeWidth="0.3" />
+            <line x1="11" y1="0" x2="11" y2="45" stroke="currentColor" strokeWidth="0.3" />
+            <line x1="34" y1="0" x2="34" y2="45" stroke="currentColor" strokeWidth="0.3" />
+            <circle cx="11" cy="11" r="1.5" fill="none" stroke="currentColor" strokeWidth="0.3" />
+            <circle cx="34" cy="34" r="1.5" fill="none" stroke="currentColor" strokeWidth="0.3" />
+            <circle cx="22" cy="22" r="1" fill="currentColor" opacity="0.3" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill={`url(#process-pcb-${index})`} className="text-accent-teal" />
+      </svg>
+
+      <div className="pointer-events-none absolute left-3 top-3 h-3 w-3 border-l border-t border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
+      <div className="pointer-events-none absolute right-3 top-3 h-3 w-3 border-r border-t border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
+      <div className="pointer-events-none absolute bottom-3 left-3 h-3 w-3 border-b border-l border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
+      <div className="pointer-events-none absolute bottom-3 right-3 h-3 w-3 border-b border-r border-accent-teal/20 transition-colors duration-300 group-hover:border-accent-teal/60" />
+
+      <div className="relative z-10">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="font-mono text-[11px] font-bold tracking-[0.2em] text-accent-teal/50">[{phase.id}]</span>
+          <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }} className="h-1.5 w-1.5 rounded-full bg-accent-teal" />
+        </div>
+        <h3 className="mb-2 font-display text-2xl font-bold uppercase tracking-tight dark:text-white text-[var(--text-primary)] group-hover:text-accent-teal transition-colors duration-300">
+          {phase.title}
+        </h3>
+        <p className="mb-5 text-sm leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">
+          {phase.description}
+        </p>
+        <ul className="grid grid-cols-1 gap-2">
+          {phase.details.map((detail) => (
+            <li key={detail} className="flex items-start gap-2 text-[12px] dark:text-slate-400 text-[var(--text-secondary)]">
+              <CheckCircle2 className="mt-0.5 h-3 w-3 flex-shrink-0 text-accent-teal/60" />
+              {detail}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div ref={sweepRef}>
+        <motion.div initial={{ x: "-100%" }} animate={sweepInView ? { x: "200%" } : {}} transition={{ duration: 1.2, delay: 0.3 + index * 0.15, ease: "easeInOut" }} className="absolute bottom-0 left-0 h-[1px] w-1/3 bg-gradient-to-r from-transparent via-accent-teal/40 to-transparent" />
+      </div>
+    </motion.div>
   );
 }
 
@@ -279,6 +315,8 @@ export function AboutContent() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95]);
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const scrollIndicatorInView = useInView(scrollIndicatorRef, { once: true });
 
   return (
     <>
@@ -296,7 +334,7 @@ export function AboutContent() {
               Tavryz is a software engineering and design studio. We build web platforms, mobile apps, and the brand and growth systems around them — for teams who need things done right, not just done fast.
             </p>
           </Reveal>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.8 }} className="mt-16 flex flex-col items-center gap-2">
+          <motion.div ref={scrollIndicatorRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.8 }} className="mt-16 flex flex-col items-center gap-2">
             <span className="font-mono text-[9px] uppercase tracking-[0.3em] dark:text-slate-600 text-[var(--text-muted)]">Scroll</span>
             <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }} className="h-8 w-px bg-gradient-to-b from-accent-teal/40 to-transparent" />
           </motion.div>

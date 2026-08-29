@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { whyTavryz } from "@/lib/why";
 
 function PcbOverlay() {
@@ -30,6 +30,9 @@ function PcbOverlay() {
 }
 
 function BranchWire({ isLeft, index }: { isLeft: boolean; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
   const yJitter = ((index * 7) % 16) - 8;
   const curveHeight = 12 + (index % 3) * 6;
 
@@ -44,45 +47,44 @@ function BranchWire({ isLeft, index }: { isLeft: boolean; index: number }) {
   const d = `M 0 0 C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
 
   return (
-    <svg
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible"
-      width="160"
-      height="60"
-      viewBox="-80 -30 160 60"
-    >
-      <motion.path
-        d={d}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="4"
-        className="text-accent-teal/10"
-        initial={{ pathLength: 0, opacity: 0 }}
-        whileInView={{ pathLength: 1, opacity: 1 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-      />
-      <motion.path
-        d={d}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        className="text-accent-teal/40"
-        initial={{ pathLength: 0, opacity: 0 }}
-        whileInView={{ pathLength: 1, opacity: 1 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-      />
-      <motion.circle
-        cx={endX}
-        cy={endY}
-        r="2.5"
-        className="fill-accent-teal/50"
-        initial={{ scale: 0, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.3, delay: 0.7 }}
-      />
-    </svg>
+    <div ref={ref}>
+      <svg
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 overflow-visible"
+        width="160"
+        height="60"
+        viewBox="-80 -30 160 60"
+      >
+        <motion.path
+          d={d}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+          className="text-accent-teal/10"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.path
+          d={d}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+          className="text-accent-teal/40"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        />
+        <motion.circle
+          cx={endX}
+          cy={endY}
+          r="2.5"
+          className="fill-accent-teal/50"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={inView ? { scale: 1, opacity: 1 } : {}}
+          transition={{ duration: 0.3, delay: 0.7 }}
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -132,17 +134,6 @@ function ScrollWire() {
             className="absolute left-1/2 -translate-x-1/2"
             style={{ top: topPercent + "%" }}
           >
-            <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="relative -translate-y-1/2"
-            >
-              <div className="h-3 w-3 rounded-full border-2 border-accent-teal bg-[var(--bg-primary)] dark:bg-[#07080A]" />
-              <div className="absolute inset-0 h-3 w-3 rounded-full border border-accent-teal/30" />
-            </motion.div>
-
             <BranchWire isLeft={isLeft} index={i} />
           </div>
         );
@@ -161,37 +152,45 @@ export function WhyTimeline() {
           const Icon = point.icon;
           const isLeft = i % 2 === 0;
           return (
-            <motion.div
-              key={point.title}
-              initial={{ opacity: 0, x: isLeft ? -24 : 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className={`w-full md:w-[45%] ${isLeft ? "md:mr-auto" : "md:ml-auto"} ${
-                i % 3 === 1 ? "md:mt-10" : ""
-              }`}
-            >
-              <motion.div
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="card-border-glow relative overflow-hidden rounded-2xl border dark:border-white/[0.06] border-accent-teal/20 dark:bg-white/[0.03] bg-white/80 p-6 dark:shadow-card shadow-sm backdrop-blur-sm"
-              >
-                <PcbOverlay />
-                <div className="relative z-10">
-                  <motion.div
-                    whileHover={{ rotate: 15, scale: 1.1 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-accent-teal text-white dark:shadow-[0_0_20px_-4px_rgba(0,124,125,0.5)] shadow-[0_0_12px_-2px_rgba(0,124,125,0.3)]"
-                  >
-                    <Icon className="h-4 w-4" />
-                  </motion.div>
-                  <h3 className="mb-2 font-display text-base font-bold tracking-tight dark:text-white text-[var(--text-primary)]">{point.title}</h3>
-                  <p className="text-[13px] leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">{point.body}</p>
-                </div>
-              </motion.div>
-            </motion.div>
+            <WhyCard key={point.title} point={point} Icon={Icon} isLeft={isLeft} index={i} />
           );
         })}
       </div>
     </div>
+  );
+}
+
+function WhyCard({ point, Icon, isLeft, index }: { point: typeof whyTavryz[0]; Icon: React.ElementType; isLeft: boolean; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: isLeft ? -24 : 24 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className={`w-full md:w-[45%] ${isLeft ? "md:mr-auto" : "md:ml-auto"} ${
+        index % 3 === 1 ? "md:mt-10" : ""
+      }`}
+    >
+      <motion.div
+        whileHover={{ y: -4, transition: { duration: 0.2 } }}
+        className="card-border-glow relative overflow-hidden rounded-2xl border dark:border-white/[0.06] border-accent-teal/20 dark:bg-white/[0.03] bg-white/80 p-6 dark:shadow-card shadow-sm backdrop-blur-sm"
+      >
+        <PcbOverlay />
+        <div className="relative z-10">
+          <motion.div
+            whileHover={{ rotate: 15, scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-accent-teal text-white dark:shadow-[0_0_20px_-4px_rgba(0,124,125,0.5)] shadow-[0_0_12px_-2px_rgba(0,124,125,0.3)]"
+          >
+            <Icon className="h-4 w-4" />
+          </motion.div>
+          <h3 className="mb-2 font-display text-base font-bold tracking-tight dark:text-white text-[var(--text-primary)]">{point.title}</h3>
+          <p className="text-[13px] leading-relaxed dark:text-slate-400 text-[var(--text-secondary)]">{point.body}</p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
